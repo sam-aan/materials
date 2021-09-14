@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>Form</class>
+ <widget class="QWidget" name="Form">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>310</width>
+    <height>252</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Form</string>
+  </property>
+  <widget class="QPushButton" name="pushButton">
+   <property name="geometry">
+    <rect>
+     <x>160</x>
+     <y>220</y>
+     <width>75</width>
+     <height>23</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Расчитать</string>
+   </property>
+  </widget>
+  <widget class="QWidget" name="layoutWidget">
+   <property name="geometry">
+    <rect>
+     <x>20</x>
+     <y>20</y>
+     <width>261</width>
+     <height>201</height>
+    </rect>
+   </property>
+   <layout class="QFormLayout" name="formLayout">
+    <item row="0" column="1">
+     <widget class="QKeySequenceEdit" name="nominal">
+      <property name="enabled">
+       <bool>true</bool>
+      </property>
+     </widget>
+    </item>
+    <item row="1" column="0">
+     <widget class="QLabel" name="label_2">
+      <property name="text">
+       <string>Длина трассы</string>
+      </property>
+     </widget>
+    </item>
+    <item row="1" column="1">
+     <widget class="QKeySequenceEdit" name="dlina"/>
+    </item>
+    <item row="2" column="0">
+     <widget class="QLabel" name="label_3">
+      <property name="text">
+       <string>Длина сварных секций</string>
+      </property>
+     </widget>
+    </item>
+    <item row="2" column="1">
+     <widget class="QKeySequenceEdit" name="Lsvar_izd"/>
+    </item>
+    <item row="3" column="0">
+     <widget class="QLabel" name="label_4">
+      <property name="text">
+       <string>Количесвто секций</string>
+      </property>
+     </widget>
+    </item>
+    <item row="3" column="1">
+     <widget class="QKeySequenceEdit" name="Nsekc"/>
+    </item>
+    <item row="4" column="0">
+     <widget class="QLabel" name="label_5">
+      <property name="text">
+       <string>Количество стыков</string>
+      </property>
+     </widget>
+    </item>
+    <item row="4" column="1">
+     <widget class="QKeySequenceEdit" name="Nstik"/>
+    </item>
+    <item row="5" column="0">
+     <widget class="QLabel" name="label_6">
+      <property name="text">
+       <string>Количество фланцев</string>
+      </property>
+     </widget>
+    </item>
+    <item row="5" column="1">
+     <widget class="QKeySequenceEdit" name="Nflanc"/>
+    </item>
+    <item row="6" column="0">
+     <widget class="QLabel" name="label_7">
+      <property name="text">
+       <string>Количество заглушек</string>
+      </property>
+     </widget>
+    </item>
+    <item row="6" column="1">
+     <widget class="QKeySequenceEdit" name="Nkon_zag"/>
+    </item>
+    <item row="0" column="0">
+     <widget class="QLabel" name="label">
+      <property name="text">
+       <string>Номинал</string>
+      </property>
+     </widget>
+    </item>
+   </layout>
+  </widget>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>
