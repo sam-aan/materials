@@ -399,7 +399,7 @@ class calculation:
                     detali[4][1] = 2
                     detali.append(['fl', 2])
 
-        elif self.dat['Серия'] in ['CR', 'CRM', 'CR1']:
+        elif self.dat['Серия'] in ['CR', 'CRM', 'CR1', 'CR2']:
 
             if str(self.dat['Кол. пров.']) in ['4', '3+1']:
                 detali = [['s', 4, self.os[0]], ['torcentr', 2], ['mfazcentr', round(int(self.L) / 0.4)]]
@@ -1809,8 +1809,8 @@ class calculation:
 
 
 if __name__ == '__main__':  # Если мы запускаем файл напрямую, а не импортируем
-    #s = rashet(195, 'D:/PycharmProjects/materials/пример.xlsx')
-    s = rashet(157, 'D:/PycharmProjects/materials/Технопарк доп заказ.xlsx')
+    s = rashet(195, 'D:/PycharmProjects/materials/пример.xlsx')
+    #s = rashet(157, 'D:/PycharmProjects/materials/Технопарк доп заказ.xlsx')
 
     s.zapusk()
     # pyinstaller --onefile --icon=sol.ico --noconsole Solaris_vedomost.py
