@@ -1323,7 +1323,12 @@ class calculation:
                 return False
 
             elif int(self.tip[0]) in [1, 2]:
-                A = int(os[1])
+
+                if len(os) <= 1:
+                    A = int(os[0]) / 2
+                else:
+                    A = int(os[1])
+
                 L = int(os[0])
                 B = '-'
                 C = '-'
@@ -1358,21 +1363,26 @@ class calculation:
 
             elif int(self.tip[0]) in [3, 4]:
 
+                if len(os[0]) <= 1:
+
+                    if int(os[0]) == 2000:
+                        A = 500
+                        B = 1000
+                    elif int(os[0]) == 2500:
+                        A = 750
+                        B = 1000
+                    else:
+                        A = 1000
+                        B = 1000
+
+                else:
+                    A = int(os[1])
+                    B = int(os[2])
+
+
                 #if int(self.L) in [1000, 1500, 2000, 2500, 3000]:
                 L = int(os[0])
-                A = int(os[1])
-                B = int(os[2])
                 C = '-'
-
-                '''if int(os) == 2000:
-                    A = 500
-                    B = 1000
-                elif int(os) == 2500:
-                    A = 750
-                    B = 1000
-                else:
-                    A = 1000
-                    B = 1000'''
 
                 if nominal == 2500:
                     if int(self.tip[0]) in [3]:
@@ -1397,11 +1407,17 @@ class calculation:
 
             elif int(self.tip[0]) in [5, 6]:
 
-                if int(self.L) in [3000]:
-                    L = int(os[0])
+                if len(os) <= 1:
+                    A = 500
+                    B = 1000
+                    C = 1000
+                else:
                     A = int(os[1])
                     B = int(os[2])
                     C = int(os[3])
+
+                if int(self.L) in [3000]:
+                    L = int(os[0])
 
                     if nominal == 2500:
 
