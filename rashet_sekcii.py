@@ -799,12 +799,12 @@ class calculation:
                 svar_det_one_floor[3] = ['С-СД13', 1, ['cB', 1, self.C], ['u', 2, 0], ['cC', 1, self.B], ['cA', 1, self.A]]
             elif self.dat['In'] in [2600, 3200]:
                 svar_det_one_floor[2] = ['С-СД13', 2, ['cB', 2, self.A],  ['u', 2, 0], ['cC', 2, self.B], ['cA', 2, self.C]]
-                svar_det_one_floor[3] = ['С-СД13', 2, ['cB', 2, self.C],  ['u', 2, 0], ['cC', 2, self.B], ['cA', 2, self.C]]
+                svar_det_one_floor[3] = ['С-СД13', 2, ['cB', 2, self.C],  ['u', 2, 0], ['cC', 2, self.B], ['cA', 2, self.A]]
                 svar_det_one_floor.append(['К-СД16', 1, ['kc1', 1, self.A], ['kc4', 1, self.B], ['kc1', 1, self.C]])
                 for i in [2, 3, 4, 5]:
                     detali[i][1] = 2
             elif self.dat['In'] in [4000, 5000]:
-                svar_det_one_floor[2] = ['С-СД13', 2, ['cB', 2, self.A], ['u', 2, 0], ['cC', 2, self.B], ['cA', 2, self.A]]
+                svar_det_one_floor[2] = ['С-СД13', 2, ['cB', 2, self.A], ['u', 2, 0], ['cC', 2, self.B], ['cA', 2, self.C]]
                 svar_det_one_floor[3] = ['С-СД13', 2, ['cB', 2, self.C], ['u', 2, 0], ['cC', 2, self.B], ['cA', 2, self.A]]
                 svar_det_one_floor.append(['К-СД16', 1, ['kc1', 1, self.A], ['kc4', 1, self.B], ['kc1', 1, self.C]])
                 for i in [2, 3, 4, 5]:
