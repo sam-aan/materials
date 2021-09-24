@@ -1668,8 +1668,8 @@ class Detali:
             self.Y = float(float(self.os[1]) - float(self.R_sh) - float(self.S_sh_izol) * 2 - int(self.S_sh) / 2) * (math.tan(math.radians(beta)))
 
         BD = self.razvertka_XY(beta * 2, self.R, self.Ka, self.S_sh)
-        self.A = round(float(self.X) - BD / 2 + self.L1_sh_b, 1)
-        self.B = round(float(self.Y) - BD / 2 + self.L1_sh_b, 1)
+        self.A = round(float(self.X) - BD / 2 + self.L1_sh_b, 1) - 3    # технологический допуск
+        self.B = round(float(self.Y) - BD / 2 + self.L1_sh_b, 1) - 3    # технологический допуск
         self.L = '-'
         self.L1 = round(float(self.A) + float(self.B), 1)
         self.oboznachenie = 'Ш8'
@@ -1742,7 +1742,7 @@ class Detali:
 
         BD = self.razvertka_XY(90, self.R, self.Ka, self.S_sh)
         self.A = round(float(self.X) - BD / 2, 1)
-        self.B = round(float(self.Y) - BD / 2 + self.L1_sh_b, 1)
+        self.B = round(float(self.Y) - BD / 2 + self.L1_sh_b, 1) - 3    # технологический допуск
         self.L = '-'
         self.L1 = round(float(self.A) + float(self.B), 1)
         self.oboznachenie = 'Ш12'

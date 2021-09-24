@@ -1673,11 +1673,101 @@ class calculation:
         self.nestandart()
         return False
 
-    # Секция компенсации
+    # Секция компенсации не готово
     def sk(self):
-        self.spisok_dla_mater['dlina'] = round(self.spisok_dla_mater['dlina'] + int(self.dat['количество']) * int(self.L) / 1000, 0)
+
         self.nestandart()
-        return False
+
+        '''self.L = self.os[0]
+        self.index = self.index + 1
+
+        self.spisok_dla_mater['dlina'] = round(self.spisok_dla_mater['dlina'] + int(self.dat['количество']) * int(self.L) / 1000, 0)
+
+        itog = [[self.index, self.dat['Серия'], self.dat['ip'], self.dat['Материал'], self.dat['In'],
+                 self.dat['Кол. пров.'], self.dat['Наименование'], 'sk',
+                 self.L, self.L1, self.A, self.B, self.C,
+                 self.dat['количество'], 'спецификация']]
+
+        if self.dat['Серия'] in ['Е3', 'E3']:
+
+            if str(self.dat['Кол. пров.']) in ['4', '3+1']:
+                detali = [['kv', 2, self.os[0]], ['c', 2, self.os[0]], ['s1', 2, self.os[0]], ['s2', 2, self.os[0]],
+                          ['n', 4], ['sux', 4]]
+
+                if self.dat['Обозначение'] in ['пф', 'pf', 'pfk']:
+                    self.spisok_dla_mater['Nflanc'] = self.spisok_dla_mater['Nflanc'] + int(self.dat['количество'])
+                    itog[0][7] = 'pf'
+                    detali[2][0] = 's17'
+                    detali[3][0] = 's18'
+                    detali[4][1] = 2
+                    detali.append(['fl', 2])
+
+                if self.dat['In'] in [2500]:
+                    detali.pop(0)
+                    detali.insert(0, ['k', 2, self.os[0]])
+                elif self.dat['In'] in [2600, 3200, 4000, 5000]:
+                    detali.pop(0)
+                    detali.insert(0, ['k', 2, self.os[0]])
+                    for i in [1, 2, 3]:
+                        detali[i][1] = 4
+                    detali.insert(1, ['kc', 1, self.os[0]])
+                elif self.dat['In'] in [6300]:
+                    detali.pop(0)
+                    detali.insert(0, ['k', 2, self.os[0]])
+                    for i in range(1, 4):
+                        detali[i][1] = 6
+                    detali.insert(1, ['kc', 2, self.os[0]])
+
+            else:   # 3-х проводной
+                detali = [['kv', 2, self.os[0]], ['c', 2, self.os[0]], ['s1', 2, self.os[0]], ['s', 1, self.os[0]],
+                          ['n', 4], ['sux', 4]]
+
+                if self.dat['Обозначение'] in ['пф', 'pf', 'pfk']:
+                    self.spisok_dla_mater['Nflanc'] = self.spisok_dla_mater['Nflanc'] + int(self.dat['количество'])
+                    itog[0][7] = 'pf'
+                    detali[2][0] = 's17'
+                    detali[4][1] = 2
+                    detali.append(['fl', 2])
+
+        elif self.dat['Серия'] in ['CR', 'CRM', 'CR1', 'CR2']:
+
+            if str(self.dat['Кол. пров.']) in ['4', '3+1']:
+                detali = [['s', 4, self.os[0]], ['torcentr', 2], ['mfazcentr', round(int(self.L) / 0.4)]]
+
+                if self.dat['Обозначение'] in ['пф', 'pf', 'pfk']:
+                    self.spisok_dla_mater['Nflanc'] = self.spisok_dla_mater['Nflanc'] + int(self.dat['количество'])
+                    itog[0][7] = 'pf'
+                    detali[2][0] = 's17'
+                    detali[3][0] = 's18'
+                    detali[4][1] = 2
+                    detali.append(['fl', 2])
+
+                if self.dat['In'] in [3200, 4000, 5000]:
+                    detali.insert(0, ['s', 8, self.os[0]])
+                elif self.dat['In'] in [6300]:
+                    detali.insert(0, ['s', 12, self.os[0]])
+
+            else:  # 3-х проводной
+                detali = [['s', 3, self.os[0]], ['torcentr', 2], ['mfazcentr', round(int(self.L) / 0.4)]]
+
+                # нет чертежей для пф для заливки
+                if self.dat['Обозначение'] in ['пф', 'pf', 'pfk']:
+                    self.spisok_dla_mater['Nflanc'] = self.spisok_dla_mater['Nflanc'] + int(self.dat['количество'])
+                    itog[0][7] = 'pf'
+                    detali[2][0] = 's17'
+                    detali[4][1] = 2
+                    detali.append(['fl', 2])
+
+        for i in detali:
+            itog_det = self.detail(i, 's')
+            if itog_det == 0:   # только что расчитывали сухарь, направляющую или фланец
+                continue
+            else:
+                itog.append(itog_det)
+        self.prints(itog)
+
+        line_raskroi.komlektuyushie(self.dat, self.length_OS, self.spis_kompl).standart_izdel()
+        return True'''
 
     def ts(self):
         print('5. Расчет трансформаторной секции:')
