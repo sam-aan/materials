@@ -314,6 +314,14 @@ class calculation:
                   ['dp', self.dat['количество демпферов'], self.os],
                   ['izol_k', 2, self.os],
                   ['izol_s', self.dat['количество средних изоляторов'], self.os]]
+
+        if self.dat['In'] in [3200, 4000, 5000]:
+            detali[5][1] = detali[5][1] * 2
+            detali[6][1] = detali[6][1] * 2
+        elif self.dat['In'] in [3200, 4000, 5000]:
+            detali[5][1] = detali[5][1] * 3
+            detali[6][1] = detali[6][1] * 3
+
         self.spisok_dla_mater['Nstik'] = self.spisok_dla_mater['Nstik'] + int(self.dat['количество'])
 
         for j in detali:

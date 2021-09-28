@@ -2052,8 +2052,7 @@ class Detali:
         if self.naimenovanie in ['Крышка', 'Сухарь', 'Крышка средняя', 'Уголок_25х25х3', 'Крышка с выступом крашенная',
                                  'Втулка', 'Крышка стыка', 'Демпфер']:
             nominal = '-'
-        elif self.nominal > 2500 and self.naimenovanie in ['Стенка', 'Стенка крашенная', 'Стенка стыка',
-                                                           'Пластина токопроводящая', 'Изолятор крайний',
+        elif self.nominal > 2500 and self.naimenovanie in ['Стенка', 'Стенка крашенная', 'Изолятор крайний',
                                                            'Изолятор средний', 'Направляющая']:
 
             if self.material in ['Al']:
@@ -2067,7 +2066,7 @@ class Detali:
 
             if self.material in ['Al']:
 
-                if self.nominal > 2500 and re.findall(r'\w*', self.naimenovanie)[0] in ['Шина', 'Пластина']:
+                if self.nominal > 2500 and re.findall(r'\w*', self.naimenovanie)[0] in ['Шина']:
                     nominalus = {3200: 1600, 2600: 1250, 4000: 2000, 5000: 2500, 6300: 2500}
                     nominal = str(nominalus[self.nominal]) + ' (Алюм)'
                 else:
