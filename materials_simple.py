@@ -34,6 +34,7 @@ class vvod:
         print('\nНоминал/длина/стыки/секции/заглушки/фланцы/сварные\n', self.nominal, '/', self.dlina, '/', self.Nstik,
               '/', self.Nsekc, '/', self.Nkon_zag, '/', self.Nflanc, '/', self.Lsvar_izd)
 
+        print("Материал", self.material)
         if self.material in ['Алюминий', 'Al']:
             self.vibor()
         else:
@@ -404,7 +405,7 @@ class vvod:
 
     def sh(self, os):   #расчет шины
         L = round(math.ceil(os * 4 / 3), 2)
-        if self.material == 'Алюминий':
+        if self.material in ['Алюминий', 'Al']:
             name = 'Шина ' + str(self.nominal_2)
         else:
             name = 'Шина медная ' + str(self.nominal)
@@ -419,7 +420,7 @@ class vvod:
         sux_kol = int(kol) * 4
         self.itog.append(['заг', 'Сухарь (Деталь)', sux_kol, 'шт.'])
 
-    def napr(self, kol):    # направляющиеа
+    def napr(self, kol):    # направляющиеа расчитываем из количества секций
 
         if self.nominal in [3200, 4000, 5000]:
             L = round(math.ceil((self.s * 2 + 66 + 5 + 3 + 3) * 4 * kol / 3000), 2)
@@ -543,7 +544,7 @@ class vvod:
         self.itog.append(['Пи', 'Наклейки на стыки ШП', kol * 2, 'шт.'])
         self.itog.append(['П', 'Стенка стыка', L_stenka, 'шт.'])
 
-        if self.material == 'Алюминий':
+        if self.material in ['Алюминий', 'Al']:
             name_L_plastina = ''
         else:
             name_L_plastina = ' медная'

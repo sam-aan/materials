@@ -10,7 +10,6 @@ import socket
 import exel_to_spisok
 import to_pdf
 from datetime import datetime
-import Solaris_vedomost
 
 
 class rashet:
@@ -60,9 +59,6 @@ class rashet:
                     RabVed = itog[2]
                     self.komplekt = itog[3]
 
-                    #for key in RabVed:
-                        #KontrVed[key] = RabVed[key]
-
                 self.spisok_dla_mater[i] = copy.deepcopy(itog[4])
             RabVed = line_raskroi.techno(self.komplekts(SpisKomplekt, RabVed))
             self.spisok_filov.append(writing_to_exl(self.N_zak, i, RabVed, line, 'vedomost').setting_exl())
@@ -70,10 +66,8 @@ class rashet:
         sklad = exel_to_spisok.InOut([sklad, KtrSlvr], 'o').zapusk()
         ret = writing_to_exl(self.N_zak, False, sklad, line, 'upakovka').setting_exl()  # делаем файл эксель с котр.вед.
                                                                                         # и получем имя файла и список
-        #print('bbbb', self.spisok_dla_mater)
         self.spisok_filov.append(ret[0])        # добавляем в список файлов для удаления имя контрольной ведомсти
         #to_pdf.simple_table(ret[1])             # запускаем создание наклеек в pdf
-        #(self.spisok_filov)
         return [self.spisok_filov, self.spisok_dla_mater]
 
     def komplekts(self, spisok, itog):
@@ -337,6 +331,7 @@ class calculation:
         self.index = self.index + 1
 
         self.spisok_dla_mater['dlina'] = round(self.spisok_dla_mater['dlina'] + int(self.dat['количество']) * int(self.L) / 1000, 0)
+        self.spisok_dla_mater['Nsekc'] = self.spisok_dla_mater['Nsekc'] + int(self.dat['количество'])
 
         if (self.index) == 500:
             self.dat['тип'] = 0.5
@@ -459,6 +454,7 @@ class calculation:
         self.B = self.os[1]
 
         self.spisok_dla_mater['dlina'] = round(self.spisok_dla_mater['dlina'] + int(self.dat['количество']) * (int(self.A) + int(self.B)) / 1000, 0)
+        self.spisok_dla_mater['Nsekc'] = self.spisok_dla_mater['Nsekc'] + int(self.dat['количество'])
         self.spisok_dla_mater['Lsvar_izd'] = round(self.spisok_dla_mater['Lsvar_izd'] + int(self.dat['количество']) * (int(self.A) + int(self.B)) / 1000, 0)
 
         # вычисляем угол горизонтального угла
@@ -609,6 +605,7 @@ class calculation:
         self.B = self.os[1]
 
         self.spisok_dla_mater['dlina'] = round(self.spisok_dla_mater['dlina'] + int(self.dat['количество']) * (int(self.A) + int(self.B)) / 1000, 0)
+        self.spisok_dla_mater['Nsekc'] = self.spisok_dla_mater['Nsekc'] + int(self.dat['количество'])
         self.spisok_dla_mater['Lsvar_izd'] = round(self.spisok_dla_mater['Lsvar_izd'] + int(self.dat['количество']) * (int(self.A) + int(self.B)) / 1000, 0)
 
         self.index = self.index + 1
@@ -781,6 +778,7 @@ class calculation:
         self.C = self.os[2]
 
         self.spisok_dla_mater['dlina'] = round(self.spisok_dla_mater['dlina'] + int(self.dat['количество']) * (int(self.A) + int(self.B) + int(self.C)) / 1000, 0)
+        self.spisok_dla_mater['Nsekc'] = self.spisok_dla_mater['Nsekc'] + int(self.dat['количество'])
         self.spisok_dla_mater['Lsvar_izd'] = round(self.spisok_dla_mater['Lsvar_izd'] + int(self.dat['количество']) * (int(self.A) + int(self.B) + int(self.C)) / 1000, 0)
 
         self.index = self.index + 1
@@ -880,6 +878,7 @@ class calculation:
         self.C = self.os[2]
 
         self.spisok_dla_mater['dlina'] = round(self.spisok_dla_mater['dlina'] + int(self.dat['количество']) * (int(self.A) + int(self.B) + int(self.C)) / 1000, 0)
+        self.spisok_dla_mater['Nsekc'] = self.spisok_dla_mater['Nsekc'] + int(self.dat['количество'])
         self.spisok_dla_mater['Lsvar_izd'] = round(self.spisok_dla_mater['Lsvar_izd'] + int(self.dat['количество']) * (int(self.A) + int(self.B) + int(self.C)) / 1000,0)
 
         self.index = self.index + 1
@@ -1036,6 +1035,7 @@ class calculation:
         self.C = self.os[2]
 
         self.spisok_dla_mater['dlina'] = round(self.spisok_dla_mater['dlina'] + int(self.dat['количество']) * (int(self.A) + int(self.B) + int(self.C)) / 1000, 0)
+        self.spisok_dla_mater['Nsekc'] = self.spisok_dla_mater['Nsekc'] + int(self.dat['количество'])
         self.spisok_dla_mater['Lsvar_izd'] = round(self.spisok_dla_mater['Lsvar_izd'] + int(self.dat['количество']) * (int(self.A) + int(self.B) + int(self.C)) / 1000, 0)
 
         self.index = self.index + 1
@@ -1185,6 +1185,7 @@ class calculation:
         self.C = self.os[2]
 
         self.spisok_dla_mater['dlina'] = round(self.spisok_dla_mater['dlina'] + int(self.dat['количество']) * (int(self.A) + int(self.B) + int(self.C)) / 1000, 0)
+        self.spisok_dla_mater['Nsekc'] = self.spisok_dla_mater['Nsekc'] + int(self.dat['количество'])
         self.spisok_dla_mater['Lsvar_izd'] = round(self.spisok_dla_mater['Lsvar_izd'] + int(self.dat['количество']) * (int(self.A) + int(self.B) + int(self.C)) / 1000, 0)
 
         self.index = self.index + 1
@@ -1319,6 +1320,7 @@ class calculation:
         self.L = self.os[0]
 
         self.spisok_dla_mater['dlina'] = round(self.spisok_dla_mater['dlina'] + int(self.dat['количество']) * int(self.L) / 1000, 0)
+        self.spisok_dla_mater['Nsekc'] = self.spisok_dla_mater['Nsekc'] + int(self.dat['количество'])
 
         print('os', self.os)
 
@@ -1496,6 +1498,7 @@ class calculation:
         self.L = self.dat['размер']
 
         self.spisok_dla_mater['dlina'] = round(self.spisok_dla_mater['dlina'] + int(self.dat['количество']) * int(self.L) / 1000, 0)
+        self.spisok_dla_mater['Nsekc'] = self.spisok_dla_mater['Nsekc'] + int(self.dat['количество'])
 
         #print('Секция отбора мощности с фиксированным выводом')
         def tipiz(os, calc, nominal, tip):
@@ -1615,6 +1618,7 @@ class calculation:
         self.C = z = self.os[2]
 
         self.spisok_dla_mater['dlina'] = round(self.spisok_dla_mater['dlina'] + int(self.dat['количество']) * (int(self.A) + int(self.B) + int(self.C)) / 1000, 0)
+        self.spisok_dla_mater['Nsekc'] = self.spisok_dla_mater['Nsekc'] + int(self.dat['количество'])
         self.spisok_dla_mater['Lsvar_izd'] = round(self.spisok_dla_mater['Lsvar_izd'] + int(self.dat['количество']) * (int(self.A) + int(self.B) + int(self.C)) / 1000, 0)
 
         #print(self.index)
@@ -1676,6 +1680,7 @@ class calculation:
     def tg(self):
 
         self.spisok_dla_mater['dlina'] = round(self.spisok_dla_mater['dlina'] + int(self.dat['количество']) * (int(self.A) + int(self.B) + int(self.C)) / 1000, 0)
+        self.spisok_dla_mater['Nsekc'] = self.spisok_dla_mater['Nsekc'] + int(self.dat['количество'])
         self.spisok_dla_mater['Lsvar_izd'] = round(self.spisok_dla_mater['Lsvar_izd'] + int(self.dat['количество']) * (int(self.A) + int(self.B) + int(self.C)) / 1000, 0)
 
         self.nestandart()
@@ -1685,6 +1690,7 @@ class calculation:
     def sk(self):
 
         self.nestandart()
+        self.spisok_dla_mater['Nsekc'] = self.spisok_dla_mater['Nsekc'] + int(self.dat['количество'])
 
         '''self.L = self.os[0]
         self.index = self.index + 1
@@ -1805,6 +1811,7 @@ class calculation:
 
         self.L = razmer
         self.spisok_dla_mater['dlina'] = round(self.spisok_dla_mater['dlina'] + int(self.dat['количество']) * int(self.L) / 1000, 0)
+        self.spisok_dla_mater['Nsekc'] = self.spisok_dla_mater['Nsekc'] + int(self.dat['количество'])
 
         #print('Длина по X:', razmer, ' Тип:', str(str(tip1) + '.' + str(tip2)))
         os = [razmer, L1, A, B, C, tip1, tip2]
@@ -1889,6 +1896,7 @@ class calculation:
             self.C = '-'
 
         self.spisok_dla_mater['Nkon_zag'] = self.spisok_dla_mater['Nkon_zag'] + int(self.dat['количество'])
+        self.spisok_dla_mater['Nsekc'] = self.spisok_dla_mater['Nsekc'] + int(self.dat['количество'])
 
         itog = [[self.index, self.dat['Серия'], self.dat['ip'], self.dat['Материал'], self.dat['In'],
                  self.dat['Кол. пров.'], self.dat['Наименование'], 'kz',
@@ -1908,18 +1916,22 @@ class calculation:
 
     def pn(self):
         self.nestandart()
+        self.spisok_dla_mater['Nsekc'] = self.spisok_dla_mater['Nsekc'] + int(self.dat['количество'])
 
     def bom(self):
         self.nestandart()
 
     def ks(self):
         self.nestandart()
+        self.spisok_dla_mater['Nsekc'] = self.spisok_dla_mater['Nsekc'] + int(self.dat['количество'])
 
     def ksb(self):
         self.nestandart()
+        self.spisok_dla_mater['Nsekc'] = self.spisok_dla_mater['Nsekc'] + int(self.dat['количество'])
 
     def pp(self):
         self.nestandart()
+        self.spisok_dla_mater['Nsekc'] = self.spisok_dla_mater['Nsekc'] + int(self.dat['количество'])
 
 
 if __name__ == '__main__':  # Если мы запускаем файл напрямую, а не импортируем
