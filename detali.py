@@ -1656,7 +1656,7 @@ class Detali:
         self.profil(['профиль', 'Шина ' + s, 'Ш_' + s, '90 90'], self.L1)
         return self.a
 
-    def s8(self):  # шина гнутая внутренняя большой гиб
+    def s8(self):  # шина гнутая внутренняя большой гиб (с припуском)
 
         beta = (180 - int(self.C)) / 2
 
@@ -1668,8 +1668,15 @@ class Detali:
             self.Y = float(float(self.os[1]) - float(self.R_sh) - float(self.S_sh_izol) * 2 - int(self.S_sh) / 2) * (math.tan(math.radians(beta)))
 
         BD = self.razvertka_XY(beta * 2, self.R, self.Ka, self.S_sh)
-        self.A = round(float(self.X) - BD / 2 + self.L1_sh_b, 1) - 3    # технологический допуск
-        self.B = round(float(self.Y) - BD / 2 + self.L1_sh_b, 1) - 3    # технологический допуск
+
+        # для 6мм. шины создаем припуск, для 8мм. припуска нет
+        if self.S_sh in [6, '6']:
+            self.A = round(float(self.X) - BD / 2 + self.L1_sh_b, 1) - 3    # технологический допуск
+            self.B = round(float(self.Y) - BD / 2 + self.L1_sh_b, 1) - 3    # технологический допуск
+        else:
+            self.A = round(float(self.X) - BD / 2 + self.L1_sh_b, 1)
+            self.B = round(float(self.Y) - BD / 2 + self.L1_sh_b, 1)
+
         self.L = '-'
         self.L1 = round(float(self.A) + float(self.B), 1)
         self.oboznachenie = 'Ш8'
