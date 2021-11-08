@@ -2095,7 +2095,7 @@ class Detali:
             nominal = nominalus[self.nominal]
         else:
             nominal = str(self.nominal)
-        self.a = [self.seria, self.ip, self. material, nominal, self.Nprov, self.naimenovanie, self.oboznachenie, self.L,
+        self.a = [self.seria, self.ip, self.material, nominal, self.Nprov, self.naimenovanie, self.oboznachenie, self.L,
                   self.L1, self.A, self.B, self.C]
 
         return nominal

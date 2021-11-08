@@ -177,6 +177,7 @@ class calculation:
 
         if last_symbol == 'З':
             oboznach = oboznach + ' (Зеркальная)'
+
         A = '-'
         B = '-'
         C = '-'
@@ -232,21 +233,26 @@ class calculation:
             nom_two = [A, B, C]
             nom_one = 0
 
-            for i in range(2, len(svar_det)):
 
+            print('QQQQ ' *20)
+            print(len(svar_det))
+            for i in range(2, len(svar_det)):
+                print('qqqqqq ' * 50)
                 if svar_det[i][0] == 'u':
                     result = self.detail(svar_det[i] + self.os, '')
                     W_line1.append(result)
                     continue
                 else:
                     result = self.detail(svar_det[i], '')
-                    nom_two[nom_one] = result[9]
+                    nom_two[nom_one] = result[8]
                     W_line1.append(result)
                     nom_one += 1
 
             A = nom_two[0]
             B = nom_two[1]
             C = nom_two[2]
+            print('QQQQ' *20)
+            print(A, B, C)
         else:   # для ОМ
             nom_one = 0
 
@@ -822,12 +828,12 @@ class calculation:
                 for i in [2, 3, 4, 5]:
                     detali[i][1] = 3
 
-            if self.os[0] == self.os[2] and self.dat['Обозначение'] not in ['згф', 'zgf']:
+            '''if self.os[0] == self.os[2] and self.dat['Обозначение'] not in ['згф', 'zgf']:
                 svar_det_one_floor.pop(3)           # удаляем первую крышку К-СД4
                 svar_det_one_floor[2][1] *= 2       # умножаем на 2 К-СД1
                 svar_det_one_floor[2][2][1] *= 2    # умножаем на 2 с3
                 svar_det_one_floor[2][3][1] *= 2    # умножаем на 2 с2а
-                svar_det_one_floor[2][4][1] *= 2    # умножаем на 2 сВ
+                svar_det_one_floor[2][4][1] *= 2    # умножаем на 2 сВ'''
 
             if self.dat['Обозначение'] in ['згф', 'zgf']:
                 self.spisok_dla_mater['Nflanc'] = self.spisok_dla_mater['Nflanc'] + int(self.dat['количество'])
