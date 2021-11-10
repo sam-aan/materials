@@ -2069,6 +2069,9 @@ class Detali:
                 nominalus = {3200: 1250, 4000: 1600, 5000: 1600, 6300: 1600}
                 nominal = nominalus[self.nominal]
 
+            if self.naimenovanie in ['Стенка', 'Стенка крашенная']:
+                self.oboznachenie = str(self.oboznachenie) + '-01'
+
         elif re.findall(r'.', self.oboznachenie)[0] in ['Ш'] or self.oboznachenie in ['ТП']:
 
             if self.material in ['Al']:
@@ -2095,6 +2098,7 @@ class Detali:
             nominal = nominalus[self.nominal]
         else:
             nominal = str(self.nominal)
+
         self.a = [self.seria, self.ip, self.material, nominal, self.Nprov, self.naimenovanie, self.oboznachenie, self.L,
                   self.L1, self.A, self.B, self.C]
 
