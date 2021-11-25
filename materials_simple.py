@@ -430,7 +430,7 @@ class vvod:
             L = round(math.ceil((self.s + 66 + 5 + 3) * 4 * kol / 3000), 2)
         print('Направляющая', L, 'шт.')
 
-        if self.nominal == 2500:
+        if self.nominal in [2500, 5000, 6300]:
             self.itog.append(['П', 'Направляющая ' + str(self.nominal), L, 'шт.'])
         else:
             self.itog.append(['П', 'Направляющая', L, 'шт.'])
@@ -447,21 +447,39 @@ class vvod:
         self.itog.append(['М', 'Уплотнитель из пористой резины "EPDM 150" с клеевым слоем, 5 мм х125 мм (цвет чёрный)',
                           epdm3, 'м.п.'])
 
+    # нужно пересчитать премикс для изоляторов и вообще выделить расчет всех материалов в отдельный расчет в конце модуля
     def stik(self, kol):    # стыки
         print('nominal', self.nominal)
         L_stenka = round(kol * (self.s + 66 + 5) * 2 / 3000, 2)  # расчет стенки стыка
         #print(str(kol), str(self.s))
         L_skotch_dvoinoi = round(kol * (self.s + 30) * 4 * 8 / 1000, 2)  # расчет двойного скотча
         L_epdm = kol * 0.25 * 2  # расчет EPDM уплотнителя
+        razmer_dempf = 35
+        razmer_list_sil = 500
+        procent_dempf = (razmer_dempf ^ 2) * 100 / (razmer_list_sil ^ 2)
 
-        if self.nominal in [2000, 2500]:
+        if self.nominal in [2000]:
             kol_plast = kol * 8
             L_plastina = round(kol_plast * (self.s + 30 + 5) / 3000, 2)  # расчет пластины токопроводящей
             kol_b = kol * 2
             ves_vtul = round(kol * 2 * 0.05075, 2)  # вес втулки расчет
             kol_demp = kol_b * 4  # количество демпферов
-            self.itog.append(['заг', 'Демпфер 25-35мм 8мм', kol_demp, 'шт.'])
+            #self.itog.append(['заг', 'Демпфер 25-35мм 8мм', kol_demp, 'шт.'])
             ves_demp = round(kol_demp * 0.008085, 2)  # вес всех демпферов
+            itog_dempf = kol_demp * procent_dempf
+            isol_sr = kol * 3  # количество изоляторов средних
+            isol_kr = kol * 2  # количество изоляторов крайних
+            naz_sr = 'Изолятор 2000А  (Ср.)'  # название изолятора
+            naz_kr = 'Изолятор 2000А  (Кр.)'  # название изолятора
+        elif self.nominal in [2500]:
+            kol_plast = kol * 8
+            L_plastina = round(kol_plast * (self.s + 30 + 5) / 3000, 2)  # расчет пластины токопроводящей
+            kol_b = kol * 2
+            ves_vtul = round(kol * 2 * 0.05075, 2)  # вес втулки расчет
+            kol_demp = kol_b * 4  # количество демпферов
+            # self.itog.append(['заг', 'Демпфер 25-35мм 8мм', kol_demp, 'шт.'])
+            ves_demp = round(kol_demp * 0.008085, 2)  # вес всех демпферов
+            itog_dempf = kol_demp * procent_dempf
             isol_sr = kol * 3  # количество изоляторов средних
             isol_kr = kol * 2  # количество изоляторов крайних
             naz_sr = 'Изолятор 2000А  (Ср.)'  # название изолятора
@@ -472,7 +490,8 @@ class vvod:
             kol_b = kol * 2
             ves_vtul = round(kol * 2 * 0.05075, 2)  # вес втулки расчет
             kol_demp = kol_b * 4  # количество демпферов
-            self.itog.append(['заг', 'Демпфер 20-30мм 4мм', kol_demp, 'шт.'])
+            itog_dempf = kol_demp * procent_dempf
+            #self.itog.append(['заг', 'Демпфер 20-30мм 4мм', kol_demp, 'шт.'])
             ves_demp = round(kol_demp * 0.008085, 2)  # вес всех демпферов
             isol_sr = kol * 3  # количество изоляторов средних
             isol_kr = kol * 2  # количество изоляторов крайних
@@ -485,19 +504,34 @@ class vvod:
             print('rolichestvo boltov', kol_b)
             ves_vtul = round(kol * 2 * 0.05075, 2)  # вес втулки расчет
             kol_demp = kol_b * 4  # количество демпферов
-            self.itog.append(['заг', 'Демпфер 20-30мм 4мм', kol_demp, 'шт.'])
+            itog_dempf = kol_demp * procent_dempf
+            #self.itog.append(['заг', 'Демпфер 20-30мм 4мм', kol_demp, 'шт.'])
             ves_demp = round(kol_demp * 0.008085, 2)  # вес всех демпферов
             isol_sr = kol * 6  # количество изоляторов средних
             isol_kr = kol * 4  # количество изоляторов крайних
             naz_sr = 'Изолятор 1600А  (Ср.)'  # название изолятора
             naz_kr = 'Изолятор 1600А  (Кр.)'  # название изолятора
-        elif self.nominal in [4000, 5000]:
+        elif self.nominal in [4000]:
             kol_plast = kol * 8
             L_plastina = round(kol_plast * (self.s * 2 + 30 + 5) / 3000, 2)  # расчет пластины токопроводящей
             kol_b = kol * 4
             ves_vtul = round(kol * 2 * 0.05075, 2)  # вес втулки расчет
             kol_demp = kol_b * 4  # количество демпферов
-            self.itog.append(['заг', 'Демпфер 20-30мм 4мм', kol_demp, 'шт.'])
+            itog_dempf = kol_demp * procent_dempf
+            #self.itog.append(['заг', 'Демпфер 20-30мм 4мм', kol_demp, 'шт.'])
+            ves_demp = round(kol_demp * 0.008085, 2)  # вес всех демпферов
+            isol_sr = kol * 6  # количество изоляторов средних
+            isol_kr = kol * 4  # количество изоляторов крайних
+            naz_sr = 'Изолятор 2000А  (Ср.)'  # название изолятора
+            naz_kr = 'Изолятор 2000А  (Кр.)'  # название изолятора
+        elif self.nominal in [5000]:
+            kol_plast = kol * 8
+            L_plastina = round(kol_plast * (self.s * 2 + 30 + 5) / 3000, 2)  # расчет пластины токопроводящей
+            kol_b = kol * 4
+            ves_vtul = round(kol * 2 * 0.05075, 2)  # вес втулки расчет
+            kol_demp = kol_b * 4  # количество демпферов
+            itog_dempf = kol_demp * procent_dempf
+            #self.itog.append(['заг', 'Демпфер 20-30мм 4мм', kol_demp, 'шт.'])
             ves_demp = round(kol_demp * 0.008085, 2)  # вес всех демпферов
             isol_sr = kol * 6  # количество изоляторов средних
             isol_kr = kol * 4  # количество изоляторов крайних
@@ -509,7 +543,8 @@ class vvod:
             kol_b = kol
             ves_vtul = round(kol * 0.05075, 2)  # вес втулки расчет
             kol_demp = kol_b * 4  # количество демпферов
-            self.itog.append(['заг', 'Демпфер 20-30мм 4мм', kol_demp, 'шт.'])
+            itog_dempf = kol_demp * procent_dempf
+            #self.itog.append(['заг', 'Демпфер 20-30мм 4мм', kol_demp, 'шт.'])
             ves_demp = round(kol_demp * 0.008085, 2)  # вес всех демпферов
             isol_sr = kol * 3  # количество изоляторов средних
             isol_kr = kol * 2  # количество изоляторов крайних
@@ -522,7 +557,8 @@ class vvod:
             kol_b = kol * 6
             ves_vtul = round(kol * 0.05075, 2)  # вес втулки расчет
             kol_demp = kol_b * 4  # количество демпферов
-            self.itog.append(['заг', 'Демпфер 20-30мм 4мм', kol_demp, 'шт.'])
+            itog_dempf = kol_demp * procent_dempf
+            #self.itog.append(['заг', 'Демпфер 20-30мм 4мм', kol_demp, 'шт.'])
             ves_demp = round(kol_demp * 0.008085, 2)  # вес всех демпферов
             isol_sr = kol * 9  # количество изоляторов средних
             isol_kr = kol * 6  # количество изоляторов крайних
@@ -534,7 +570,8 @@ class vvod:
             kol_b = kol
             ves_vtul = round(kol * 0.05075, 2)  # вес втулки расчет
             kol_demp = kol_b * 4  # количество демпферов
-            self.itog.append(['заг', 'Демпфер 20-30мм 4мм', kol_demp, 'шт.'])
+            itog_dempf = kol_demp * procent_dempf
+            #self.itog.append(['заг', 'Демпфер 20-30мм 4мм', kol_demp, 'шт.'])
             ves_demp = round(kol_demp * 0.008085, 2)  # вес всех демпферов
             isol_sr = kol * 3  # количество изоляторов средних
             isol_kr = kol * 2  # количество изоляторов крайних
@@ -551,15 +588,18 @@ class vvod:
 
         if self.nominal in [2500, 5000, 6300]:
             self.itog.append(['П', 'Пластина токопроводящая 2500' + name_L_plastina, L_plastina, 'шт.'])
+            self.itog.append(['Пи', 'Болт М12 со срывной головкой (номинал 2500) по чертежу 000 031-01', kol_b, 'шт.'])
+            self.itog.append(['заг', 'Силикон листовой толщина 8 мм 500х500мм', itog_dempf, 'шт.'])
         else:
             self.itog.append(['П', 'Пластина токопроводящая' + name_L_plastina, L_plastina, 'шт.'])
+            self.itog.append(['Пи', 'болт со срывной головкой', kol_b, 'шт.'])
+            self.itog.append(['заг', 'Силикон листовой 6мм, 500х500мм', itog_dempf, 'шт.'])
+            self.itog.append(['Пи', 'Втулка двухсоставная', kol_b, 'шт.'])
 
-        self.itog.append(['Пи', 'Втулка двухсоставная', kol_b, 'шт.'])
         #self.p('М', 'капролон листовой толщина 25 мм.', ves_vtul, 'шт.')
         self.itog.append(['Пи', naz_sr, isol_sr, 'шт.'])
         self.itog.append(['Пи', naz_kr, isol_kr, 'шт.'])
         #print('Уплотнитель из пористой резины "EPDM 150" с клеевым слоем, 5 мм х125 мм (цвет чёрный) ', L_epdm, ' м.п.')
-        self.itog.append(['Пи', 'болт со срывной головкой', kol_b, 'шт.'])
         self.itog.append(['ст', 'Гайка М12 шестигранная, цинк DIN934', kol_b * 0.01567, 'кг.'])
         self.itog.append(['Пи', 'держатель гайки', kol_b, 'шт.'])
         self.itog.append(['Пи', 'Индикатор температуры', kol, 'шт.'])
@@ -609,7 +649,7 @@ class vvod:
         per = self.s * 2 + 6
         plosh = per * 0.001 * os * 4
         ves = round(plosh * 0.35, 2)
-        self.itog.append(['М', 'Краска порошковая ОХТЭК-3 трубная', ves, 'кг.'])
+        self.itog.append(['М', 'Краска порошковая ОХТЭК - 3ГЛ RAL 6024 ТР9 (для шин, зеленая)', ves, 'кг.'])
 
     def plenka(self, os):   # пленка
         L1 = round(self.s * 0.001 * os * 5 * 0.000125 * 1380, 2)
@@ -689,8 +729,8 @@ class vvod:
         ves_shaiba_m6 = kol_shaib_grovm6 * 0.00085
         ves_kol_shaib_grovm6 = kol_shaib_grovm6 * 0.00056
         #self.p('ст', 'винт с цилиндрической головкой и внутренним шестигранником М6х16', str(ves_kol_boltm6x16), 'кг.')
-        self.itog.append(['ст', 'Винт самонарезной М6х12 DIN7500C полуцилиндр гол.оцинк.TORX', kol_boltm6x16, 'шт.'])
-
+        #self.itog.append(['ст', 'Винт самонарезной М6х12 DIN7500C полуцилиндр гол.оцинк.TORX', kol_boltm6x16, 'шт.'])
+        self.itog.append(['ст', 'Винт самонарезной полуцилиндр. гол., М6х16 DIN 7500С  TORX ', kol_boltm6x16, 'шт.'])
         #print('винт с цилиндрической головкой и внутренним шестигранником М6х10  ', str(kol_boltm6x10), ' шт.')
         #self.p('ст', 'винт с потайной головкой и внутренним шестигранником М6х16', str(kol_boltm6x10), 'шт.')
         self.itog.append(['ст', 'Винт самонарезной М6х12 DIN7500М потай гол. оцинк. TORX', kol_boltm6x10, 'шт.'])
