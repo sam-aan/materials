@@ -647,8 +647,7 @@ class vvod:
         #self.p('М', 'капролон листовой толщина 25 мм.', ves_vtul, 'шт.')
         #self.itog.append(['Пи', naz_sr, isol_sr, 'шт.'])
         #self.itog.append(['Пи', naz_kr, isol_kr, 'шт.'])
-        self.itog.append(['М', 'Прессматериал полиэфирный TNPC BMC 200.20.1',
-                          isol_sr * ves_izol_sr + isol_kr * ves_izol_kr, 'шт.'])
+        self.itog.append(['М', 'Прессматериал полиэфирный TNPC BMC 200.20.1', isol_sr * ves_izol_sr + isol_kr * ves_izol_kr, 'шт.'])
         #print('Уплотнитель из пористой резины "EPDM 150" с клеевым слоем, 5 мм х125 мм (цвет чёрный) ', L_epdm, ' м.п.')
         self.itog.append(['ст', 'Гайка М12 шестигранная, цинк DIN934', kol_b * 0.01567, 'кг.'])
         self.itog.append(['Пи', 'держатель гайки', kol_b, 'шт.'])
