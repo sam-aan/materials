@@ -456,7 +456,7 @@ class vvod:
         L_epdm = kol * 0.25 * 2  # расчет EPDM уплотнителя
         razmer_dempf = 35
         razmer_list_sil = 500
-        procent_dempf = (razmer_dempf ^ 2) * 100 / (razmer_list_sil ^ 2)
+        procent_dempf = (razmer_dempf ** 2) * 100 / (razmer_list_sil ** 2)
 
         if self.nominal in [2000]:
             kol_plast = kol * 8
@@ -641,7 +641,7 @@ class vvod:
         else:
             self.itog.append(['П', 'Пластина токопроводящая' + name_L_plastina, L_plastina, 'шт.'])
             self.itog.append(['Пи', 'болт со срывной головкой', kol_b, 'шт.'])
-            self.itog.append(['заг', 'Силикон листовой 6мм, 500х500мм', itog_dempf, 'шт.'])
+            self.itog.append(['М', 'Силикон листовой 6мм, 500х500мм', itog_dempf, 'шт.'])
             self.itog.append(['Пи', 'Втулка двухсоставная', kol_b, 'шт.'])
 
         #self.p('М', 'капролон листовой толщина 25 мм.', ves_vtul, 'шт.')
@@ -733,7 +733,7 @@ class vvod:
         self.itog.append(['М', 'Лист АМГ6М 4х1200х3000  ГОСТ 21631-76', ves_flancev, 'кг.'])
         self.itog.append(['ст', 'Болт шестигранный М8х65 8.8 DIN 933', ves_boltm8x65, 'кг.'])
         self.itog.append(['ст', 'Болт М8х35 DIN 933 Zn. 8.8', ves_boltm8x35, 'кг.'])
-        self.itog.append(['ст', 'гайка с фланцем М8', kol_gaikam8_flanec, 'шт.'])
+        self.itog.append(['ст', 'Гайка шестигранная с фланцем М8 DIN 6923 Zn', kol_gaikam8_flanec, 'шт.'])
         self.itog.append(['ст', 'шайба плоская С.8', ves_shaiba8, 'кг.'])
         self.itog.append(['М', 'Трубка ТСЭФ 10х14х950', trubka, 'шт.'])
 
@@ -755,7 +755,7 @@ class vvod:
             k_zak = round(L / 150 * 6, 1)
         #6300
         else:
-            k_zak = round(L / 150 * 3, 1)
+            k_zak = round(L / 150 * 3 / 1000, 1)
         self.itog.append(['ст', 'Заклепка вытяжная AFT 4,8х12 мм Алюм/Сталь станд.бортик (0,5/5,0zac) ZAC', k_zak, 'тыс. шт.'])
 
     def bolt_m6(self, kol):
