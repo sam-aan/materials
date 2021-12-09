@@ -1605,11 +1605,11 @@ class Detali:
         beta = (180 - int(self.C)) / 2
 
         if str(self.Nprov) in ['4', '3+1']:
-            self.X = float(self.os[0]) - float(self.R_sh) + (float(self.S_sh_izol) * 3 + int(self.S_sh) * 2) * (math.tan(math.radians(beta)))
-            self.Y = float(self.os[1]) - float(self.R_sh) + (float(self.S_sh_izol) * 3 + int(self.S_sh) * 2) * (math.tan(math.radians(beta)))
+            self.X = float(float(self.os[0]) - float(self.R_sh) + (float(self.S_sh_izol) * 3 + int(self.S_sh) * 2) * (math.tan(math.radians(beta))))
+            self.Y = float(float(self.os[1]) - float(self.R_sh) + (float(self.S_sh_izol) * 3 + int(self.S_sh) * 2) * (math.tan(math.radians(beta))))
         else:       # 3-х проводной
-            self.X = float(self.os[0]) - float(self.R_sh) + float(self.S_sh_izol) * 2 + int(self.S_sh) * 1.5 * (math.tan(math.radians(beta)))
-            self.Y = float(self.os[1]) - float(self.R_sh) + float(self.S_sh_izol) * 2 + int(self.S_sh) * 1.5 * (math.tan(math.radians(beta)))
+            self.X = float(float(self.os[0]) - float(self.R_sh) + float(self.S_sh_izol) * 2 + int(self.S_sh) * 1.5 * (math.tan(math.radians(beta))))
+            self.Y = float(float(self.os[1]) - float(self.R_sh) + float(self.S_sh_izol) * 2 + int(self.S_sh) * 1.5 * (math.tan(math.radians(beta))))
 
         BD = self.razvertka_XY(beta * 2, self.R, self.Ka, self.S_sh)
         self.A = round(float(self.X) - BD / 2 + self.L1_sh_b, 1)
@@ -1626,8 +1626,8 @@ class Detali:
 
         beta = (180 - int(self.C)) / 2
 
-        self.X = float(float(self.os[0]) - float(self.R_sh) + float(self.S_sh_izol) + int(self.S_sh)) * (math.tan(math.radians(beta)))
-        self.Y = float(float(self.os[1]) - float(self.R_sh) + float(self.S_sh_izol) + int(self.S_sh)) * (math.tan(math.radians(beta)))
+        self.X = float(float(self.os[0]) - float(self.R_sh) + (float(self.S_sh_izol) + int(self.S_sh)) * (math.tan(math.radians(beta))))
+        self.Y = float(float(self.os[1]) - float(self.R_sh) + (float(self.S_sh_izol) + int(self.S_sh)) * (math.tan(math.radians(beta))))
         BD = self.razvertka_XY(beta * 2, self.R, self.Ka, self.S_sh)
         self.A = round(float(self.X) - BD / 2 + self.L1_sh_m, 1)
         self.B = round(float(self.Y) - BD / 2 + self.L1_sh_m, 1)
@@ -1643,8 +1643,8 @@ class Detali:
 
         beta = (180 - int(self.C)) / 2
 
-        self.X = float(float(self.os[0]) - float(self.R_sh) - float(self.S_sh_izol)) * (math.tan(math.radians(beta)))
-        self.Y = float(float(self.os[1]) - float(self.R_sh) - float(self.S_sh_izol)) * (math.tan(math.radians(beta)))
+        self.X = float(float(self.os[0]) - float(self.R_sh) - (float(self.S_sh_izol)) * (math.tan(math.radians(beta))))
+        self.Y = float(float(self.os[1]) - float(self.R_sh) - (float(self.S_sh_izol)) * (math.tan(math.radians(beta))))
         BD = self.razvertka_XY(beta * 2, self.R, self.Ka, self.S_sh)
         self.A = round(float(self.X) - BD / 2 + self.L1_sh_m, 1)
         self.B = round(float(self.Y) - BD / 2 + self.L1_sh_m, 1)
@@ -1661,18 +1661,18 @@ class Detali:
         beta = (180 - int(self.C)) / 2
 
         if str(self.Nprov) in ['4', '3+1']:
-            self.X = float(float(self.os[0]) - float(self.R_sh) - float(self.S_sh_izol) * 3 - int(self.S_sh)) * (math.tan(math.radians(beta)))
-            self.Y = float(float(self.os[1]) - float(self.R_sh) - float(self.S_sh_izol) * 3 - int(self.S_sh)) * (math.tan(math.radians(beta)))
+            self.X = float(float(self.os[0]) - float(self.R_sh) - (float(self.S_sh_izol) * 3 + int(self.S_sh)) * (math.tan(math.radians(beta))))
+            self.Y = float(float(self.os[1]) - float(self.R_sh) - (float(self.S_sh_izol) * 3 + int(self.S_sh)) * (math.tan(math.radians(beta))))
         else:
-            self.X = float(float(self.os[0]) - float(self.R_sh) - float(self.S_sh_izol) * 2 - int(self.S_sh) / 2) * (math.tan(math.radians(beta)))
-            self.Y = float(float(self.os[1]) - float(self.R_sh) - float(self.S_sh_izol) * 2 - int(self.S_sh) / 2) * (math.tan(math.radians(beta)))
+            self.X = float(float(self.os[0]) - float(self.R_sh) - (float(self.S_sh_izol) * 2 + int(self.S_sh) / 2) * (math.tan(math.radians(beta))))
+            self.Y = float(float(self.os[1]) - float(self.R_sh) - (float(self.S_sh_izol) * 2 + int(self.S_sh) / 2) * (math.tan(math.radians(beta))))
 
         BD = self.razvertka_XY(beta * 2, self.R, self.Ka, self.S_sh)
 
         # для 6мм. шины создаем припуск, для 8мм. припуска нет
         if self.S_sh in [6, '6']:
-            self.A = round(float(self.X) - BD / 2 + self.L1_sh_b, 1) - 3    # технологический допуск
-            self.B = round(float(self.Y) - BD / 2 + self.L1_sh_b, 1) - 3    # технологический допуск
+            self.A = round(float(self.X) - BD / 2 + self.L1_sh_b, 1)    # технологический допуск
+            self.B = round(float(self.Y) - BD / 2 + self.L1_sh_b, 1)    # технологический допуск
         else:
             self.A = round(float(self.X) - BD / 2 + self.L1_sh_b, 1)
             self.B = round(float(self.Y) - BD / 2 + self.L1_sh_b, 1)

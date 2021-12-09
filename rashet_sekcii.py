@@ -232,12 +232,9 @@ class calculation:
                                        'pt', 'ug', 'uv', 'zg', 'zv', 'kp', 'kl', 'zgf', 'zvf', 'uvf', 'ugf', 'tv', 'tsv']:
             nom_two = [A, B, C]
             nom_one = 0
-
-
-            print('QQQQ ' *20)
             print(len(svar_det))
+
             for i in range(2, len(svar_det)):
-                print('qqqqqq ' * 50)
                 if svar_det[i][0] == 'u':
                     result = self.detail(svar_det[i] + self.os, '')
                     W_line1.append(result)
@@ -251,7 +248,6 @@ class calculation:
             A = nom_two[0]
             B = nom_two[1]
             C = nom_two[2]
-            print('QQQQ' *20)
             print(A, B, C)
         else:   # для ОМ
             nom_one = 0
