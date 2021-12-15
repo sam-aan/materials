@@ -659,7 +659,7 @@ class vvod:
 
         if self.seria in ['CR1'] and self.nominal in [3200, 4000, 1600, 2500]:
 
-            if self.material in ['Алюминий']:
+            if self.material in ['Алюминий', 'Al']:
                 obem_nominal = {'4000': 18, '3200': 14, '1600': 9.6, '2500': 10.5}
             else:   #медь
                 obem_nominal = {'2500': 10.5}

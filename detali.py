@@ -1340,17 +1340,26 @@ class Detali:
         self.A = '-'
         self.B = '-'
         self.C = '-'
-        if str(self.Nprov) in ['4', '3+1']:
-            self.L = float(self.os) - float(self.H)
-        else:   # 3-х проводной
-            if self.name in ['п', 'pt']:
+        if self.seria in ['CR1']:
+            if self.name in ['ув', 'uv']:
+                if self.os[1] == 'x':
+                    self.L = float(self.os[0]) - self.R_sh - self.H / 2
+                else:
+                    self.L = float(self.os[0]) - self.R_sh + self.H / 2
+            elif self.name in ['п', 'pt']:
                 self.L = float(self.os) - float(self.R_sh) * 2
-            elif self.name in ['пф', 'pf', 'pfk']:
-                self.L = float(self.os) - float(self.R_sh) + self.L1Centre
-            elif self.name in ['зв', 'звф', 'zv', 'zvf']:
+        else:
+            if str(self.Nprov) in ['4', '3+1']:
                 self.L = float(self.os) - float(self.H)
-            else:   # УВ
-                self.L = float(self.os) + float(self.H) / 2 - float(self.R_sh)
+            else:   # 3-х проводной
+                if self.name in ['п', 'pt']:
+                    self.L = float(self.os) - float(self.R_sh) * 2
+                elif self.name in ['пф', 'pf', 'pfk']:
+                    self.L = float(self.os) - float(self.R_sh) + self.L1Centre
+                elif self.name in ['зв', 'звф', 'zv', 'zvf']:
+                    self.L = float(self.os) - float(self.H)
+                else:   # УВ
+                    self.L = float(self.os) + float(self.H) / 2 - float(self.R_sh)
         self.oboznachenie = 'Ш'
         self.naimenovanie = 'Шина'
         sI = self.print_rezult()
@@ -2001,9 +2010,13 @@ class Detali:
         self.A = '-'
         self.B = '-'
         self.C = '-'
+
         if self.name in ['kpfuv', 'klfuv']:
             self.L = round(float(self.os) + float(self.H) / 2 + 210, 1)     # 210 это длина вывода фланца
             self.L1 = round(float(self.os) + float(self.H) / 2 + self.L1Edge, 1)
+        elif self.seria in ['CR1']:
+            self.L = round(float(self.os) + 210 - self.R_sh, 1)
+            self.L1 = round(float(self.os) + self.L1Edge - self.R_sh, 1)
         else:
             self.L = round(float(self.os) - float(self.H) / 2 + 210, 1)  # 210 это длина вывода фланца
             self.L1 = round(float(self.os) - float(self.H) / 2 + self.L1Edge, 1)
@@ -2021,6 +2034,9 @@ class Detali:
         if self.name in ['kpfuv', 'klfuv']:
             self.L = round(float(self.os) + float(self.H) / 2 + 210, 1)
             self.L1 = round(float(self.os) + float(self.H) / 2 + self.L1Centre, 1)
+        elif self.seria in ['CR1']:
+            self.L = round(float(self.os) + 210 - self.R_sh, 1)
+            self.L1 = round(float(self.os) + self.L1Centre - self.R_sh, 1)
         else:
             self.L = round(float(self.os) - float(self.H) / 2 + 210, 1)
             self.L1 = round(float(self.os) - float(self.H) / 2 + self.L1Centre, 1)
@@ -2049,6 +2065,48 @@ class Detali:
         self.L = '-'
         self.L1 = round(float(self.A) + float(self.B), 1)
         self.oboznachenie = 'Ш38'
+        self.naimenovanie = 'Шина (' + str(self.stp_L1) + ')'
+        s = self.print_rezult()
+        self.profil(['профиль', 'Шина ' + s, 'Ш_' + s, '90 90'], self.L1)
+        return self.a
+
+    def s41(self):
+
+        beta = (180 - int(self.C)) / 2
+
+        if self.os[2] == 1:
+            if str(self.Nprov) in ['4', '3+1']:
+                self.X = float(float(self.os[0]) - float(self.R_sh) + (float(self.S_sh_izol) * 3 + int(self.S_sh) * 2) * (math.tan(math.radians(beta))))
+                self.Y = float(float(self.os[1]) - float(self.R_sh) + (float(self.S_sh_izol) * 3 + int(self.S_sh) * 2) * (math.tan(math.radians(beta))))
+            else:       # 3-х проводной
+                self.X = float(float(self.os[0]) - float(self.R_sh) + float(self.S_sh_izol) * 2 + int(self.S_sh) * 1.5 * (math.tan(math.radians(beta))))
+                self.Y = float(float(self.os[1]) - float(self.R_sh) + float(self.S_sh_izol) * 2 + int(self.S_sh) * 1.5 * (math.tan(math.radians(beta))))
+        elif self.os[2] == 2:
+                self.X = float(float(self.os[0]) - float(self.R_sh) + (float(self.S_sh_izol) + int(self.S_sh)) * (math.tan(math.radians(beta))))
+                self.Y = float(float(self.os[1]) - float(self.R_sh) + (float(self.S_sh_izol) + int(self.S_sh)) * (math.tan(math.radians(beta))))
+        elif self.os[2] == 3:
+                self.X = float(
+                    float(self.os[0]) - float(self.R_sh) - (float(self.S_sh_izol)) * (math.tan(math.radians(beta))))
+                self.Y = float(
+                    float(self.os[1]) - float(self.R_sh) - (float(self.S_sh_izol)) * (math.tan(math.radians(beta))))
+        elif self.os[2] == 4:
+                if str(self.Nprov) in ['4', '3+1']:
+                    self.X = float(
+                        float(self.os[0]) - float(self.R_sh) - (float(self.S_sh_izol) * 3 + int(self.S_sh)) * (math.tan(math.radians(beta))))
+                    self.Y = float(
+                        float(self.os[1]) - float(self.R_sh) - (float(self.S_sh_izol) * 3 + int(self.S_sh)) * (math.tan(math.radians(beta))))
+                else:
+                    self.X = float(
+                        float(self.os[0]) - float(self.R_sh) - (float(self.S_sh_izol) * 2 + int(self.S_sh) / 2) * (math.tan(math.radians(beta))))
+                    self.Y = float(
+                        float(self.os[1]) - float(self.R_sh) - (float(self.S_sh_izol) * 2 + int(self.S_sh) / 2) * (math.tan(math.radians(beta))))
+
+        BD = self.razvertka_XY(beta * 2, self.R, self.Ka, self.S_sh)
+        self.A = round(float(self.X) - BD / 2, 1)
+        self.B = round(float(self.Y) - BD / 2, 1)
+        self.L = '-'
+        self.L1 = round(float(self.A) + float(self.B), 1)
+        self.oboznachenie = 'Ш41'
         self.naimenovanie = 'Шина (' + str(self.stp_L1) + ')'
         s = self.print_rezult()
         self.profil(['профиль', 'Шина ' + s, 'Ш_' + s, '90 90'], self.L1)

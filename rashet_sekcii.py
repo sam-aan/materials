@@ -362,7 +362,7 @@ class calculation:
                  self.dat['Кол. пров.'], self.dat['Наименование'], 'pt',
                  self.L, self.L1, self.A, self.B, self.C,
                  self.dat['количество'], 'спецификация']]
-
+#E3
         if self.dat['Серия'] in ['Е3', 'E3']:
 
             if str(self.dat['Кол. пров.']) in ['4', '3+1']:
@@ -403,18 +403,21 @@ class calculation:
                     detali[2][0] = 's17'
                     detali[4][1] = 2
                     detali.append(['fl', 2])
-
-        elif self.dat['Серия'] in ['CR', 'CRM', 'CR1', 'CR2']:
+#CR
+        elif self.dat['Серия'] in ['CR1', 'CR2']:
 
             if str(self.dat['Кол. пров.']) in ['4', '3+1']:
-                detali = [['s', 4, self.os[0]], ['torcentr', 2], ['mfazcentr', round(int(self.L) / 0.4)]]
+                detali = [['s', 4, self.os[0]], ['torcentr', 2], ['mfazcentr', round(int(self.L) / 400, 0)]]
+
+                print('AAAAA' * 100)
+                print('aaa', detali[2])
 
                 if self.dat['Обозначение'] in ['пф', 'pf', 'pfk']:
                     self.spisok_dla_mater['Nflanc'] = self.spisok_dla_mater['Nflanc'] + int(self.dat['количество'])
                     itog[0][7] = 'pf'
-                    detali[2][0] = 's17'
-                    detali[3][0] = 's18'
-                    detali[4][1] = 2
+                    detali[0][0] = 's36'
+                    detali[0][1] = 2
+                    detali.append(['s37', 2, self.os[0]])
                     detali.append(['fl', 2])
 
                 if self.dat['In'] in [3200, 4000, 5000]:
@@ -574,6 +577,15 @@ class calculation:
                 detali.append(['fl', 2])
                 #print(detali)
 
+#CR
+            if self.dat['Серия'] in ['CR1', 'CR2']:
+                detali = [['n', 4], ['sux', 4],
+                          ['s41', 1, [self.A, self.B, 1]],
+                          ['s41', 1, [self.A, self.B, 2]],
+                          ['s41', 1, [self.A, self.B, 3]],
+                          ['s41', 1, [self.A, self.B, 4]],
+                          ['torcentr', 2], ['mfazcentr', round((int(self.os[0]) + int(self.os[1])) / 200, 0)]]
+
         else:
             svar_det_one_floor = [['К-СД1', 1, ['k1', 1, self.A], ['k2', 1, self.B]],
                                   ['К-СД1', 1, ['k1', 1, self.os[1]], ['k2', 1, self.A]],
@@ -584,10 +596,13 @@ class calculation:
                       ['s38', 1, [self.A, self.B]],
                       ['s8', 1, [self.A, self.B]]]
 
-        for i in svar_det_one_floor:
-            itog_svar = self.welded_part(i)
-            for j in itog_svar:
-                itog.append(j)
+        if self.dat['Серия'] in ['CR1', 'CR2']:
+            print('Сварных деталей нет')
+        else:
+            for i in svar_det_one_floor:
+                itog_svar = self.welded_part(i)
+                for j in itog_svar:
+                    itog.append(j)
 
         for j in detali:
             itog_det = self.detail(j, '')
@@ -617,161 +632,183 @@ class calculation:
                  self.L, self.L1, self.A, self.B, self.C,
                  self.dat['количество'], 'спецификация']]
 
-        def one(x, y):
-            if self.dat['Обозначение'] in ['увф', 'uvf']:
-                self.spisok_dla_mater['Nflanc'] = self.spisok_dla_mater['Nflanc'] + int(self.dat['количество'])
-                itog[0][7] = 'uvf'
-                detali = [['n', 2], ['sux', 4], ['fl', 2]]
-                svar_det_one_floor = [['К-СД2', 1, ['k3f', 1, x], ['k3', 1, y]],
-                                      ['К-СД3', 1, ['k4f', 1, x], ['k4', 1, y]],
-                                      ['С-СД3', 1, ['c1f', 1, x], ['c2', 1, y]],
-                                      ['С-СД3', 1, ['c1', 1, y], ['c2f', 1, x]],
-                                      ['Ш-СД17', 1, ['s36', 1, x], ['s3', 1, y]],
-                                      ['Ш-СД17-З', 1, ['s36', 1, x], ['s3', 1, y]],
-                                      ['Ш-СД18', 1, ['s37', 1, x], ['s4', 1, y]],
-                                      ['Ш-СД18-З', 1, ['s37', 1, x], ['s4', 1, y]]]
-            else:
+        # CR
+        if self.dat['Серия'] in ['CR1', 'CR2']:
+            detali = [['torcentr', 2], ['mfazcentr', round((int(self.os[0]) + int(self.os[1])) / 200, 0)]]
+            svar_det = [['Ш-СД31', 4, ['s', 4, [self.A, 'x']], ['s', 4, [self.B, 'y']]]]
+
+            for i in svar_det:
+                itog_svar = self.welded_part(i)
+
+                for j in itog_svar:
+                    itog.append(j)
+
+            for j in detali:
+                itog_det = self.detail(j, '')
+
+                if itog_det == 0:  # только что расчитывали сухарь, направляющую или фланец
+                    continue
+                else:
+                    itog.append(itog_det)
+
+            self.prints(itog)
+            return True
+        else:
+            def one(x, y):
+                if self.dat['Обозначение'] in ['увф', 'uvf']:
+                    self.spisok_dla_mater['Nflanc'] = self.spisok_dla_mater['Nflanc'] + int(self.dat['количество'])
+                    itog[0][7] = 'uvf'
+                    detali = [['n', 2], ['sux', 4], ['fl', 2]]
+                    svar_det_one_floor = [['К-СД2', 1, ['k3f', 1, x], ['k3', 1, y]],
+                                          ['К-СД3', 1, ['k4f', 1, x], ['k4', 1, y]],
+                                          ['С-СД3', 1, ['c1f', 1, x], ['c2', 1, y]],
+                                          ['С-СД3', 1, ['c1', 1, y], ['c2f', 1, x]],
+                                          ['Ш-СД17', 1, ['s36', 1, x], ['s3', 1, y]],
+                                          ['Ш-СД17-З', 1, ['s36', 1, x], ['s3', 1, y]],
+                                          ['Ш-СД18', 1, ['s37', 1, x], ['s4', 1, y]],
+                                          ['Ш-СД18-З', 1, ['s37', 1, x], ['s4', 1, y]]]
+                else:
+                    detali = [['n', 4], ['sux', 4]]
+                    svar_det_one_floor = [['К-СД2', 1, ['k3', 1, x], ['k3', 1, y]],
+                                          ['К-СД3', 1, ['k4', 1, x], ['k4', 1, y]],
+                                          ['С-СД3', 1, ['c1', 1, x], ['c2', 1, y]],
+                                          ['С-СД3', 1, ['c1', 1, y], ['c2', 1, x]],
+                                          ['Ш-СД1', 1, ['s3', 1, x], ['s3a', 1, y]],
+                                          ['Ш-СД1-З', 1, ['s3', 1, x], ['s3a', 1, y]],
+                                          ['Ш-СД2', 1, ['s4', 1, x], ['s4a', 1, y]],
+                                          ['Ш-СД2-З', 1, ['s4', 1, x], ['s4a', 1, y]]]
+                for j in detali:
+                    itog_det = self.detail(j, '')
+                    if itog_det == 0:  # только что расчитывали сухарь, направляющую или фланец
+                        continue
+                    else:
+                        itog.append(itog_det)
+
+                return svar_det_one_floor
+
+            def one_3(x, y):
                 detali = [['n', 4], ['sux', 4]]
+                for j in detali:
+                    itog_det = self.detail(j, '')
+                    if itog_det == 0:  # только что расчитывали сухарь, направляющую или фланец
+                        continue
+                    else:
+                        itog.append(itog_det)
+
                 svar_det_one_floor = [['К-СД2', 1, ['k3', 1, x], ['k3', 1, y]],
                                       ['К-СД3', 1, ['k4', 1, x], ['k4', 1, y]],
                                       ['С-СД3', 1, ['c1', 1, x], ['c2', 1, y]],
                                       ['С-СД3', 1, ['c1', 1, y], ['c2', 1, x]],
                                       ['Ш-СД1', 1, ['s3', 1, x], ['s3a', 1, y]],
-                                      ['Ш-СД1-З', 1, ['s3', 1, x], ['s3a', 1, y]],
-                                      ['Ш-СД2', 1, ['s4', 1, x], ['s4a', 1, y]],
-                                      ['Ш-СД2-З', 1, ['s4', 1, x], ['s4a', 1, y]]]
-            for j in detali:
-                itog_det = self.detail(j, '')
-                if itog_det == 0:  # только что расчитывали сухарь, направляющую или фланец
-                    continue
-                else:
-                    itog.append(itog_det)
+                                      ['Ш-СД31', 1, ['s', 1, x], ['sa', 1, y]],
+                                      ['Ш-СД1-З', 1, ['s3', 1, x], ['s3a', 1, y]]]
 
-            return svar_det_one_floor
-
-        def one_3(x, y):
-            detali = [['n', 4], ['sux', 4]]
-            for j in detali:
-                itog_det = self.detail(j, '')
-                if itog_det == 0:  # только что расчитывали сухарь, направляющую или фланец
-                    continue
-                else:
-                    itog.append(itog_det)
-
-            svar_det_one_floor = [['К-СД2', 1, ['k3', 1, x], ['k3', 1, y]],
-                                  ['К-СД3', 1, ['k4', 1, x], ['k4', 1, y]],
-                                  ['С-СД3', 1, ['c1', 1, x], ['c2', 1, y]],
-                                  ['С-СД3', 1, ['c1', 1, y], ['c2', 1, x]],
-                                  ['Ш-СД1', 1, ['s3', 1, x], ['s3a', 1, y]],
-                                  ['Ш-СД31', 1, ['s', 1, x], ['sa', 1, y]],
-                                  ['Ш-СД1-З', 1, ['s3', 1, x], ['s3a', 1, y]]]
-
-            return svar_det_one_floor
-
-        def ayna(svar_det_one_floor):
-            if x == y:
-                svar_det_one_floor.pop(3)       # С-СД3
-                svar_det_one_floor[2][1] *= 2
-                svar_det_one_floor[2][2][1] *= 2
-                svar_det_one_floor[2][3][1] *= 2
-
-                svar_det_one_floor[0].pop(3)    # К-СД2
-                svar_det_one_floor[0][2][1] = 2
-
-                svar_det_one_floor[1].pop(3)    # К-СД3
-                svar_det_one_floor[1][2][1] = 2
-                return svar_det_one_floor
-            else:
                 return svar_det_one_floor
 
-        if str(self.dat['Кол. пров.']) in ['4', '3+1']:
-            if self.dat['In'] in [630, 800, 1000, 1250, 1600, 2000, 2500]:
-                svar_det_one_floor = one(self.A, self.B)
+            def ayna(svar_det_one_floor):
+                if x == y:
+                    svar_det_one_floor.pop(3)       # С-СД3
+                    svar_det_one_floor[2][1] *= 2
+                    svar_det_one_floor[2][2][1] *= 2
+                    svar_det_one_floor[2][3][1] *= 2
+
+                    svar_det_one_floor[0].pop(3)    # К-СД2
+                    svar_det_one_floor[0][2][1] = 2
+
+                    svar_det_one_floor[1].pop(3)    # К-СД3
+                    svar_det_one_floor[1][2][1] = 2
+                    return svar_det_one_floor
+                else:
+                    return svar_det_one_floor
+
+            if str(self.dat['Кол. пров.']) in ['4', '3+1']:
+                if self.dat['In'] in [630, 800, 1000, 1250, 1600, 2000, 2500]:
+                    svar_det_one_floor = one(self.A, self.B)
+                    for i in svar_det_one_floor:
+                        itog_svar = self.welded_part(i)
+                        for j in itog_svar:
+                            itog.append(j)
+
+                elif self.dat['In'] in [2600, 3200, 4000, 5000]:
+                    # первый этаж
+                    x = int(self.A) + self.dat['разница между этажами']
+                    y = int(self.B) + self.dat['разница между этажами']
+                    svar_det_one_floor = one(x, y)
+                    svar_det_one_floor[1][0] = 'К-СД13'
+
+                    if self.dat['Обозначение'] in ['увф', 'uvf']:
+                        self.spisok_dla_mater['Nflanc'] = self.spisok_dla_mater['Nflanc'] + int(self.dat['количество'])
+                        itog[0][7] = 'uvf'
+                        svar_det_one_floor[1][2][0] = 'kc2f'
+                    else:
+                        svar_det_one_floor[1][2][0] = 'kc2'
+
+                    svar_det_one_floor[1][3][0] = 'kc2'
+                    svar_det_one_floor = ayna(svar_det_one_floor)
+                    #   второй этаж
+                    x = int(self.A) - self.dat['разница между этажами']
+                    y = int(self.B) - self.dat['разница между этажами']
+                    svar_det_two_floor = one(x, y)
+                    svar_det_two_floor = ayna(svar_det_two_floor)
+                    svar_det_two_floor.pop(0)
+                    svar_det = svar_det_one_floor + svar_det_two_floor
+                    for i in svar_det:
+                        itog_svar = self.welded_part(i)
+                        for j in itog_svar:
+                            itog.append(j)
+
+                #   elif self.dat['In'] in [6300]:
+                else:
+                    # первый этаж
+                    x = int(self.A) + self.dat['разница между этажами']
+                    y = int(self.B) + self.dat['разница между этажами']
+                    svar_det_one_floor = one(x, y)
+                    svar_det_one_floor[1][0] = 'К-СД13'
+
+                    if self.dat['Обозначение'] in ['увф', 'uvf']:
+                        self.spisok_dla_mater['Nflanc'] = self.spisok_dla_mater['Nflanc'] + int(self.dat['количество'])
+                        itog[0][7] = 'uvf'
+                        svar_det_one_floor[1][2][0] = 'kc2f'
+                    else:
+                        svar_det_one_floor[1][2][0] = 'kc2'
+
+                    svar_det_one_floor[1][2][0] = 'kc2'
+                    svar_det_one_floor[1][3][0] = 'kc2'
+                    #   второй этаж
+                    svar_det_two_floor = one(self.A, self.B)
+                    svar_det_two_floor[1][0] = 'К-СД13'
+
+                    if self.dat['Обозначение'] in ['увф', 'uvf']:
+                        self.spisok_dla_mater['Nflanc'] = self.spisok_dla_mater['Nflanc'] + int(self.dat['количество'])
+                        itog[0][7] = 'uvf'
+                        svar_det_one_floor[1][2][0] = 'kc2f'
+                    else:
+                        svar_det_one_floor[1][2][0] = 'kc2'
+
+                    svar_det_two_floor[1][2][0] = 'kc2'
+                    svar_det_two_floor[1][3][0] = 'kc2'
+                    svar_det_two_floor.pop(0)
+                    #   третий этаж
+                    x = int(self.A) - self.dat['разница между этажами']
+                    y = int(self.B) - self.dat['разница между этажами']
+                    svar_det_three_floor = one(x, y)
+                    svar_det_three_floor.pop(0)
+                    svar_det = svar_det_one_floor + svar_det_two_floor + svar_det_three_floor
+                    for i in svar_det:
+                        itog_svar = self.welded_part(i)
+                        for j in itog_svar:
+                            itog.append(j)
+
+            else:               # 3-х проводной
+                svar_det_one_floor = one_3(self.A, self.B)
+
                 for i in svar_det_one_floor:
                     itog_svar = self.welded_part(i)
                     for j in itog_svar:
                         itog.append(j)
-
-            elif self.dat['In'] in [2600, 3200, 4000, 5000]:
-                # первый этаж
-                x = int(self.A) + self.dat['разница между этажами']
-                y = int(self.B) + self.dat['разница между этажами']
-                svar_det_one_floor = one(x, y)
-                svar_det_one_floor[1][0] = 'К-СД13'
-
-                if self.dat['Обозначение'] in ['увф', 'uvf']:
-                    self.spisok_dla_mater['Nflanc'] = self.spisok_dla_mater['Nflanc'] + int(self.dat['количество'])
-                    itog[0][7] = 'uvf'
-                    svar_det_one_floor[1][2][0] = 'kc2f'
-                else:
-                    svar_det_one_floor[1][2][0] = 'kc2'
-
-                svar_det_one_floor[1][3][0] = 'kc2'
-                svar_det_one_floor = ayna(svar_det_one_floor)
-                #   второй этаж
-                x = int(self.A) - self.dat['разница между этажами']
-                y = int(self.B) - self.dat['разница между этажами']
-                svar_det_two_floor = one(x, y)
-                svar_det_two_floor = ayna(svar_det_two_floor)
-                svar_det_two_floor.pop(0)
-                svar_det = svar_det_one_floor + svar_det_two_floor
-                for i in svar_det:
-                    itog_svar = self.welded_part(i)
-                    for j in itog_svar:
-                        itog.append(j)
-
-            #   elif self.dat['In'] in [6300]:
-            else:
-                # первый этаж
-                x = int(self.A) + self.dat['разница между этажами']
-                y = int(self.B) + self.dat['разница между этажами']
-                svar_det_one_floor = one(x, y)
-                svar_det_one_floor[1][0] = 'К-СД13'
-
-                if self.dat['Обозначение'] in ['увф', 'uvf']:
-                    self.spisok_dla_mater['Nflanc'] = self.spisok_dla_mater['Nflanc'] + int(self.dat['количество'])
-                    itog[0][7] = 'uvf'
-                    svar_det_one_floor[1][2][0] = 'kc2f'
-                else:
-                    svar_det_one_floor[1][2][0] = 'kc2'
-
-                svar_det_one_floor[1][2][0] = 'kc2'
-                svar_det_one_floor[1][3][0] = 'kc2'
-                #   второй этаж
-                svar_det_two_floor = one(self.A, self.B)
-                svar_det_two_floor[1][0] = 'К-СД13'
-
-                if self.dat['Обозначение'] in ['увф', 'uvf']:
-                    self.spisok_dla_mater['Nflanc'] = self.spisok_dla_mater['Nflanc'] + int(self.dat['количество'])
-                    itog[0][7] = 'uvf'
-                    svar_det_one_floor[1][2][0] = 'kc2f'
-                else:
-                    svar_det_one_floor[1][2][0] = 'kc2'
-
-                svar_det_two_floor[1][2][0] = 'kc2'
-                svar_det_two_floor[1][3][0] = 'kc2'
-                svar_det_two_floor.pop(0)
-                #   третий этаж
-                x = int(self.A) - self.dat['разница между этажами']
-                y = int(self.B) - self.dat['разница между этажами']
-                svar_det_three_floor = one(x, y)
-                svar_det_three_floor.pop(0)
-                svar_det = svar_det_one_floor + svar_det_two_floor + svar_det_three_floor
-                for i in svar_det:
-                    itog_svar = self.welded_part(i)
-                    for j in itog_svar:
-                        itog.append(j)
-
-        else:               # 3-х проводной
-            svar_det_one_floor = one_3(self.A, self.B)
-
-            for i in svar_det_one_floor:
-                itog_svar = self.welded_part(i)
-                for j in itog_svar:
-                    itog.append(j)
-        self.prints(itog)
-        line_raskroi.komlektuyushie(self.dat, self.length_OS, self.spis_kompl).standart_izdel()
-        return True
+            self.prints(itog)
+            line_raskroi.komlektuyushie(self.dat, self.length_OS, self.spis_kompl).standart_izdel()
+            return True
 
     def z_g(self):      #!!!!! не доделан 3-х проводной
 
