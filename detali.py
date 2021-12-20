@@ -444,7 +444,7 @@ class Detali:
             Alfa = 45
             self.C = '-'
 
-        self.L = float(self.os) - float(self.R_kor) - float(self.H_stenka) / 2 / math.tan(math.radians(Alfa))
+        self.L = round(float(self.os) - float(self.R_kor) - float(self.H_stenka) / 2 / math.tan(math.radians(Alfa)), 1)
         #print(str(float(self.os)) + '-' + str(float(self.R_kor))  + '-' + str(float(self.H_stenka)) + '/' + '2' + '=' + str(self.L))
         self.oboznachenie = 'К4'
         self.naimenovanie = 'Крышка'
@@ -1506,7 +1506,7 @@ class Detali:
         self.profil(['профиль', 'Шина ' + s, 'Ш_' + s, '90 90'], self.L1)
         return self.a
 
-    # для вертикального угла и Z втом числе на 3- х проводной
+    # для вертикального угла и Z в том числе на 3- х проводной
     def s3(self):  # для углов вертикальных с плюсом
         self.A = '-'
         self.B = '-'
@@ -1552,7 +1552,8 @@ class Detali:
         self.profil(['профиль', 'Шина ' + s, 'Ш_' + s, '90 90'], self.L1)
         return self.a
 
-    def s3a(self):  # та же шина что и Ш3 но для углов вертикальных с минусом
+    # та же шина что и Ш3 но для углов вертикальных с минусом
+    def s3a(self):
         self.A = '-'
         self.B = '-'
         self.C = '-'
@@ -1578,7 +1579,8 @@ class Detali:
         self.profil(['профиль', 'Шина ' + s, 'Ш_' + s, '90 90'], self.L1)
         return self.a
 
-    def s4a(self):  # та же шина что и Ш3 но для углов вертикальных с минусом
+    # та же шина что и Ш4 но для углов вертикальных с минусом
+    def s4a(self):
         self.A = '-'
         self.B = '-'
         self.C = '-'
@@ -2011,15 +2013,16 @@ class Detali:
         self.B = '-'
         self.C = '-'
 
-        if self.name in ['kpfuv', 'klfuv']:
-            self.L = round(float(self.os) + float(self.H) / 2 + 210, 1)     # 210 это длина вывода фланца
-            self.L1 = round(float(self.os) + float(self.H) / 2 + self.L1Edge, 1)
-        elif self.seria in ['CR1']:
+        if self.seria in ['CR1']:
             self.L = round(float(self.os) + 210 - self.R_sh, 1)
             self.L1 = round(float(self.os) + self.L1Edge - self.R_sh, 1)
         else:
-            self.L = round(float(self.os) - float(self.H) / 2 + 210, 1)  # 210 это длина вывода фланца
-            self.L1 = round(float(self.os) - float(self.H) / 2 + self.L1Edge, 1)
+            if self.name in ['kpfuv', 'klfuv']:
+                self.L = round(float(self.os) + float(self.H) / 2 + 210, 1)  # 210 это длина вывода фланца
+                self.L1 = round(float(self.os) + float(self.H) / 2 + self.L1Edge, 1)
+            else:
+                self.L = round(float(self.os) - float(self.H) / 2 + 210, 1)  # 210 это длина вывода фланца
+                self.L1 = round(float(self.os) - float(self.H) / 2 + self.L1Edge, 1)
         self.oboznachenie = 'Ш36'
         self.naimenovanie = 'Шина (' + str(self.StpEdge) + ')'
         s = self.print_rezult()
@@ -2031,15 +2034,16 @@ class Detali:
         self.A = '-'
         self.B = '-'
         self.C = '-'
-        if self.name in ['kpfuv', 'klfuv']:
-            self.L = round(float(self.os) + float(self.H) / 2 + 210, 1)
-            self.L1 = round(float(self.os) + float(self.H) / 2 + self.L1Centre, 1)
-        elif self.seria in ['CR1']:
+        if self.seria in ['CR1']:
             self.L = round(float(self.os) + 210 - self.R_sh, 1)
             self.L1 = round(float(self.os) + self.L1Centre - self.R_sh, 1)
         else:
-            self.L = round(float(self.os) - float(self.H) / 2 + 210, 1)
-            self.L1 = round(float(self.os) - float(self.H) / 2 + self.L1Centre, 1)
+            if self.name in ['kpfuv', 'klfuv']:
+                self.L = round(float(self.os) + float(self.H) / 2 + 210, 1)
+                self.L1 = round(float(self.os) + float(self.H) / 2 + self.L1Centre, 1)
+            else:
+                self.L = round(float(self.os) - float(self.H) / 2 + 210, 1)
+                self.L1 = round(float(self.os) - float(self.H) / 2 + self.L1Centre, 1)
         self.oboznachenie = 'Ш37'
         self.naimenovanie = 'Шина (' + str(self.SptCentre) + ')'
         s = self.print_rezult()

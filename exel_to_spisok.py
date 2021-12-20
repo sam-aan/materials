@@ -24,7 +24,6 @@ class InOut:
         else:
             return 'ошибка'
 
-
     def addition(self):
         """модуль создания из файла эксель раскрытого списка"""
         print('ЭКСЕЛЬ РАСКРЫТЫЙ СПИСКОК')
@@ -39,14 +38,16 @@ class InOut:
             sel = []
 
             for j in range(1, cols + 1):
-                cell = sheet.cell(row=i, column=j)
-                sel.append(str(cell.value))
+                if j <= 14:
+                    cell = sheet.cell(row=i, column=j)
+                    sel.append(str(cell.value))
+                else:
+                    continue
 
             array.append(sel)
         print(array)
 
         return array
-
 
     def spisok_etapov(self, spis):
         """модуль создания из списка словарь этапов"""
@@ -86,7 +87,6 @@ class InOut:
 
         return di
 
-
     def sklad_del(self, di):
         """модуль убирает все строчки связаннные со складом"""
         print('УДАЛЯЕМ СКЛАД')
@@ -103,7 +103,6 @@ class InOut:
 
 
         return di
-
 
     def slog_povt(self, di):
         """модуль складывает все повторяющиеся элементы списка"""
@@ -172,7 +171,6 @@ class InOut:
                 di[i].clear()
                 di[i] = array
         return di
-
 
     def slovar_raskritii(self, array):
         """модуль для создания словаря из раскрытого списка"""
@@ -260,4 +258,4 @@ class InOut:
         return s2
 
 if __name__ == '__main__':  # Если мы запускаем файл напрямую, а не импортируем
-    print(InOut('пример.xlsx', 'n').zapusk())
+    print(InOut('пример.xlsx', 'k').zapusk())

@@ -109,6 +109,7 @@ class writing_to_exl():
 
 
         if self.ved == 'upakovka':
+            print('СОЗДАНИЕ КОНТРОЛЬНОЙ ВЕДОМОСТИ')
             spis_dla_vozvrata = self.upakovka()
             #self.OTK()
             self.wb.remove_sheet(self.wb.get_sheet_by_name('Sheet'))

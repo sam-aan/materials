@@ -653,8 +653,10 @@ class calculation:
 
             self.prints(itog)
             return True
+        #E3
         else:
             def one(x, y):
+
                 if self.dat['Обозначение'] in ['увф', 'uvf']:
                     self.spisok_dla_mater['Nflanc'] = self.spisok_dla_mater['Nflanc'] + int(self.dat['количество'])
                     itog[0][7] = 'uvf'
@@ -677,6 +679,7 @@ class calculation:
                                           ['Ш-СД1-З', 1, ['s3', 1, x], ['s3a', 1, y]],
                                           ['Ш-СД2', 1, ['s4', 1, x], ['s4a', 1, y]],
                                           ['Ш-СД2-З', 1, ['s4', 1, x], ['s4a', 1, y]]]
+
                 for j in detali:
                     itog_det = self.detail(j, '')
                     if itog_det == 0:  # только что расчитывали сухарь, направляющую или фланец
@@ -705,8 +708,9 @@ class calculation:
 
                 return svar_det_one_floor
 
+            # если оси одинаковые
             def ayna(svar_det_one_floor):
-                if x == y:
+                if x == y and self.dat['Обозначение'] not in ['увф', 'uvf']:
                     svar_det_one_floor.pop(3)       # С-СД3
                     svar_det_one_floor[2][1] *= 2
                     svar_det_one_floor[2][2][1] *= 2
@@ -798,7 +802,6 @@ class calculation:
                         itog_svar = self.welded_part(i)
                         for j in itog_svar:
                             itog.append(j)
-
             else:               # 3-х проводной
                 svar_det_one_floor = one_3(self.A, self.B)
 
@@ -806,6 +809,7 @@ class calculation:
                     itog_svar = self.welded_part(i)
                     for j in itog_svar:
                         itog.append(j)
+
             self.prints(itog)
             line_raskroi.komlektuyushie(self.dat, self.length_OS, self.spis_kompl).standart_izdel()
             return True
