@@ -35,7 +35,7 @@ def simple_table(spis):
     pdf.add_font('DejaVu-bolt', '', 'PFDinDisplayPro-Bold.ttf', uni=True)
     pdf.add_font('DejaVu', '', 'PF DinDisplay Pro.ttf', uni=True)
     pdf.add_font('gothic', '', 'GOTHIC.ttf', uni=True)
-    pdf.set_font('DejaVu', '', 10)
+    pdf.set_font('DejaVu', '', 8)
 
     width_ = {0: 3, 1: 3, 2: 3, }
     # записываем первую строчку вне таблицы
@@ -46,13 +46,13 @@ def simple_table(spis):
     for i in spis:
 
         for s in zag:
-            pdf.set_font('DejaVu-bolt', '', 7)
+            pdf.set_font('DejaVu-bolt', '', 3)
             pdf.cell(16, -5, txt=str(s), border=1, ln=0, align='C')
 
         pdf.cell(0, 0, txt='', border=0, ln=1)
 
         for j in i:
-            pdf.set_font('DejaVu-bolt', '', 7)      # выбираем шрифт
+            pdf.set_font('DejaVu-bolt', '', 3)      # выбираем шрифт
             pdf.cell(16, 18, txt=str(j), border=1, ln=0, align='C')   # записываем ячейку
 
         pdf.ln(30)
@@ -61,5 +61,5 @@ def simple_table(spis):
 
 
 if __name__ == '__main__':
-    simple_table()
+    simple_table([['E3-55-Al-4000-4-uv', '1-1-0001', 'угловая вертикальная секция', '450*450', 'A1', 34.47]])
 

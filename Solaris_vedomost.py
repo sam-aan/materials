@@ -130,7 +130,7 @@ class ExampleApp(QMainWindow):
         print('Выбрана папка для сохранения: ', dirlist)
 
         for i in spisok[0]:
-            print(i)
+            print('Файл:', i)
             '''savefname = re.findall(r'[^/]+', self.fname)    # разбиваем на список путь к исходному файлу
             del savefname[-1]   # удаляем имя исходного файла из списка
             savefname.append(str(i) + '.xlsx')
@@ -139,7 +139,12 @@ class ExampleApp(QMainWindow):
             options = QFileDialog.Options()
             options = QFileDialog.DontUseNativeDialog
             fileName = QFileDialog.getSaveFileName(self, "Сохранить как", savefname, "Exel (*.xlsx)")[0]'''
-            fileName = dirlist + '/' + str(i) + '.xlsx'     # создаем новый путь для сохранения файла
+
+            '''extension = re.findall(r'[^.]', i)[-1]
+            if extension in ['pdf']:
+                fileName = dirlist + '/' + str(i) + '.xlsx'     # создаем новый путь для сохранения файла'''
+
+            fileName = dirlist + '/' + str(i)     # создаем новый путь для сохранения файла
             print('Сохранить файл: ', fileName)
             put = os.path.abspath(str(i))                   # находим путь исходного файла
             shutil.copyfile(put, fileName)                  # копируем исходный файл в нужную дирректорию

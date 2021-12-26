@@ -8,6 +8,7 @@ import nominal
 import line_raskroi
 import socket
 import exel_to_spisok
+import to_pdf_reportlab
 import to_pdf
 from datetime import datetime
 
@@ -67,7 +68,7 @@ class rashet:
         ret = writing_to_exl(self.N_zak, False, sklad, line, 'upakovka').setting_exl()  # делаем файл эксель с котр.вед.
                                                                                         # и получем имя файла и список
         self.spisok_filov.append(ret[0])        # добавляем в список файлов для удаления имя контрольной ведомсти
-        #to_pdf.simple_table(ret[1])             # запускаем создание наклеек в pdf
+        self.spisok_filov.append(to_pdf_reportlab.obedin(ret[1], self.N_zak))      # запускаем создание наклеек в pdf
         return [self.spisok_filov, self.spisok_dla_mater]
 
     def komplekts(self, spisok, itog):
