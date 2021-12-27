@@ -146,10 +146,11 @@ class ExampleApp(QMainWindow):
 
             fileName = dirlist + '/' + str(i)     # создаем новый путь для сохранения файла
             print('Сохранить файл: ', fileName)
-            put = os.path.abspath(str(i))                   # находим путь исходного файла
+            put = os.path.abspath(str(i))                  # находим путь исходного файла
+            print('Путь ', put)
             shutil.copyfile(put, fileName)                  # копируем исходный файл в нужную дирректорию
             print('удаляем фаил ', i)
-            os.remove(os.path.join(os.path.abspath(os.path.dirname(__file__)), i))
+            os.remove(str(i))
 
         for i in spisok[1]:
             rezult = materials_simple.vvod(spisok[1][i]['seria'], spisok[1][i]['material'],
