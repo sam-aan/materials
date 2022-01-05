@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 from reportlab.lib.pagesizes import letter
 from reportlab.pdfgen import canvas
-from reportlab.pdfbase import ttfonts
+from reportlab.pdfbase.ttfonts import TTFont
 from reportlab.pdfbase import pdfmetrics
 from PyPDF2 import PdfFileMerger
 import os
@@ -45,27 +45,29 @@ def simple_table(spis):
         return s2
 
     name = str(spis[1]) + '.pdf'
-    MyFontObject = ttfonts.TTFont('GOTHIC', 'GOTHICB.TTF')
-    pdfmetrics.registerFont(MyFontObject)
+    pdfmetrics.registerFont(TTFont('GOTHIC', 'GOST.TTF'))
+    pdfmetrics.registerFont(TTFont('GOTHIC2', 'GOST type A Italic.ttf'))
+    pdfmetrics.registerFont(TTFont('GOTHIC3', 'GOST type A Bold.ttf'))
+
     c = canvas.Canvas(name, pagesize=(100, 50))
     c.setLineWidth(.3)
-    c.setFont('GOTHIC', 3)
-
-    c.drawString(8, 39, 'с/н: ' + spis[1])
-    c.drawString(8, 29, 'art: ' + spis[0])
+    c.setFont('GOTHIC', 8)
+    c.drawString(8, 36.5, spis[1])
+    c.setFont('GOTHIC3', 5)
+    c.drawString(7, 29, spis[0])
     c.drawString(10, 20, "Наименование")
     c.drawString(45, 20, 'Размер, мм.')
     c.drawString(75, 20, 'Масса, кг.')
 
     # Наименование
-    c.setFont('GOTHIC', 2.8)
+    c.setFont('GOTHIC2', 4)
     s = list(spis[2])
     n = 12
     if len(s) > 20:
        ss = s_plus(s)
        for i in ss:
-           c.drawString(7, n, i)
-           n -= 2.5
+           c.drawString(6, n, i)
+           n -= 3
     else:
         c.drawString(7, 12, spis[2])
 
@@ -74,7 +76,7 @@ def simple_table(spis):
     #Вес
     c.drawString(80, 12, str(spis[5]))
     # Обозначение по проекту
-    c.setFont('GOTHIC', 18)
+    c.setFont('GOTHIC3', 20)
     c.drawString(50, 28, spis[4])
 
     c.line(5, 45, 5, 5)
@@ -94,4 +96,4 @@ def simple_table(spis):
     return name
 if __name__ == '__main__':
     obedin([['E3-55-Al-4000-4-uv', '1-1-0001', 'угловая вертикальная секция', '450*450', 'A1', 34.47],
-            ['E3-55-Al-4000-4-uv', '1-1-0002', 'угловая вертикальная секция', '450*450', 'A2', 34.47]])
+            ['E3-55-Al-4000-4-uv', '1-1-0002', 'угловая вертикальная секция', '450*450', 'A2', 34.47]], '1')
