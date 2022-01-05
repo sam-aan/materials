@@ -336,18 +336,18 @@ class writing_to_exl():
             if self.slovar[i]['Серия'] == 'E3' and self.slovar[i]['Обозначение'] in sss:
 
                 if self.slovar[i]['Мат. Пров.'] == 'Al' and int(self.slovar[i]['Ном. ток, А']) in vesEAl:
-                    ves = dlina * vesEAl[int(self.slovar[i]['Ном. ток, А'])] / 1000
+                    ves = round(dlina * vesEAl[int(self.slovar[i]['Ном. ток, А'])] / 1000, 2)
                 elif self.slovar[i]['Мат. Пров.'] == 'Cu' and int(self.slovar[i]['Ном. ток, А']) in vesECu:
-                    ves = dlina * vesECu[int(self.slovar[i]['Ном. ток, А'])] / 1000
+                    ves = round(dlina * vesECu[int(self.slovar[i]['Ном. ток, А'])] / 1000, 2)
                 else:
                     ves = '-'
 
             # Вес стыков
             elif self.slovar[i]['Серия'] == 'E3' and self.slovar[i]['Обозначение'] in ['СБ', 'sb']:
                 if self.slovar[i]['Мат. Пров.'] == 'Al' and int(self.slovar[i]['Ном. ток, А']) in vesStikAl:
-                    ves = vesStikAl[int(self.slovar[i]['Ном. ток, А'])]
+                    ves = round(vesStikAl[int(self.slovar[i]['Ном. ток, А'])], 2)
                 elif self.slovar[i]['Мат. Пров.'] == 'Cu' and int(self.slovar[i]['Ном. ток, А']) in vesStikCu:
-                    ves = vesStikCu[int(self.slovar[i]['Ном. ток, А'])]
+                    ves = round(vesStikCu[int(self.slovar[i]['Ном. ток, А'])], 2)
                 else:
                     ves = '-'
             else:
