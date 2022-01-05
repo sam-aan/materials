@@ -302,12 +302,21 @@ class calc():
 
 
         # перечисляем стп для разных выводов
-        if self.a['Обозначение'] in ['pf', 'pfk']:
-            print('Нестандартная секция!')
-            print(str(re.split(r'[*+]', self.a['размер'])))
-            if str(str(re.split(r'[*+]', self.a['размер'])[1])) == '130':
-                print("Меняем межфазное расстояние на 130 мм.")
+        if self.a['Обозначение'] in ['pf', 'pfk', 'ugf', 'uvf', 'zgf', 'zvf', 'kpuvf', 'kpugf', 'kluvf', 'klugf']:
+            if self.a['Обозначение'] in ['pf', 'pfk']:
+                razmer = str(re.split(r'[*+]', self.a['размер'])[1])
+            elif self.a['Обозначение'] in ['ugf', 'uvf']:
+                razmer = str(re.split(r'[*+]', self.a['размер'])[2])
+            else:
+                razmer = str(re.split(r'[*+]', self.a['размер'])[3])
+
+            if razmer == '130':
+                print("Нестандартная секция!\nМеняем межфазное расстояние на 130 мм.")
                 self.a['межфазное расстояние фланца'] = '130'
+            elif razmer == '100':
+                print("Нестандартная секция!\nМеняем межфазное расстояние на 100 мм.")
+                self.a['межфазное расстояние фланца'] = '100'
+
 
         # 3 проводника
         if str(self.a['Кол. пров.']) in ['3']:
