@@ -154,14 +154,14 @@ class Detali:
         self.naimenovanie = 'Пластина токопроводящая'
         if self.material == 'Al':  # алюминий
             L = {'250': 30, '400': 68, '630': 68, '800': 83, '1000': 108, '1250': 140, '1600': 185, '2000': 226, '2500': 226, '2600': 226, '3200': 364,
-                 '4000': 434, '5000': 416, '6300': 660}
+                 '4000': 434, '5000': 434, '6300': 660}
             if str(self.nominal) == '2500' or str(self.nominal) == '5000':
                 self.profil(['профиль', self.naimenovanie + ' 2500', self.oboznachenie + '_2500', '90 90'], L[str(self.nominal)])
             else:
                 self.profil(['профиль', self.naimenovanie, self.oboznachenie, '90 90'], L[str(self.nominal)])
         else:
             L = {'630': 68, '800': 68, '1000': 83, '1250': 108, '1600': 140, '2000': 185, '2500': 185, '3200': 235,
-                 '4000': 364, '5000': 336, '6300': 540}
+                 '4000': 360, '5000': 334, '6300': 540}
             if str(self.nominal) == '2500' or str(self.nominal) == '5000':
                 self.profil(['профиль', self.naimenovanie + ' медная 2500', self.oboznachenie + '_2500', '90 90'], L[str(self.nominal)])
             else:
