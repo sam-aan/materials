@@ -419,6 +419,8 @@ class vvod:
     def sux(self, kol):     # сухари
         sux_kol = int(kol) * 4
         self.itog.append(['заг', 'Сухарь (Деталь)', sux_kol, 'шт.'])
+        self.itog.append(['ст',
+                          'Заклепка вытяжная 4,8х12 мм Сталь/Сталь, стандартный бортик ZAC', sux_kol * 2 / 1000, 'шт.'])
 
     def napr(self, kol):    # направляющиеа расчитываем из количества секций
 
@@ -760,36 +762,20 @@ class vvod:
 
     def bolt_m6(self, kol):
         if self.nominal > 2500:
-            kol_boltm6x20 = round(self.dlina * 1000 / 200 * 2 * 1.1)
-            ves_boltm6x20 = kol_boltm6x20 * 0.00631
+            kol_boltm6x25 = round(self.dlina * 1000 / 200 * 2 * 1.1)
         else:
-            kol_boltm6x20 = 0
-            ves_boltm6x20 = 0
+            kol_boltm6x25 = 0
         kol_boltm6x10 = kol * 8
         kol_boltm6x16 = kol * 16 + kol_boltm6x10
-        #ves_kol_boltm6x16 = kol_boltm6x16 * 0.00490
-        #ves_kol_boltm6x16 = kol_boltm6x16 * 0.00629
         kol_klips = math.ceil(kol / 3 * 4)
-        ves_shaib_kol_klips = kol_klips * 0.00194
-        ves_kol_klips = kol_klips * 0.02522
-        kol_shaib10 = kol_klips * 2
-        ves_kol_shaib10 = kol_shaib10 * 0.00213
-        kol_shaib_grovm6 = kol_boltm6x20 + kol_boltm6x16
-        ves_shaiba_m6 = kol_shaib_grovm6 * 0.00085
-        ves_kol_shaib_grovm6 = kol_shaib_grovm6 * 0.00056
-        #self.p('ст', 'винт с цилиндрической головкой и внутренним шестигранником М6х16', str(ves_kol_boltm6x16), 'кг.')
-        #self.itog.append(['ст', 'Винт самонарезной М6х12 DIN7500C полуцилиндр гол.оцинк.TORX', kol_boltm6x16, 'шт.'])
         self.itog.append(['ст', 'Винт самонарезной полуцилиндр. гол., М6х16 DIN 7500С  TORX ', kol_boltm6x16, 'шт.'])
-        #print('винт с цилиндрической головкой и внутренним шестигранником М6х10  ', str(kol_boltm6x10), ' шт.')
-        #self.p('ст', 'винт с потайной головкой и внутренним шестигранником М6х16', str(kol_boltm6x10), 'шт.')
-        self.itog.append(['ст', 'Винт самонарезной М6х12 DIN7500М потай гол. оцинк. TORX', kol_boltm6x10, 'шт.'])
-        self.itog.append(['ст', 'винт с цилиндрической головкой и внутренним шестигранником М6х20', ves_boltm6x20, 'кг.'])
-        #self.p('ст', 'шайба гровер 6', str(round(ves_kol_shaib_grovm6, 3)), 'кг.')
+        #self.itog.append(['ст', 'Винт самонарезной М6х12 DIN7500М потай гол. оцинк. TORX', kol_boltm6x10, 'шт.'])
+        self.itog.append(
+            ['ст', 'Винт с цилин.гол. внутр.шестигр.М6х25 DIN912, 8,8', kol_boltm6x25 * 0.00666, 'кг.'])
         self.itog.append(['ст', 'Болт М10х25 8.8 DIN 933', kol_klips * 0.025, 'кг.'])
         self.itog.append(['ст', 'шайба гровер 10', kol_klips * 0.00194, 'кг.'])
         self.itog.append(['ст', 'гайка шестигранная М10', kol_klips, 'шт.'])
         self.itog.append(['ст', 'шайба плоская С.10', kol_klips * 2 * 0.00408, 'кг.'])
-        #self.p('ст', 'шайба плоская С.6', str(round(ves_shaiba_m6, 3)), 'кг.')
         self.itog.append(['ПИ', 'кронштейн', kol_klips, 'шт.'])
 
 if __name__ == '__main__':  # Если мы запускаем файл напрямую, а не импортируем
