@@ -68,7 +68,10 @@ class rashet:
         ret = writing_to_exl(self.N_zak, False, sklad, line, 'upakovka').setting_exl()  # делаем файл эксель с котр.вед.
                                                                                         # и получем имя файла и список
         self.spisok_filov.append(ret[0])        # добавляем в список файлов для удаления имя контрольной ведомсти
-        self.spisok_filov.append(to_pdf_reportlab.obedin(ret[1], self.N_zak))      # запускаем создание наклеек в pdf
+
+        for sss in to_pdf_reportlab.obedin(ret[1], self.N_zak):     # запускаем создание наклеек в pdf
+            self.spisok_filov.append(sss)
+
         return [self.spisok_filov, self.spisok_dla_mater]
 
     def komplekts(self, spisok, itog):
