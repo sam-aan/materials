@@ -373,7 +373,7 @@ class writing_to_exl():
             else:
                 value = str(re.findall(r'\d+', str(self.zakaz).lower())[0]) \
                         + '-' + str(re.findall(r'\d+', str(self.slovar[i]['Этап']).lower())[0]) \
-                        + '-' + str("%04d" % serNom)
+                        + '-' + str("%03d" % serNom)
             cell = w_rab_mesto.cell(row=y, column=3)
             cell.font = Font(name='Century Gothic')
             cell.value = value

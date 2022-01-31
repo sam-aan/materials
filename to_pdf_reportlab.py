@@ -65,8 +65,8 @@ def simple_table(spis):
     if spis[2] in ['Стыковочный блок', 'стыковочный блок']:
         name = '1-' + str(spis[1]) + '.pdf'
         c = canvas.Canvas(name, pagesize=(30, 20))
-        c.setFont('GOTHIC3', 8)
-        c.drawString(2.8, 7.5, spis[1])
+        c.setFont('GOTHIC3', 6)
+        c.drawString(1.5, 7.5, spis[1])
     else:
         name = '0-' + str(spis[1]) + '.pdf'
         c = canvas.Canvas(name, pagesize=(100, 50))
@@ -119,5 +119,5 @@ def simple_table(spis):
     return name
 
 if __name__ == '__main__':
-    obedin([['E3-55-Al-4000-4-uv', '1-1-0001', 'угловая вертикальная секция', '450*450', 'A1', 34.47],
-            ['E3-55-Al-4000-4-sb', '1-1-0003', 'Стыковочный блок', '-', '-', 34.47]], '1')
+    obedin([['E3-55-Al-4000-4-uv', '1-1-001', 'угловая вертикальная секция', '450*450', 'A1', 34.47],
+            ['E3-55-Al-4000-4-sb', '001-01-003', 'Стыковочный блок', '-', '-', 34.47]], '1')
