@@ -467,10 +467,12 @@ class calculation:
         self.spisok_dla_mater['Lsvar_izd'] = round(self.spisok_dla_mater['Lsvar_izd'] + int(self.dat['количество']) * (int(self.A) + int(self.B)) / 1000, 0)
 
         # вычисляем угол горизонтального угла
-        if len(self.os) == 2:
+        if self.dat['Обозначение'] in ['ugf', 'угф'] and len(self.os) == 3:
+            self.os.append(90)
+        elif self.dat['Обозначение'] in ['ug', 'уг'] and len(self.os) == 2:
             self.os.append(90)
 
-        self.C = int(self.os[2])
+        self.C = int(self.os[-2])
         self.index = self.index + 1
         itog = [[self.index, self.dat['Серия'], self.dat['ip'], self.dat['Материал'], self.dat['In'],
                  self.dat['Кол. пров.'], self.dat['Наименование'], 'ug',
@@ -638,8 +640,13 @@ class calculation:
 
         # CR
         if self.dat['Серия'] in ['CR1', 'CR2']:
-            detali = [['torcentr', 2], ['mfazcentr', round((int(self.os[0]) + int(self.os[1])) / 200, 0)]]
-            svar_det = [['Ш-СД31', 4, ['s', 4, [self.A, 'x']], ['s', 4, [self.B, 'y']]]]
+
+            if self.dat['Обозначение'] in ["uvf", "увф"]:
+                detali = [['torcentr', 2], ['mfazcentr', round((int(self.os[0]) + int(self.os[1])) / 200, 0)]]
+                svar_det = [['Ш-СД31', 4, ['s', 4, [self.A, 'x']], ['s', 4, [self.B, 'y']]]]
+            else:
+                detali = [['torcentr', 2], ['mfazcentr', round((int(self.os[0]) + int(self.os[1])) / 200, 0)]]
+                svar_det = [['Ш-СД31', 4, ['s', 4, [self.A, 'x']], ['s', 4, [self.B, 'y']]]]
 
             for i in svar_det:
                 itog_svar = self.welded_part(i)

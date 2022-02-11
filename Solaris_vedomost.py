@@ -436,3 +436,4 @@ if __name__ == '__main__':  # Если мы запускаем файл напр
 # В случае если не работает pyinstaller
 # C:\Users\anton\AppData\Local\Programs\Python\Python39\Scripts\pyinstaller --icon=sol.ico Solaris_vedomost.py
 # C:\Users\anton\AppData\Local\Programs\Python\Python39\Scripts\pyinstaller --onefile --icon=sol.ico Solaris_vedomost.py
+# /usr/local/bin/pyinstaller --onefile --icon=sol.ico Solaris_vedomost.py
