@@ -467,12 +467,13 @@ class calculation:
         self.spisok_dla_mater['Lsvar_izd'] = round(self.spisok_dla_mater['Lsvar_izd'] + int(self.dat['количество']) * (int(self.A) + int(self.B)) / 1000, 0)
 
         # вычисляем угол горизонтального угла
+        print("self.os", self.os, len(self.os))
         if self.dat['Обозначение'] in ['ugf', 'угф'] and len(self.os) == 3:
             self.os.append(90)
         elif self.dat['Обозначение'] in ['ug', 'уг'] and len(self.os) == 2:
             self.os.append(90)
 
-        self.C = int(self.os[-2])
+        self.C = int(self.os[-1])
         self.index = self.index + 1
         itog = [[self.index, self.dat['Серия'], self.dat['ip'], self.dat['Материал'], self.dat['In'],
                  self.dat['Кол. пров.'], self.dat['Наименование'], 'ug',
@@ -1950,7 +1951,6 @@ class calculation:
             self.C = '-'
 
         self.spisok_dla_mater['Nkon_zag'] = self.spisok_dla_mater['Nkon_zag'] + int(self.dat['количество'])
-        self.spisok_dla_mater['Nsekc'] = self.spisok_dla_mater['Nsekc'] + int(self.dat['количество'])
 
         itog = [[self.index, self.dat['Серия'], self.dat['ip'], self.dat['Материал'], self.dat['In'],
                  self.dat['Кол. пров.'], self.dat['Наименование'], 'kz',
@@ -1968,24 +1968,21 @@ class calculation:
         line_raskroi.komlektuyushie(self.dat, self.length_OS, self.spis_kompl).standart_izdel()
         return True
 
-    def pn(self):
+    def pn(self):   # Перевод нейтрали
         self.nestandart()
         self.spisok_dla_mater['Nsekc'] = self.spisok_dla_mater['Nsekc'] + int(self.dat['количество'])
 
     def bom(self):
         self.nestandart()
 
-    def ks(self):
+    def ks(self):   # Крепежная скоба
         self.nestandart()
-        self.spisok_dla_mater['Nsekc'] = self.spisok_dla_mater['Nsekc'] + int(self.dat['количество'])
 
-    def ksb(self):
+    def ksb(self):  # Крышка стыка
         self.nestandart()
-        self.spisok_dla_mater['Nsekc'] = self.spisok_dla_mater['Nsekc'] + int(self.dat['количество'])
 
-    def pp(self):
+    def pp(self):   # Пружинный подвес
         self.nestandart()
-        self.spisok_dla_mater['Nsekc'] = self.spisok_dla_mater['Nsekc'] + int(self.dat['количество'])
 
 
 if __name__ == '__main__':  # Если мы запускаем файл напрямую, а не импортируем
