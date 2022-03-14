@@ -4,7 +4,13 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="89123829-8447-4316-aa24-a83a35692c1d" name="Changes" comment="ug" />
+    <list default="true" id="89123829-8447-4316-aa24-a83a35692c1d" name="Changes" comment="ug">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/logfilename.txt" beforeDir="false" afterPath="$PROJECT_DIR$/logfilename.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/materials_simple.py" beforeDir="false" afterPath="$PROJECT_DIR$/materials_simple.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/to_exl_main_mat.py" beforeDir="false" afterPath="$PROJECT_DIR$/to_exl_main_mat.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/пример.xlsx" beforeDir="false" afterPath="$PROJECT_DIR$/пример.xlsx" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -26,12 +32,11 @@
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/Solaris_vedomost.py" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/rashet_sekcii.py" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.detected.package.tslint" value="true" />
     <property name="node.js.selected.package.eslint" value="(autodetect)" />
     <property name="node.js.selected.package.tslint" value="(autodetect)" />
-    <property name="restartRequiresConfirmation" value="false" />
     <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
   </component>
   <component name="RunManager" selected="Python.Solaris_vedomost">
@@ -47,7 +52,30 @@
       <option name="IS_MODULE_SDK" value="false" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
       <option name="SCRIPT_NAME" value="$PROJECT_DIR$/Solaris_vedomost.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="rashet_sekcii" type="PythonConfigurationType" factoryName="Python" nameIsGenerated="true">
+      <module name="materials" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="C:\Users\anton\AppData\Local\Programs\Python\Python39\python.exe" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="false" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/rashet_sekcii.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -81,6 +109,7 @@
     <list>
       <item itemvalue="Python.to_pdf_reportlab" />
       <item itemvalue="Python.Solaris_vedomost" />
+      <item itemvalue="Python.rashet_sekcii" />
     </list>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
@@ -93,6 +122,8 @@
       <updated>1643611952758</updated>
       <workItem from="1643611954123" duration="7936000" />
       <workItem from="1643963852377" duration="703000" />
+      <workItem from="1646976758691" duration="2108000" />
+      <workItem from="1647261365132" duration="347000" />
     </task>
     <task id="LOCAL-00001" summary="nakleika">
       <created>1643615263314</created>
@@ -115,7 +146,14 @@
       <option name="project" value="LOCAL" />
       <updated>1645906114128</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="ug">
+      <created>1645906217127</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1645906217127</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -131,12 +169,15 @@
         </entry>
       </map>
     </option>
-    <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="nakleika" />
     <MESSAGE value="ugf" />
     <MESSAGE value="ug" />
     <option name="LAST_COMMIT_MESSAGE" value="ug" />
+  </component>
+  <component name="com.intellij.coverage.CoverageDataManagerImpl">
+    <SUITE FILE_PATH="coverage/materials$rashet_sekcii.coverage" NAME="rashet_sekcii Coverage Results" MODIFIED="1646976957180" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/materials$Solaris_vedomost.coverage" NAME="Solaris_vedomost Coverage Results" MODIFIED="1647261713383" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
   </component>
 </project>
