@@ -575,7 +575,7 @@ class vvod:
         elif self.nominal in [1250]:
             kol_plast = kol * 8
             L_plastina = round(kol_plast * (self.s + 30 + 5) / 3000, 2)  # расчет пластины токопроводящей
-            kol_b = kol * 2
+            kol_b = kol * 1
             ves_vtul = round(kol * 2 * 0.05075, 2)  # вес втулки расчет
             kol_demp = kol_b * 4  # количество демпферов
             itog_dempf = kol_demp * procent_dempf
@@ -587,10 +587,10 @@ class vvod:
             ves_izol_kr = 0.15
             naz_sr = 'Изолятор 1250А  (Ср.)'  # название изолятора
             naz_kr = 'Изолятор 1250А  (Кр.)'  # название изолятора
-        elif self.nominal in [1250]:
+        elif self.nominal in [1250] and self.material in ['Cu']:
             kol_plast = kol * 8
             L_plastina = round(kol_plast * (self.s + 30 + 5) / 3000, 2)  # расчет пластины токопроводящей
-            kol_b = kol * 2
+            kol_b = kol * 1
             ves_vtul = round(kol * 2 * 0.05075, 2)  # вес втулки расчет
             kol_demp = kol_b * 4  # количество демпферов
             itog_dempf = kol_demp * procent_dempf

@@ -161,7 +161,7 @@ class Detali:
                 self.profil(['профиль', self.naimenovanie, self.oboznachenie, '90 90'], L[str(self.nominal)])
         else:
             L = {'630': 66, '800': 66, '1000': 80, '1250': 108, '1600': 138, '2000': 185, '2500': 185, '3200': 234,
-                 '4000': 360, '5000': 364, '6300': 540}
+                 '4000': 360, '5000': 360, '6300': 540}
             if str(self.nominal) == '2500' or str(self.nominal) == '5000':
                 self.profil(['профиль', self.naimenovanie + ' медная 2500', self.oboznachenie + '_2500', '90 90'], L[str(self.nominal)])
             else:
@@ -1860,7 +1860,7 @@ class Detali:
         self.profil(['профиль', 'Шина ' + s, 'Ш_' + s, '90 90'], self.L1)
         return self.a
 
-    # дял угф
+    # для угф
     def s19(self):  # шина гнутая внешняя большой гиб
         self.C = '-'
         self.X = float(float(self.os[0]) + float(self.S_sh_izol) * 3 + int(self.S_sh) * 2)

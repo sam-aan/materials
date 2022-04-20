@@ -77,7 +77,9 @@ class rashet:
     def komplekts(self, spisok, itog):
         '''модуль eto нужен исключительно для счета направляющих и сухарей.'''
         print('РАСЧЕТ НАПРАВЛЯЮЩИХ И СУХАРЕЙ')
+        print(spisok)
         spisok_strok = sorting('0', spisok, False, 5, False, None).addition()
+        print(spisok_strok)
         for i in spisok_strok:
             dat = nominal.calc(['E3', '55', i[1], i[0], i[2], '', i[3], '', '', i[4]]).calc_nom()
             self.index += 1

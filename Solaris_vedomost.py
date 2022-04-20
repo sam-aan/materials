@@ -9,7 +9,7 @@
 import os
 import re
 from PyQt5.QtWidgets import (QMainWindow, QTextEdit, QWidget, QMessageBox,
-                             QAction, QFileDialog, QApplication, QCheckBox, QLineEdit)
+                             QAction, QFileDialog, QApplication, QCheckBox, QLineEdit, QRadioButton)
 import rashet_sekcii
 import to_exl_main_mat
 from PyQt5 import QtCore, QtGui, QtWidgets
@@ -74,6 +74,13 @@ class ExampleApp(QMainWindow):
         self.line.move(20, 40)
         self.line.resize(80, 20)
 
+        self.v1button = QRadioButton("Питон Кама", self)
+        self.v1button.setGeometry(QtCore.QRect(20, 200, 100, 10))
+        self.v2button = QRadioButton("Солярис", self)
+        self.v2button.setGeometry(QtCore.QRect(20, 230, 100, 10))
+        self.v2button.setChecked(True)
+
+
         MainWindow.setCentralWidget(self.centralwidget)
 
         self.fname = ''
@@ -113,8 +120,19 @@ class ExampleApp(QMainWindow):
             print('файл не выбран')
             self.showDialog()
         elif self.line.text() == '':
-            QtWidgets.QMessageBox.question(self, 'Уведомление', 'Введите номер заказа',
-                                           QtWidgets.QMessageBox.Ok)
+            QMessageBox.question(self, 'Уведомление', 'Введите номер заказа', QMessageBox.Ok, QMessageBox.No)
+        elif self.v1button.isChecked() == True:
+            reply = QMessageBox.question(self, 'Уведомление', 'Расчет для Питон Кама!', QMessageBox.Yes,
+                                         QMessageBox.No)
+
+            if reply == QMessageBox.Yes:
+                print('Расчет для производственной площадки Питон Кама')
+                self.PromProiz = 1
+
+        elif self.v2button.isChecked() == True:
+           print('Рачсет для производственной площадки Солярис')
+           self.PromProiz = 0
+
         else:
             spisok = rashet_sekcii.rashet(self.line.text(), self.fname).zapusk()
             self.saveFileDialog(spisok)
