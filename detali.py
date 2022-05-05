@@ -1,7 +1,5 @@
-import math
 import re
 import math
-import os, sys, stat
 
 
 class Detali:
@@ -55,7 +53,8 @@ class Detali:
     # Лист боковой
     def lb(self):
         nominal = {'630': 113, '800': 128, '1000': 153, '1250': 183,
-                   '1600': 233, '2000': 273, '2500': 273, '2600': 299, '3200': 399, '4000': 479, '5000': 479, '6300': '-'}
+                   '1600': 233, '2000': 273, '2500': 273, '2600': 299,
+                   '3200': 399, '4000': 479, '5000': 479, '6300': '-'}
         self.A = 150
         self.B = nominal[str(self.nominal)]
         self.C = '-'
@@ -1534,7 +1533,6 @@ class Detali:
         self.profil(['профиль', 'Шина ' + s, 'Ш_' + s, '90 90'], self.L1)
         return self.a
 
-
     # для ТВ
     def s3t(self):
         self.A = '-'
@@ -1830,6 +1828,23 @@ class Detali:
         s = self.print_rezult()
         self.profil(['профиль', 'Шина ' + s, 'Ш_' + s, '90 90'], self.L1)
         return self.a
+
+
+# шины для прямой с фланцем по новому чертежу СТП 01Ф
+    def stp01f_01(self):
+        razmery = [210, 100]
+
+        self.A = '-'    # не должен быть меньше 100 мм.
+        self.B = '-'
+        self.C = '-'
+        self.L = '-'
+        self.L1 = 1
+        #print(float(self.os), float(self.R_sh), self.L1Edge, self.L1_sh_b)
+        self.oboznachenie = 'Ш17'
+        self.naimenovanie = 'Шина (' + str(self.StpEdge) + ')'
+        s = self.print_rezult()
+        self.profil(['профиль', 'Шина ' + s, 'Ш_' + s, '90 90'], self.L1)
+        print(self.a)
 
     # для фланцев
     # для номинала от 630 до 2000 включительно

@@ -3,10 +3,10 @@ import psycopg2
 def sozdanie_tabl():
 
   con = psycopg2.connect(
-    database="postgres",
+    database="test",
     user="postgres",
-    password="sepiaabrain2012",
-    host="127.0.0.1",
+    password="sam-aan2020",
+    host="192.168.98.157",
     port="5432"
   )
 
@@ -25,10 +25,10 @@ def sozdanie_tabl():
 
 def Vvod_data():
   con = psycopg2.connect(
-    database="postgres",
+    database="test",
     user="postgres",
-    password="sepiaabrain2012",
-    host="127.0.0.1",
+    password="sam-aan2020",
+    host="192.168.98.157",
     port="5432"
   )
 

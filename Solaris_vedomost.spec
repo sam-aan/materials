@@ -5,7 +5,7 @@ block_cipher = None
 
 
 a = Analysis(['Solaris_vedomost.py'],
-             pathex=['D:\\PycharmProjects\\materials'],
+             pathex=[],
              binaries=[],
              datas=[],
              hiddenimports=[],
@@ -33,7 +33,7 @@ exe = EXE(pyz,
           upx=True,
           upx_exclude=[],
           runtime_tmpdir=None,
-          console=True,
+          console=False,
           disable_windowed_traceback=False,
           target_arch=None,
           codesign_identity=None,

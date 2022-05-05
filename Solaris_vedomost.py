@@ -9,7 +9,7 @@
 import os
 import re
 from PyQt5.QtWidgets import (QMainWindow, QTextEdit, QWidget, QMessageBox,
-                             QAction, QFileDialog, QApplication, QCheckBox, QLineEdit, QRadioButton)
+                             QAction, QFileDialog, QApplication, QCheckBox, QLineEdit, QRadioButton, QInputDialog)
 import rashet_sekcii
 import to_exl_main_mat
 from PyQt5 import QtCore, QtGui, QtWidgets
@@ -115,30 +115,42 @@ class ExampleApp(QMainWindow):
         print('Открыть файл: ', self.fname)
 
     def nachalo(self):
+        NomZak = self.line.text()    # Номер заказа
 
-        if self.fname == '':  # ничего не выбрано показывает предупреждение
-            print('файл не выбран')
-            self.showDialog()
-        elif self.line.text() == '':
-            QMessageBox.question(self, 'Уведомление', 'Введите номер заказа', QMessageBox.Ok, QMessageBox.No)
-        elif self.v1button.isChecked() == True:
-            reply = QMessageBox.question(self, 'Уведомление', 'Расчет для Питон Кама!', QMessageBox.Yes,
-                                         QMessageBox.No)
-
-            if reply == QMessageBox.Yes:
-                print('Расчет для производственной площадки Питон Кама')
-                self.PromProiz = 1
-
-        elif self.v2button.isChecked() == True:
-           print('Рачсет для производственной площадки Солярис')
-           self.PromProiz = 0
-
-        else:
-            spisok = rashet_sekcii.rashet(self.line.text(), self.fname).zapusk()
+        def SS(PP):
+            spisok = rashet_sekcii.rashet(NomZak, self.fname, PP).zapusk()
             self.saveFileDialog(spisok)
             QtWidgets.QMessageBox.question(self, 'Уведомление', 'Расчет окончен!', QtWidgets.QMessageBox.Ok)
             print('конец расчетов')
             self.fname = ''
+
+        # проверка атрибутов (номер заказа, выбран ли файл)
+        if self.fname == '':  # ничего не выбрано показывает предупреждение
+            print('файл не выбран')
+            self.showDialog()
+        elif NomZak == '':
+            #QMessageBox.question(self, 'Уведомление', 'Введите номер заказа', QMessageBox.Ok, QMessageBox.No)
+            text, ok = QInputDialog.getText(self, 'Номер заказа', 'Введине номер заказа')
+
+            if ok:
+                NomZak = str(text)
+                print('Введен номер заказа: ', NomZak)
+
+        # проверянм оператора уверен ли он в том, что выбрал правильное проивзоство
+        if self.v1button.isChecked() == True:
+            reply = QMessageBox.question(self, 'Уведомление', 'Расчет для Питон Кама!', QMessageBox.Yes, QMessageBox.No)
+
+            if reply == QMessageBox.Yes:
+                print('Расчет для производственной площадки Питон Кама')
+                SS('Kama')
+
+        else:
+            reply = QMessageBox.question(self, 'Уведомление', 'Расчет для Солярис!', QMessageBox.Yes, QMessageBox.No)
+
+            if reply == QMessageBox.Yes:
+                print('Рачсет для производственной площадки Солярис')
+                SS('Solaris')
+
 
     def saveFileDialog(self, spisok):
         dict_path_save = re.findall(r'[^/]+', self.fname)   # разделили путь к файлу на список

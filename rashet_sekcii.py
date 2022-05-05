@@ -12,15 +12,15 @@ import to_pdf_reportlab
 import to_pdf
 from datetime import datetime
 
-
 class rashet:
-    def __init__(self, N_zak, fname):
+    def __init__(self, N_zak, fname, PP):
         self.index = 0
         self.N_zak = N_zak
         self.fname = fname
         self.spisok_filov = []
         self.spis_kompl = {'profil': [], 'st_izd': []}
         self.spisok_dla_mater = {}  # словарь для расчета материалов
+        self.Proiz = PP     # Выбранное производство, 1-Кама, 0-Солярис
 
     def zapusk(self):
         print('Начало')
@@ -41,13 +41,13 @@ class rashet:
             RabVed = {}      # Словарь для раб. ведомости
             SpisKomplekt = []  # список для направляющих, сухарей, фланцев.
             self.spisok_dla_mater[i] = {'seria': 'E3', 'material': 'Al', 'nominal': 630, 'dlina': 0,
-                                            'Nstik': 0, 'Nsekc': 0, 'Nkon_zag': 0, 'Nflanc': 0, 'Lsvar_izd': 0}
+                                        'Nstik': 0, 'Nsekc': 0, 'Nkon_zag': 0, 'Nflanc': 0, 'Lsvar_izd': 0}
 
             for input_data in di[i]:  # начинаем перебор построчно
                 self.spisok_dla_mater[i]['material'] = input_data[2]
                 self.spisok_dla_mater[i]['nominal'] = input_data[4]
                 self.spisok_dla_mater[i]['seria'] = input_data[0]
-                data = nominal.calc(input_data).calc_nom()
+                data = nominal.calc(input_data, self.Proiz).calc_nom()
                 itog = calculation(data, input_data, self.index, RabVed, SpisKomplekt,
                                    self.spis_kompl, self.spisok_dla_mater[i]).choice()
 
@@ -80,8 +80,9 @@ class rashet:
         print(spisok)
         spisok_strok = sorting('0', spisok, False, 5, False, None).addition()
         print(spisok_strok)
+
         for i in spisok_strok:
-            dat = nominal.calc(['E3', '55', i[1], i[0], i[2], '', i[3], '', '', i[4]]).calc_nom()
+            dat = nominal.calc(['E3', '55', i[1], i[0], i[2], '', i[3], '', '', i[4]], self.Proiz).calc_nom()
             self.index += 1
             kol = int(i[4])
             det = Detali(0, dat, '', kol, [0, 0], [0, 0, 0], self.spis_kompl)
@@ -1988,11 +1989,8 @@ class calculation:
 
 
 if __name__ == '__main__':  # Если мы запускаем файл напрямую, а не импортируем
-    s = rashet(195, 'D:/PycharmProjects/materials/пример.xlsx')
+    #s = rashet(195, 'D:/PycharmProjects/materials/пример.xlsx', 1)
+    s = rashet(195, '/home/eva/PycharmProjects/materials/пример.xlsx', 'Solaris')
     #s = rashet(157, 'D:/PycharmProjects/materials/Технопарк доп заказ.xlsx')
 
     s.zapusk()
-    # pyinstaller --onefile --icon=sol.ico --noconsole Solaris_vedomost.py
-
-    '''with open(name_file) as file:
-        array = [row.strip() for row in file]  # переписываем все строки в список ['первая строка', 'вторая строка'..]'''
