@@ -74,7 +74,7 @@ def simple_table(spis):
         c.setLineWidth(.3)
         c.setFont('GOTHIC', 8)
         c.drawString(8, 36.5, spis[1])
-        c.setFont('GOTHIC3', 5)
+        c.setFont('GOTHIC3', 4)
         c.drawString(7, 29, spis[0])
         c.drawString(10, 20, "Наименование")
         c.drawString(45, 20, 'Размер, мм.')
@@ -120,5 +120,5 @@ def simple_table(spis):
     return name
 
 if __name__ == '__main__':
-    obedin([['E3-55-Al-4000-4-uv', '1-1-001', 'угловая вертикальная секция', '450*450', 'A1', 34.47],
-            ['E3-55-Al-4000-4-sb', '001-01-003', 'Стыковочный блок', '-', '-', 34.47]], '1')
+    obedin([['E3-55-Al-4-4000-uv', '1-1-001', 'угловая вертикальная секция', '450*450', 'A1', 34.47],
+            ['E3-55-Al-4-4000-sb', '001-01-003', 'Стыковочный блок', '-', '-', 34.47]], '1')

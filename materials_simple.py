@@ -405,18 +405,22 @@ class vvod:
 
     def sh(self, os):   #расчет шины
         L = round(math.ceil(os * 4 / 3), 2)
+
         if self.material in ['Алюминий', 'Al']:
             name = 'Шина ' + str(self.nominal_2)
         else:
             name = 'Шина медная ' + str(self.nominal)
+
         if self.nominal in [3200, 4000, 5000]:
             self.itog.append(['П', name, L * 2, 'шт.'])
+
             if self.nominal in [3200]:
                 name = 'Шина медная ' + '1600'
             elif self.nominal in [4000]:
                 name = 'Шина медная ' + '2000'
             else:    # nominal 5000
                 name = 'Шина медная ' + '2500'
+
         elif self.nominal in [6300]:
             self.itog.append(['П', name, L * 3, 'шт.'])
         else:
@@ -670,7 +674,7 @@ class vvod:
             if self.material in ['Алюминий', 'Al']:
                 obem_nominal = {'4000': 18, '3200': 14, '1600': 9.6, '2500': 10.5}
             else:   #медь
-                obem_nominal = {'2500': 10.5}
+                obem_nominal = {'2000': 9.6, '2500': 10.5, '4000': 17.4}
 
             obem = obem_nominal[str(self.nominal)] * self.Nstik  # объем компаунда в стыке в литрах
             print(obem, 'obem')

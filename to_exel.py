@@ -187,12 +187,12 @@ class writing_to_exl():
         sheet.page_setup.fitToHeight = False
         self.kolontitul('Ведомость Нач.смен')
         x = 1
-
+        operation = ['05', '10', '15', '20', '25', '30', '35', '40', '45', '50', '55', '60']
         # записываем первую строку для ведомости нач. смены с раб. местами.
         perv_stroka = ['№', 'Серия', 'ip', 'Материал', 'In', 'Кол. пров.', 'Наименование', 'Обозначение',
                             'Разм.L', 'Разм.L1', 'Разм.A', 'Разм.B', 'Разм.C', 'Кол.',
                             'пила', 'гибка', 'фрезер', 'сверловка', 'напыление', 'сварка',
-                            'зачистка', 'шлифовка', 'покраска', 'предсборка', 'сборка']
+                            'зачистка', 'шлифовка', 'лаз.резка', 'покраска', 'предсборка', 'сборка_заливка']
         for i in perv_stroka:
             cell = sheet.cell(row=1, column=x)
             cell.font = Font(name='Century Gothic', bold=True, color='000000')
@@ -201,7 +201,8 @@ class writing_to_exl():
 
         print('созданы страницы для рабочих мест')
         rab_mesto = {'пила': 'O', 'гибка': 'P', 'фрезер': 'Q', 'сверловка': 'R', 'напыление': 'S', 'сварка': 'T',
-                     'зачистка': 'U', 'шлифовка': 'V', 'покраска': 'W', 'предсборка': 'X', 'сборка': 'Y'}
+                     'зачистка': 'U', 'шлифовка': 'V', 'лаз.резка': 'W', 'покраска': 'X', 'предсборка': 'Y',
+                     'сборка_заливка': 'Z'}
 
         # Создаем новые страницы для раб. мест
         for s in rab_mesto:
@@ -215,6 +216,7 @@ class writing_to_exl():
 
             # записываем первую строку в новую страницу без рабочих мест
             for i in perv_stroka:
+
                 if x <= 14:
                     cell = sheet2.cell(row=1, column=x)
                     cell.font = Font(name='Century Gothic', bold=True, color='000000')
@@ -247,6 +249,7 @@ class writing_to_exl():
 
             # начинаем вычислять какая строчка нам нужна для формулы значения
             nS_schet = 1                                        # номер счетчика
+
             for cell in self.wb['Ведомость Нач.смен']['A']:     # перебираем столбец А в списке нач смен
                 #print(cell.value)
                 #print('i', i)
@@ -260,9 +263,9 @@ class writing_to_exl():
                 cell = sheet.cell(row=y, column=x)
                 cell.font = st
 
-                if self.slovar[i][j] == 0 and j in rab_mesto:
+                if self.slovar[i][j] == '0' and j in rab_mesto:
                     cell.value = 'Х'
-                elif self.slovar[i][j] == 1 and j in rab_mesto:
+                elif self.slovar[i][j] in operation and j in rab_mesto:     # проверяем, есть ли номер операции в списке
                     cell.value = ''
                     stroka = [i, self.slovar[i]['Серия'], self.slovar[i]['ip'], self.slovar[i]['Материал'],
                               self.slovar[i]['In'], self.slovar[i]['Кол. пров.'],
@@ -362,8 +365,8 @@ class writing_to_exl():
             cell = w_rab_mesto.cell(row=y, column=2)
             cell.font = Font(name='Century Gothic')
             value = str(self.slovar[i]['Серия']) + '-' + str(self.slovar[i]['IP']) + '-' + str(
-                self.slovar[i]['Мат. Пров.']) + '-' + str(self.slovar[i]['Ном. ток, А']) + '-' + str(
-                self.slovar[i]['Кол. Пров.']) + '-' + str(self.slovar[i]['Обозначение'] + str(self.slovar[i]['Тип']))
+                self.slovar[i]['Мат. Пров.']) + '-' + str(self.slovar[i]['Кол. Пров.']) + '-' + str(
+                self.slovar[i]['Ном. ток, А']) + '-' + str(self.slovar[i]['Обозначение'] + str(self.slovar[i]['Тип']))
             cell.value = value
             spis_dla_vozvrata_2.append(value)      # для возвращяемого списка
 

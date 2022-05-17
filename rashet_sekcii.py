@@ -7,7 +7,7 @@ from detali import Detali
 import nominal
 import line_raskroi
 import socket
-import exel_to_spisok
+import exel_to_spisok   # для обработки входного файла эксель
 import to_pdf_reportlab
 import to_pdf
 from datetime import datetime
@@ -1989,8 +1989,8 @@ class calculation:
 
 
 if __name__ == '__main__':  # Если мы запускаем файл напрямую, а не импортируем
-    #s = rashet(195, 'D:/PycharmProjects/materials/пример.xlsx', 1)
-    s = rashet(195, '/home/eva/PycharmProjects/materials/пример.xlsx', 'Solaris')
+    s = rashet(195, 'D:/PycharmProjects/materials/пример.xlsx', 'Solaris')
+    #s = rashet(195, '/home/eva/PycharmProjects/materials/пример.xlsx', 'Solaris')
     #s = rashet(157, 'D:/PycharmProjects/materials/Технопарк доп заказ.xlsx')
 
     s.zapusk()
