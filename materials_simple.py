@@ -336,23 +336,24 @@ class vvod:
         else:
             obem = round(gabarit[0] * gabarit[1] * os2 - obem_shin, 5)   # объем шинопровода в м3
         print(obem, 'obem')
+        self.itog.append(['М', 'Компаунд', obem, 'м3'])
 
         '''Расчитываем эпоксидку'''
-        epoxy = round(obem / 0.001 * 0.49, 2)
-        print('epoxy', epoxy)
-        self.itog.append(['М', 'Смола CHS-Epoxy 520', epoxy, 'кг.'])
+        #epoxy = round(obem / 0.001 * 0.49, 2)
+        #print('epoxy', epoxy)
+        #self.itog.append(['М', 'Смола CHS-Epoxy 520', epoxy, 'кг.'])
         '''расчитываем отвердитель'''
-        otverd_0903 = round(obem / 0.001 * 0.1, 2)
-        print('otverd0903', otverd_0903)
-        self.itog.append(['М', 'Отвердитель Telalit 0903', otverd_0903, 'кг.'])
+        #otverd_0903 = round(obem / 0.001 * 0.1, 2)
+        #print('otverd0903', otverd_0903)
+        #self.itog.append(['М', 'Отвердитель Telalit 0903', otverd_0903, 'кг.'])
         '''расчитываем отвердитель'''
-        otverd_0590 = round(obem / 0.001 * 0.07, 2)
-        print('otverd0590', otverd_0590)
-        self.itog.append(['М', 'Отвердитель Telalit 0590', otverd_0590, 'кг.'])
+        #otverd_0590 = round(obem / 0.001 * 0.07, 2)
+        #print('otverd0590', otverd_0590)
+        #self.itog.append(['М', 'Отвердитель Telalit 0590', otverd_0590, 'кг.'])
         '''расчитываем наполнитель'''
-        kv_pes = round(obem / 0.001 * 0.91, 2)
-        print('kv pesok', kv_pes)
-        self.itog.append(['М', 'Кварцевая мука', kv_pes, 'кг.'])
+        #kv_pes = round(obem / 0.001 * 0.91, 2)
+        #print('kv pesok', kv_pes)
+        #self.itog.append(['М', 'Кварцевая мука', kv_pes, 'кг.'])
 
     def kr_st_kraska(self, os):     # расчет крышки и стенки крашенной
         print(os, 'os')
@@ -678,6 +679,7 @@ class vvod:
 
             obem = obem_nominal[str(self.nominal)] * self.Nstik  # объем компаунда в стыке в литрах
             print(obem, 'obem')
+            self.itog.append(['М стык', 'Компаунд', obem * 0.001, 'м3'])
             '''Для получения 1 литра компаунда необходимо смешать следующие компоненты: 
                 -0,49 кг. эпоксидной смолы,
                 - 0,10 кг отвердителя 0903, 
@@ -685,21 +687,21 @@ class vvod:
                 -0,91 кг кварцевого песка. '''
 
             '''Расчитываем эпоксидку'''
-            epoxy = round(obem * 0.49, 2)
-            print('epoxy', epoxy)
-            self.itog.append(['М стык', 'Смола CHS-Epoxy 520', epoxy, 'кг.'])
+            #epoxy = round(obem * 0.49, 2)
+            #print('epoxy', epoxy)
+            #self.itog.append(['М стык', 'Смола CHS-Epoxy 520', epoxy, 'кг.'])
             '''расчитываем отвердитель'''
-            otverd_0903 = round(obem * 0.1, 2)
-            print('otverd0903', otverd_0903)
-            self.itog.append(['М стык', 'Отвердитель Telalit 0903', otverd_0903, 'кг.'])
+            #otverd_0903 = round(obem * 0.1, 2)
+            #print('otverd0903', otverd_0903)
+            #self.itog.append(['М стык', 'Отвердитель Telalit 0903', otverd_0903, 'кг.'])
             '''расчитываем отвердитель'''
-            otverd_0590 = round(obem * 0.07, 2)
-            print('otverd0590', otverd_0590)
-            self.itog.append(['М стык', 'Отвердитель Telalit 0590', otverd_0590, 'кг.'])
+            #otverd_0590 = round(obem * 0.07, 2)
+            #print('otverd0590', otverd_0590)
+            #self.itog.append(['М стык', 'Отвердитель Telalit 0590', otverd_0590, 'кг.'])
             '''расчитываем наполнитель'''
-            kv_pes = round(obem * 0.91, 2)
-            print('kv pesok', kv_pes)
-            self.itog.append(['М стык', 'Кварцевая мука', kv_pes, 'кг.'])
+            #kv_pes = round(obem * 0.91, 2)
+            #print('kv pesok', kv_pes)
+            #self.itog.append(['М стык', 'Кварцевая мука', kv_pes, 'кг.'])
 
     def pos(self, pl):#ПОС порошок
         plosh = self.s * 40 * pl * 16 + (self.s + 30) * 40 * pl * 16
