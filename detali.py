@@ -132,11 +132,11 @@ class Detali:
     def fl(self):
         if self.material == 'Al':  # алюминий
             L = {'630': [182, 200], '800': [200, 200], '1000': [226, 200], '1250': [249, 200], '1600': [305, 200],
-                 '2000': [351, 200], '2500': [351, 245], '3200': [504, 245], '2600': [504, 245],
+                 '2000': [351, 200], '2500': [351, 245], '3200': [504, 245], '3201': [504, 245], '2600': [504, 245],
                  '4000': [596, 245], '5000': [596, 245], '6300': [763, 245]}
         else:
             L = {'630': ['X', 'Y'], '1000': [200, 200], '1250': [226, 200], '1600': [249, 200], '2000': [305, 200],
-                 '2500': [305, 200], '3200': ['X', 'Y'], '4000': [504, 245], '5000': [504, 245], '6300': ['X', 'Y']}
+                 '2500': [305, 200], '3200': ['X', 'Y'], '3201': ['X', 'Y'], '4000': [504, 245], '5000': [504, 245], '6300': ['X', 'Y']}
         self.A = L[str(self.nominal)][0]
         self.B = L[str(self.nominal)][1]
         self.oboznachenie = '000 168'
@@ -152,7 +152,8 @@ class Detali:
         self.oboznachenie = 'ТП'
         self.naimenovanie = 'Пластина токопроводящая'
         if self.material == 'Al':  # алюминий
-            L = {'250': 30, '400': 68, '630': 66, '800': 80, '1000': 108, '1250': 138, '1600': 185, '2000': 226, '2500': 226, '2600': 226, '3200': 360,
+            L = {'250': 30, '400': 68, '630': 66, '800': 80, '1000': 108, '1250': 138, '1600': 185, '2000': 226,
+                 '2500': 226, '2600': 226, '3200': 360, '3201': 360,
                  '4000': 434, '5000': 434, '6300': 660}
             if str(self.nominal) == '2500' or str(self.nominal) == '5000':
                 self.profil(['профиль', self.naimenovanie + ' 2500', self.oboznachenie + '_2500', '90 90'], L[str(self.nominal)])
@@ -992,7 +993,11 @@ class Detali:
         self.B = '-'
         Alfa = (180 - int(self.C)) / 2
 
-        self.L = round(float(self.os) - float(self.R_kor) + (float(self.H_paketa) / 2 + float(self.S_stenka)) * math.tan(math.radians(Alfa)), 1)
+        if self.seria in ['CR1', 'CR2']:
+            self.L = round(float(self.os) - float(self.R_kor) + (float('100') / 2 + float(self.S_stenka)) * math.tan(math.radians(Alfa)), 1)
+        else:
+            self.L = round(float(self.os) - float(self.R_kor) + (float(self.H_paketa) / 2 + float(self.S_stenka)) * math.tan(math.radians(Alfa)), 1)
+
         self.oboznachenie = 'С3'
         self.naimenovanie = 'Стенка'
         nominal = self.print_rezult()
@@ -1015,7 +1020,12 @@ class Detali:
         self.A = '-'
         self.B = '-'
         Alfa = (180 - int(self.C)) / 2
-        self.L = round(float(self.os) - float(self.R_kor) - float(self.H_paketa) / 2 * math.tan(math.radians(Alfa)), 1)
+
+        if self.seria in ['CR1', 'CR2']:
+            self.L = round(float(self.os) - float(self.R_kor) - 100 / 2 * math.tan(math.radians(Alfa)), 1)
+        else:
+            self.L = round(float(self.os) - float(self.R_kor) - float(self.H_paketa) / 2 * math.tan(math.radians(Alfa)), 1)
+
         self.oboznachenie = 'С4'
         self.naimenovanie = 'Стенка'
         nominal = self.print_rezult()
@@ -1936,6 +1946,71 @@ class Detali:
         self.profil(['профиль', 'Шина ' + s, 'Ш_' + s, '90 90'], self.L1)
         return self.a
 
+    # для комбинированных и для CR
+    def s23(self):  # шина гнутая внутренняя большой гиб
+        beta = (180 - int(self.C)) / 2
+        self.X = float(float(self.os[0]) + (float(self.S_sh_izol) * 3 + int(self.S_sh) * 2) * (math.tan(math.radians(beta))))
+        self.Y = float(float(self.os[1]) - float(self.R_sh) + (float(self.S_sh_izol) * 3 + int(self.S_sh) * 2) * (math.tan(math.radians(beta))))
+        print(self.Y, (float(self.S_sh_izol) * 3 + int(self.S_sh) * 2) * (math.tan(math.radians(beta))))
+        BD = self.razvertka_XY(beta * 2, self.R, self.Ka, self.S_sh)
+        self.B = round(float(self.Y) - BD / 2 + self.L1_sh_b, 1)
+        self.A = round(float(self.X) - BD / 2 + self.L1Edge + 4, 1)
+        self.L = '-'
+        self.L1 = round(float(self.A) + float(self.B), 1)
+        self.oboznachenie = 'Ш23'
+        self.naimenovanie = 'Шина'
+        s = self.print_rezult()
+        self.profil(['профиль', 'Шина ' + s, 'Ш_' + s, '90 90'], self.L1)
+        return self.a
+
+    def s24(self):  # шина гнутая внешняя малый гиб
+        beta = (180 - int(self.C)) / 2
+        self.X = float(float(self.os[0]) + (float(self.S_sh_izol) + int(self.S_sh)) * (math.tan(math.radians(beta))))
+        self.Y = float(float(self.os[1]) - float(self.R_sh) + (float(self.S_sh_izol) + int(self.S_sh)) * (math.tan(math.radians(beta))))
+        print(self.Y, (float(self.S_sh_izol) + int(self.S_sh)) * (math.tan(math.radians(beta))))
+        BD = self.razvertka_XY(beta * 2, self.R, self.Ka, self.S_sh)
+        self.A = round(float(self.X) - BD / 2 + self.L1Centre + 4, 1)
+        self.B = round(float(self.Y) - BD / 2 + self.L1_sh_m, 1)
+        self.L = '-'
+        self.L1 = round(float(self.A) + float(self.B), 1)
+        self.oboznachenie = 'Ш24'
+        self.naimenovanie = 'Шина'
+        s = self.print_rezult()
+        self.profil(['профиль', 'Шина ' + s, 'Ш_' + s, '90 90'], self.L1)
+        return self.a
+
+    def s25(self):  # шина гнутая внутренняя малый гиб
+        beta = (180 - int(self.C)) / 2
+        self.X = float(float(self.os[0]) - (float(self.S_sh_izol)) * (math.tan(math.radians(beta))))
+        self.Y = float(float(self.os[1]) - float(self.R_sh) - (float(self.S_sh_izol)) * (math.tan(math.radians(beta))))
+        print(self.Y, float(self.S_sh_izol) * (math.tan(math.radians(beta))))
+        BD = self.razvertka_XY(beta * 2, self.R, self.Ka, self.S_sh)
+        self.A = round(float(self.X) - BD / 2 + self.L1Centre + 4, 1)
+        self.B = round(float(self.Y) - BD / 2 + self.L1_sh_m, 1)
+        self.L = '-'
+        self.L1 = round(float(self.A) + float(self.B), 1)
+        self.oboznachenie = 'Ш25'
+        self.naimenovanie = 'Шина'
+        s = self.print_rezult()
+        self.profil(['профиль', 'Шина ' + s, 'Ш_' + s, '90 90'], self.L1)
+        return self.a
+
+    def s26(self):  # шина гнутая внутренняя большой гиб
+        beta = (180 - int(self.C)) / 2
+        self.X = float(float(self.os[0]) - (float(self.S_sh_izol) * 3 - int(self.S_sh)) * (math.tan(math.radians(beta))))
+        self.Y = float(float(self.os[1]) - float(self.R_sh) - (float(self.S_sh_izol) * 3 + int(self.S_sh)) * (math.tan(math.radians(beta))))
+        #print(self.Y, (float(self.S_sh_izol) * 3 + int(self.S_sh)) * (math.tan(math.radians(beta))))
+        BD = self.razvertka_XY(beta * 2, self.R, self.Ka, self.S_sh)
+        self.A = round(float(self.X) - BD / 2 + self.L1Edge + 4, 1)
+        self.B = round(float(self.Y) - BD / 2 + self.L1_sh_b, 1)
+        self.L = '-'
+        self.L1 = round(float(self.A) + float(self.B), 1)
+        self.oboznachenie = 'Ш26'
+        self.naimenovanie = 'Шина'
+        s = self.print_rezult()
+        self.profil(['профиль', 'Шина ' + s, 'Ш_' + s, '90 90'], self.L1)
+        return self.a
+
     # для Z-образной с фланцем
 
     def s27(self):  # шина гнутая внешняя большой гиб
@@ -2140,7 +2215,7 @@ class Detali:
                                                            'Изолятор средний', 'Направляющая']:
 
             if self.material in ['Al']:
-                nominalus = {3200: 1600, 2600: 1250, 4000: 2000, 5000: 2000, 6300: 2000}
+                nominalus = {3200: 1600, 2600: 1250, 4000: 2000, 5000: 2000, 6300: 2000, 3201: 2000}
                 nominal = nominalus[self.nominal]
             else:
                 nominalus = {3200: 1250, 4000: 1600, 5000: 1600, 6300: 1600}
@@ -2154,7 +2229,7 @@ class Detali:
             if self.material in ['Al']:
 
                 if self.nominal > 2500 and re.findall(r'\w*', self.naimenovanie)[0] in ['Шина']:
-                    nominalus = {3200: 1600, 2600: 1250, 4000: 2000, 5000: 2500, 6300: 2500}
+                    nominalus = {3200: 1600, 3201: 1600, 2600: 1250, 4000: 2000, 5000: 2500, 6300: 2500}
                     nominal = str(nominalus[self.nominal]) + ' (Алюм)'
                 else:
                     nominal = str(self.nominal) + ' (Алюм)'

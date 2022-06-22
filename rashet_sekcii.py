@@ -416,9 +416,6 @@ class calculation:
             if str(self.dat['Кол. пров.']) in ['4', '3+1']:
                 detali = [['s', 4, self.os[0]], ['torcentr', 2], ['mfazcentr', round(int(self.L) / 400, 0)]]
 
-                print('AAAAA' * 100)
-                print('aaa', detali[2])
-
                 if self.dat['Обозначение'] in ['пф', 'pf', 'pfk']:
                     self.spisok_dla_mater['Nflanc'] = self.spisok_dla_mater['Nflanc'] + int(self.dat['количество'])
                     itog[0][7] = 'pf'
@@ -589,12 +586,19 @@ class calculation:
 
 #CR
             if self.dat['Серия'] in ['CR1', 'CR2']:
-                detali = [['n', 4], ['sux', 4],
-                          ['s41', 1, [self.A, self.B, 1]],
-                          ['s41', 1, [self.A, self.B, 2]],
-                          ['s41', 1, [self.A, self.B, 3]],
-                          ['s41', 1, [self.A, self.B, 4]],
-                          ['torcentr', 2], ['mfazcentr', round((int(self.os[0]) + int(self.os[1])) / 200, 0)]]
+
+                if self.dat['Обозначение'] in ['угф', 'ugf']:
+                    detali = [['s23', 1, [self.A, self.B, 1]],
+                              ['s24', 1, [self.A, self.B, 2]],
+                              ['s25', 1, [self.A, self.B, 3]],
+                              ['s26', 1, [self.A, self.B, 4]],
+                              ['torcentr', 2], ['mfazcentr', round((int(self.os[0]) + int(self.os[1])) / 200, 0)]]
+                else:
+                    detali = [['s41', 1, [self.A, self.B, 1]],
+                              ['s41', 1, [self.A, self.B, 2]],
+                              ['s41', 1, [self.A, self.B, 3]],
+                              ['s41', 1, [self.A, self.B, 4]],
+                              ['torcentr', 2], ['mfazcentr', round((int(self.os[0]) + int(self.os[1])) / 200, 0)]]
 
         else:
             svar_det_one_floor = [['К-СД1', 1, ['k1', 1, self.A], ['k2', 1, self.B]],
@@ -607,10 +611,12 @@ class calculation:
                       ['s8', 1, [self.A, self.B]]]
 
         if self.dat['Серия'] in ['CR1', 'CR2']:
-            print('Сварных деталей нет')
+            print('CR1 нет сварных деталей!!!')
         else:
+
             for i in svar_det_one_floor:
                 itog_svar = self.welded_part(i)
+
                 for j in itog_svar:
                     itog.append(j)
 
@@ -1989,7 +1995,7 @@ class calculation:
 
 
 if __name__ == '__main__':  # Если мы запускаем файл напрямую, а не импортируем
-    s = rashet(195, 'D:/PycharmProjects/materials/пример.xlsx', 'Solaris')
+    s = rashet('88 Сбербанк', 'D:/PycharmProjects/materials/пример.xlsx', 'Kama')
     #s = rashet(195, '/home/eva/PycharmProjects/materials/пример.xlsx', 'Solaris')
     #s = rashet(157, 'D:/PycharmProjects/materials/Технопарк доп заказ.xlsx')
 
