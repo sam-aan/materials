@@ -339,14 +339,14 @@ class calc():
 
         # перечисляем стп для разных выводов
         if self.a['Обозначение'] in ['pf', 'pfk', 'ugf', 'uvf', 'zgf', 'zvf', 'kpuvf', 'kpugf', 'kluvf', 'klugf'] \
-                and len(re.split(r'[*+]', self.a['размер'])) > 1:
+                and len(re.split(r'[*+-]', self.a['размер'])) > 1:
 
             if self.a['Обозначение'] in ['pf', 'pfk']:
-                razmer = str(re.split(r'[*+]', self.a['размер'])[1])
+                razmer = str(re.split(r'[*+-]', self.a['размер'])[1])
             elif self.a['Обозначение'] in ['ugf', 'uvf']:
-                razmer = str(re.split(r'[*+]', self.a['размер'])[2])
+                razmer = str(re.split(r'[*+-]', self.a['размер'])[2])
             else:
-                razmer = str(re.split(r'[*+]', self.a['размер'])[3])
+                razmer = str(re.split(r'[*+-]', self.a['размер'])[3])
 
             if razmer == '130':
                 print("Нестандартная секция!\nМеняем межфазное расстояние на 130 мм.")

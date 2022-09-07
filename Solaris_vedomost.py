@@ -87,7 +87,6 @@ class ExampleApp(QMainWindow):
         self.retranslateUi(MainWindow)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
 
-
     def handleButton(self):
         next = ExampleApp2(self)
         next.show()

@@ -408,24 +408,28 @@ class vvod:
         L = round(math.ceil(os * 4 / 3), 2)
 
         if self.material in ['Алюминий', 'Al']:
-            name = 'Шина ' + str(self.nominal_2)
+            name2 = 'Шина '
         else:
-            name = 'Шина медная ' + str(self.nominal)
+            name2 = 'Шина медная '
 
-        if self.nominal in [3200, 4000, 5000]:
-            self.itog.append(['П', name, L * 2, 'шт.'])
-
-            if self.nominal in [3200]:
-                name = 'Шина медная ' + '1600'
-            elif self.nominal in [4000]:
-                name = 'Шина медная ' + '2000'
-            else:    # nominal 5000
-                name = 'Шина медная ' + '2500'
-
+        if self.nominal in [3200]:
+            name = name2 + '1600'
+            L = L * 2
+        elif self.nominal in [4000]:
+            name = name2 + '2000'
+            L = L * 2
+        elif self.nominal in [4000]:
+            name = name2 + '2500'
+            L = L * 2
         elif self.nominal in [6300]:
-            self.itog.append(['П', name, L * 3, 'шт.'])
+            name = name2 + '2500'
+            L = L * 3
         else:
-            self.itog.append(['П', name, L, 'шт.'])
+            name = name2 + str(self.nominal)
+
+        self.itog.append(['П', name, L, 'шт.'])
+
+
 
     def sux(self, kol):     # сухари
         sux_kol = int(kol) * 4

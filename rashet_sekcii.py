@@ -1561,7 +1561,7 @@ class calculation:
     def omf(self):    # Не доделано
         self.L = self.dat['размер']
 
-        self.spisok_dla_mater['dlina'] = round(self.spisok_dla_mater['dlina'] + int(self.dat['количество']) * int(self.L) / 1000, 0)
+        self.spisok_dla_mater['dlina'] = round(self.spisok_dla_mater['dlina'] + int(self.dat['количество']) * int(re.findall(r'\d+', self.L)[0]) / 1000, 0)
         self.spisok_dla_mater['Nsekc'] = self.spisok_dla_mater['Nsekc'] + int(self.dat['количество'])
 
         #print('Секция отбора мощности с фиксированным выводом')
@@ -1587,10 +1587,10 @@ class calculation:
                 else:
                     detali = [['kv', 1, os], ['kv20', 1, os], ['kv21', 1, os], ['c', 2, os], ['n', 4], ['sux', 4]]
 
-                svar_det = [['Ш-СД39', 1, ['s1', 1, os], ['stp026v', 1, 0], [A]],
-                            ['Ш-СД34', 1, ['s2_01', 1, os], ['stp09v', 1, 0], [A]],
-                            ['Ш-СД34', 1, ['s2_01', 1, os], ['stp09v', 1, 0], [A]],
-                            ['Ш-СД33', 1, ['s1_01', 1, os], ['stp09v', 1, 0], [A]]]
+                svar_det = [['Ш-СД35', 1, ['s1', 1, os], ['stp026v', 1, 0], [A]],
+                            ['Ш-СД36', 1, ['s2_01', 1, os], ['stp09v', 1, 0], [A]],
+                            ['Ш-СД36-З', 1, ['s2_01', 1, os], ['stp09v', 1, 0], [A]],
+                            ['Ш-СД35-З', 1, ['s1_01', 1, os], ['stp09v', 1, 0], [A]]]
                 return [detali, svar_det, A, B, C]
 
             elif int(tip[0]) in [3, 4]:
@@ -1640,6 +1640,7 @@ class calculation:
                 return False
 
         itogo = tipiz(int(self.os[0]), self.dat, self.dat['In'], self.tip)
+        print(itogo, self.tip)
 
         if itogo == False:
             return False
@@ -1743,9 +1744,9 @@ class calculation:
 
     def tg(self):
 
-        self.spisok_dla_mater['dlina'] = round(self.spisok_dla_mater['dlina'] + int(self.dat['количество']) * (int(self.A) + int(self.B) + int(self.C)) / 1000, 0)
+        '''self.spisok_dla_mater['dlina'] = round(self.spisok_dla_mater['dlina'] + int(self.dat['количество']) * (int(self.A) + int(self.B) + int(self.C)) / 1000, 0)
         self.spisok_dla_mater['Nsekc'] = self.spisok_dla_mater['Nsekc'] + int(self.dat['количество'])
-        self.spisok_dla_mater['Lsvar_izd'] = round(self.spisok_dla_mater['Lsvar_izd'] + int(self.dat['количество']) * (int(self.A) + int(self.B) + int(self.C)) / 1000, 0)
+        self.spisok_dla_mater['Lsvar_izd'] = round(self.spisok_dla_mater['Lsvar_izd'] + int(self.dat['количество']) * (int(self.A) + int(self.B) + int(self.C)) / 1000, 0)'''
 
         self.nestandart()
         return False
@@ -1856,10 +1857,10 @@ class calculation:
         #print('text1', text1)
         vivod = int(text1[2])
         #print('vivod', vivod)
-        self.A = A = int(re.findall(r'[^-]+', text1[1])[0])
-        self.B = B = int(re.findall(r'[^-]+', text1[1])[1])
-        self.C = C = int(re.findall(r'[^-]+', text1[1])[2])
-        self.L1 = L1 = int(re.findall(r'[^-]+', text1[1])[3])
+        self.A = A = int(re.findall(r'[^-*]+', text1[1])[0])
+        self.B = B = int(re.findall(r'[^-*]+', text1[1])[1])
+        self.C = C = int(re.findall(r'[^-*]+', text1[1])[2])
+        self.L1 = L1 = int(re.findall(r'[^-*]+', text1[1])[3])
         #print(str('L1=' + str(L1)), str('A=' + str(A)), str('B=' + str(B)), str('C=' + str(C)))
 
         A1 = C + B + A + L1
