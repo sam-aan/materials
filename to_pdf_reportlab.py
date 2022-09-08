@@ -36,7 +36,7 @@ def obedin(s, nZak):
     for i in spis:
         os.remove(i)
 
-    return [name, name2]
+    return [[2, name], [2, name2]]
 
 def simple_table(spis):
     # создаем однк наклейку

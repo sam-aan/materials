@@ -36,7 +36,7 @@ class ExampleApp(QMainWindow):
 
     def setupUi(self, MainWindow):
         MainWindow.setObjectName("MainWindow")
-        MainWindow.resize(400, 300)
+        MainWindow.resize(500, 300)
         self.centralwidget = QtWidgets.QWidget(MainWindow)
         self.centralwidget.setObjectName("centralwidget")
         self.widget = QtWidgets.QWidget(self.centralwidget)
@@ -70,9 +70,25 @@ class ExampleApp(QMainWindow):
         self.label_zakaz.setGeometry(QtCore.QRect(20, 20, 100, 10))
         self.label_zakaz.setObjectName("label")
         self.label_zakaz.setText('№ заказа')
-        self.line = QLineEdit(self)
-        self.line.move(20, 40)
-        self.line.resize(80, 20)
+        self.line_zakaz = QLineEdit(self)
+        self.line_zakaz.move(20, 40)
+        self.line_zakaz.resize(80, 20)
+
+        self.label_project = QtWidgets.QLabel(self.centralwidget)
+        self.label_project.setGeometry(QtCore.QRect(130, 20, 100, 10))
+        self.label_project.setObjectName("label")
+        self.label_project.setText('№ Проекта')
+        self.line_project = QLineEdit(self)
+        self.line_project.move(130, 40)
+        self.line_project.resize(80, 20)
+
+        self.label_project_name = QtWidgets.QLabel(self.centralwidget)
+        self.label_project_name.setGeometry(QtCore.QRect(250, 20, 160, 10))
+        self.label_project_name.setObjectName("label")
+        self.label_project_name.setText('№ Наименование проекта')
+        self.line_project_name = QLineEdit(self)
+        self.line_project_name.move(250, 40)
+        self.line_project_name.resize(180, 20)
 
         self.v1button = QRadioButton("Питон Кама", self)
         self.v1button.setGeometry(QtCore.QRect(20, 200, 100, 10))
@@ -87,6 +103,9 @@ class ExampleApp(QMainWindow):
         self.retranslateUi(MainWindow)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
 
+        self.atribut = []  # Номер заказа, номер проекта
+
+    # Наименование проекта
     def handleButton(self):
         next = ExampleApp2(self)
         next.show()
@@ -114,10 +133,10 @@ class ExampleApp(QMainWindow):
         print('Открыть файл: ', self.fname)
 
     def nachalo(self):
-        NomZak = self.line.text()    # Номер заказа
+        self.atribut = [self.line_zakaz.text(), self.line_project.text(), self.line_project_name.text()]
 
         def SS(PP):
-            spisok = rashet_sekcii.rashet(NomZak, self.fname, PP).zapusk()
+            spisok = rashet_sekcii.rashet(self.atribut, self.fname, PP).zapusk()
             self.saveFileDialog(spisok)
             QtWidgets.QMessageBox.question(self, 'Уведомление', 'Расчет окончен!', QtWidgets.QMessageBox.Ok)
             print('конец расчетов')
@@ -127,13 +146,20 @@ class ExampleApp(QMainWindow):
         if self.fname == '':  # ничего не выбрано показывает предупреждение
             print('файл не выбран')
             self.showDialog()
-        elif NomZak == '':
+        elif self.atribut[0] == '':
+            print(self.atribut)
             #QMessageBox.question(self, 'Уведомление', 'Введите номер заказа', QMessageBox.Ok, QMessageBox.No)
             text, ok = QInputDialog.getText(self, 'Номер заказа', 'Введине номер заказа')
 
             if ok:
-                NomZak = str(text)
-                print('Введен номер заказа: ', NomZak)
+                self.atribut[0] = str(text)
+                print('Введен номер заказа: ', self.atribut[0])
+
+        if self.atribut[1] == '':
+            self.atribut[1] = 'БП'
+
+        if self.atribut[2] == '':
+            self.atribut[2] = 'Без проекта'
 
         # проверянм оператора уверен ли он в том, что выбрал правильное проивзоство
         if self.v1button.isChecked() == True:
@@ -152,34 +178,50 @@ class ExampleApp(QMainWindow):
 
 
     def saveFileDialog(self, spisok):
+
+        # алгоритм сохранени в нужной папке и удалением исходника
+        def SaveFile(i, fileName, znach):  # i-имя файла, fileName-путь до файла
+            print('Сохранить файл: ', fileName)
+            put = os.path.abspath(str(i))  # находим путь исходного файла
+            print('Путь ', put)
+            shutil.copyfile(put, fileName)  # копируем исходный файл в нужную дирректорию
+
+            if znach == 0:
+                print('удаляем фаил ', i)
+                os.remove(str(i))
+            else:
+                print('не удаляем фаил ', i)
+
         dict_path_save = re.findall(r'[^/]+', self.fname)   # разделили путь к файлу на список
+        fname = dict_path_save[-1]                          # узнали имя исходного файла
         del dict_path_save[-1]                              # удалили последний элемент списка
         path_save = '/'.join(dict_path_save)                # создали новй путь для сохранения
         dirlist = QFileDialog.getExistingDirectory(self, "Выбрать папку", path_save)    # выбор пользователем пути сохра
         print('Выбрана папка для сохранения: ', dirlist)
+        print('SPISOK\n', spisok)
+        dirlistNew = str(dirlist) + '/№' + str(self.atribut[0] +
+                                               ' Проект №' + str(self.atribut[1]) +
+                                               ' ' + str(self.atribut[2]))
+
+        # проверяем есть ли создаваемая папка
+        def proverka(fileP):
+            if os.path.exists(fileP):
+                print('папка уже существует')
+            else:
+                print('Записываем новую папку')
+                os.mkdir(fileP)
+
+        proverka(dirlistNew)
+        # начинаем создавать свои папки для файлов
+        spisokPapok = ['/1. Ведомость деталей/', '/2. КОВ/', '/3. Наклейки/',
+                       '/4. Программы/', '/5. Расходники/', '/6. Чертежи/', '/7. Материалы/', '/8. Спецификация заказа/']
+        for i in spisokPapok:
+            proverka(dirlistNew + i)
 
         for i in spisok[0]:
             print('Файл:', i)
-            '''savefname = re.findall(r'[^/]+', self.fname)    # разбиваем на список путь к исходному файлу
-            del savefname[-1]   # удаляем имя исходного файла из списка
-            savefname.append(str(i) + '.xlsx')
-            savefname = '/'.join(savefname)     # создаем путь из исходного файла с новым названием файла
-            print('Путь для сохранения: ', savefname)
-            options = QFileDialog.Options()
-            options = QFileDialog.DontUseNativeDialog
-            fileName = QFileDialog.getSaveFileName(self, "Сохранить как", savefname, "Exel (*.xlsx)")[0]'''
-
-            '''extension = re.findall(r'[^.]', i)[-1]
-            if extension in ['pdf']:
-                fileName = dirlist + '/' + str(i) + '.xlsx'     # создаем новый путь для сохранения файла'''
-
-            fileName = dirlist + '/' + str(i)     # создаем новый путь для сохранения файла
-            print('Сохранить файл: ', fileName)
-            put = os.path.abspath(str(i))                  # находим путь исходного файла
-            print('Путь ', put)
-            shutil.copyfile(put, fileName)                  # копируем исходный файл в нужную дирректорию
-            print('удаляем фаил ', i)
-            os.remove(str(i))
+            fileName = dirlistNew + spisokPapok[i[0]] + str(i[1])  # создаем новый путь для сохранения файла
+            SaveFile(i[1], fileName, 0)
 
         for i in spisok[1]:
             rezult = materials_simple.vvod(spisok[1][i]['seria'], spisok[1][i]['material'],
@@ -191,16 +233,11 @@ class ExampleApp(QMainWindow):
                                            spisok[1][i]['nominal'], spisok[1][i]['dlina'],
                                            spisok[1][i]['Nstik'], spisok[1][i]['Nsekc'], spisok[1][i]['Nkon_zag'],
                                            spisok[1][i]['Nflanc'], spisok[1][i]['Lsvar_izd']])
-            namefile = 'Расчет маетриалов Заказ №' + str(self.line.text()) + ' Этап №' + str(
+            namefile = 'Расчет маетриалов Заказ №' + str(self.line_zakaz.text()) + ' Этап №' + str(
                 i) + ' ' + str(spisok[1][i]['seria']) + '-' + str(spisok[1][i]['material']) + '-' + str(
                     spisok[1][i]['nominal']) + '-' + str(spisok[1][i]['dlina'])
-            fileName = dirlist + '/' + namefile + '.xls'
-            print(fileName)
-            thisFile = "example2.xls"
-            put = os.path.abspath(thisFile)
-            print(put)
-            shutil.copyfile(put, fileName)
-            os.remove('example2.xls')
+            SaveFile("example2.xls", dirlistNew + spisokPapok[6] + namefile + '.xls', 0)
+            SaveFile(str(fname), dirlistNew + spisokPapok[7] + fname, 1)
 
 # расчет материалов
 class ExampleApp2(QtWidgets.QMainWindow):

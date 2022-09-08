@@ -8,7 +8,7 @@ import datetime
 import сравнение
 
 class writing_to_exl():
-    def __init__(self, zakaz, etap, array, last_line, ved):
+    def __init__(self, atrib, etap, array, last_line, ved):
         self.font0 = xlwt.Font()
         self.style0 = xlwt.XFStyle()
         self.font1 = xlwt.Font()
@@ -64,7 +64,7 @@ class writing_to_exl():
         self.oboznach_1 = ['Крышка СБ', 'Крышка с выступом СБ', 'Стенка СБ', 'Шина СБ', 'Направляющая', 'Сухарь',
                            'Фланец', 'Шина СБ (Зеркальная)']
         self.wb = openpyxl.Workbook()   # Создаем виртуальную книгу
-        self.zakaz = zakaz      # номер заказа
+        self.zakaz = atrib[0]      # номер заказа
         self.etap = etap        # номер этапа
         self.last_line = last_line  # номер расчет, данные о компьютере.
         self.slovar = array
@@ -116,7 +116,7 @@ class writing_to_exl():
             name_out_file = 'Контрольная ведомость Заказ №' + str(self.zakaz) + '.xlsx'
             print('Сохранение в файл: ', name_out_file)
             self.wb.save(name_out_file)
-            return [name_out_file, spis_dla_vozvrata]
+            return [[1, name_out_file], spis_dla_vozvrata]
         else:
             self.Nach_smen()
             self.txt_tabl()
@@ -125,7 +125,7 @@ class writing_to_exl():
             name_out_file = 'Заказ №' + str(self.zakaz) + ' Этап №' + str(self.etap) + '.xlsx'
             print('Сохранение в файл: ', name_out_file)
             self.wb.save(name_out_file)
-            return name_out_file
+            return [0, name_out_file]
 
     def kolontitul(self, name_sheet):
         """колонтитулы"""

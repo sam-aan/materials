@@ -13,9 +13,11 @@ import to_pdf
 from datetime import datetime
 
 class rashet:
-    def __init__(self, N_zak, fname, PP):
+    def __init__(self, atr, fname, PP):
         self.index = 0
-        self.N_zak = N_zak
+        self.N_zak = atr[0]
+        self.N_proj = atr[1]
+        self.Name_proj = atr[2]
         self.fname = fname
         self.spisok_filov = []
         self.spis_kompl = {'profil': [], 'st_izd': []}
@@ -65,8 +67,8 @@ class rashet:
             self.spisok_filov.append(writing_to_exl(self.N_zak, i, RabVed, line, 'vedomost').setting_exl())
 
         sklad = exel_to_spisok.InOut([sklad, KtrSlvr], 'o').zapusk()
-        ret = writing_to_exl(self.N_zak, False, sklad, line, 'upakovka').setting_exl()  # делаем файл эксель с котр.вед.
-                                                                                        # и получем имя файла и список
+        '''делаем файл эксель с котр.вед. и получем имя файла и список'''
+        ret = writing_to_exl([self.N_zak, self.N_proj, self.Name_proj], False, sklad, line, 'upakovka').setting_exl()
         self.spisok_filov.append(ret[0])        # добавляем в список файлов для удаления имя контрольной ведомсти
 
         for sss in to_pdf_reportlab.obedin(ret[1], self.N_zak):     # запускаем создание наклеек в pdf
@@ -1857,10 +1859,10 @@ class calculation:
         #print('text1', text1)
         vivod = int(text1[2])
         #print('vivod', vivod)
-        self.A = A = int(re.findall(r'[^-*]+', text1[1])[0])
-        self.B = B = int(re.findall(r'[^-*]+', text1[1])[1])
-        self.C = C = int(re.findall(r'[^-*]+', text1[1])[2])
-        self.L1 = L1 = int(re.findall(r'[^-*]+', text1[1])[3])
+        self.A = A = int(re.findall(r'[^-*+]+', text1[1])[0])
+        self.B = B = int(re.findall(r'[^-*+]+', text1[1])[1])
+        self.C = C = int(re.findall(r'[^-*+]+', text1[1])[2])
+        self.L1 = L1 = int(re.findall(r'[^-*+]+', text1[1])[3])
         #print(str('L1=' + str(L1)), str('A=' + str(A)), str('B=' + str(B)), str('C=' + str(C)))
 
         A1 = C + B + A + L1
