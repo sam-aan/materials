@@ -59,18 +59,25 @@ class InOut:
         del spis[0]  # удаляем первую строку
 
         for i in spis:
-            print(i)
-            kol_povt = int(i[11])
-            i.pop(11)
+            if i[0] in ('Итог', 'Итог:', 'Итого', 'Итого:', 'итог', 'итог:', 'итого', 'итого:'):
+                print('пропускаем строчку')
+                continue
+            else:
+                print(i)
+                kol_povt = int(i[11])
+                i.pop(11)
 
-            while kol_povt >= 1:
-                array.append(i)
-                kol_povt = kol_povt - 1
+                while kol_povt >= 1:
+                    array.append(i)
+                    kol_povt = kol_povt - 1
 
         # меняем формат значения этапа на цифренное
         for s in array:
-            s[12] = int(s[12])
-
+            if s[12] in ('None', '', ' '):
+                s[12] = 1
+            else:
+                s[12] = int(s[12])
+        print(array)
         # создаем словарь этапов из полного списка
         array = sorted(array, key=lambda ji: ji[12])  # сортируем итоговый список по номеру этапа
         s = int(array[0][12])  # номер этапа
@@ -208,6 +215,8 @@ class InOut:
 
         for i in array:
 
+            if i[12] in ('None', '', ' ', None):
+                i[12] = 1
             if n == 0:
                 n += 1
                 continue
@@ -235,8 +244,8 @@ class InOut:
         print('СОРТРОВКА НЕСТАНДАРТА')
         s1 = self.fname[0]
         s2 = self.fname[1]
-        #print('s1', s1)
-        #print('s2', s2)
+        print('s1', s1)
+        print('s2', s2)
 
         for i in s1:
             f = [s1[i]['Серия'], int(s1[i]['ip']), s1[i]['Материал'], int(s1[i]['Кол. пров.']), int(s1[i]['In']),
@@ -246,6 +255,9 @@ class InOut:
 
                 if s2[i2]['Ном. ток, А'] in ['', '-', '0', 0, ' ']:
                     s2[i2]['Ном. ток, А'] = 0
+                print(s2[i2]['Этап'])
+                if s2[i2]['Этап'] in ['None', '', ' ']:
+                    s2[i2]['Этап'] = 1
 
                 f2 = [s2[i2]['Серия'], int(s2[i2]['IP']), s2[i2]['Мат. Пров.'], int(s2[i2]['Кол. Пров.']),
                       int(s2[i2]['Ном. ток, А']), s2[i2]['Наименование'], s2[i2]['Обозначение'],

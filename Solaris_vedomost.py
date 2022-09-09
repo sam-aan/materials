@@ -237,7 +237,8 @@ class ExampleApp(QMainWindow):
                 i) + ' ' + str(spisok[1][i]['seria']) + '-' + str(spisok[1][i]['material']) + '-' + str(
                     spisok[1][i]['nominal']) + '-' + str(spisok[1][i]['dlina'])
             SaveFile("example2.xls", dirlistNew + spisokPapok[6] + namefile + '.xls', 0)
-            SaveFile(str(fname), dirlistNew + spisokPapok[7] + fname, 1)
+            print('fname', fname, '\n', self.fname)
+            SaveFile(str(self.fname), dirlistNew + spisokPapok[7] + fname, 1)
 
 # расчет материалов
 class ExampleApp2(QtWidgets.QMainWindow):
