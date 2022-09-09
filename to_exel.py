@@ -64,7 +64,7 @@ class writing_to_exl():
         self.oboznach_1 = ['Крышка СБ', 'Крышка с выступом СБ', 'Стенка СБ', 'Шина СБ', 'Направляющая', 'Сухарь',
                            'Фланец', 'Шина СБ (Зеркальная)']
         self.wb = openpyxl.Workbook()   # Создаем виртуальную книгу
-        self.zakaz = atrib[0]      # номер заказа
+        self.zakaz = atrib      # номер заказа
         self.etap = etap        # номер этапа
         self.last_line = last_line  # номер расчет, данные о компьютере.
         self.slovar = array
