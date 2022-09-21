@@ -64,9 +64,10 @@ class writing_to_exl():
         self.oboznach_1 = ['Крышка СБ', 'Крышка с выступом СБ', 'Стенка СБ', 'Шина СБ', 'Направляющая', 'Сухарь',
                            'Фланец', 'Шина СБ (Зеркальная)']
         self.wb = openpyxl.Workbook()   # Создаем виртуальную книгу
-        self.zakaz = atrib      # номер заказа
-        self.etap = etap        # номер этапа
-        self.last_line = last_line  # номер расчет, данные о компьютере.
+        self.zakaz = atrib[0]           # номер заказа
+        self.name_proizv = atrib[3]     # наименование произ. полщадки
+        self.etap = etap                # номер этапа
+        self.last_line = last_line      # номер расчет, данные о компьютере.
         self.slovar = array
         self.ved = ved
 
@@ -145,7 +146,12 @@ class writing_to_exl():
 
         # верхний правый колонтитул
         now = datetime.datetime.today().strftime("%d %m %Y")
-        sheet.oddHeader.right.text = 'ООО «ПИК «СОЛЯРИС»\n' + str(now)
+
+        if self.name_proizv in ['Солярис']:
+            sheet.oddHeader.right.text = 'ООО «ПИК «СОЛЯРИС»\n' + str(now)
+        else:
+            sheet.oddHeader.right.text = 'ООО «Питон Кама»\n' + str(now)
+
         sheet.oddHeader.right.size = 12
         sheet.oddHeader.right.font = "Century Gothic"
 

@@ -64,11 +64,11 @@ class rashet:
 
                 self.spisok_dla_mater[i] = copy.deepcopy(itog[4])
             RabVed = line_raskroi.techno(self.komplekts(SpisKomplekt, RabVed))
-            self.spisok_filov.append(writing_to_exl(self.N_zak, i, RabVed, line, 'vedomost').setting_exl())
+            self.spisok_filov.append(writing_to_exl([self.N_zak, self.N_proj, self.Name_proj, self.Proiz], i, RabVed, line, 'vedomost').setting_exl())
 
         sklad = exel_to_spisok.InOut([sklad, KtrSlvr], 'o').zapusk()
         '''делаем файл эксель с котр.вед. и получем имя файла и список'''
-        ret = writing_to_exl([self.N_zak, self.N_proj, self.Name_proj], False, sklad, line, 'upakovka').setting_exl()
+        ret = writing_to_exl([self.N_zak, self.N_proj, self.Name_proj, self.Proiz], False, sklad, line, 'upakovka').setting_exl()
         self.spisok_filov.append(ret[0])        # добавляем в список файлов для удаления имя контрольной ведомсти
 
         for sss in to_pdf_reportlab.obedin(ret[1], self.N_zak):     # запускаем создание наклеек в pdf
