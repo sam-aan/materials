@@ -239,7 +239,7 @@ class writing_to_exl():
 
             # для обозначения секций жирным шрифтом с подчеркиванием для сборок
             if self.slovar[i]['Наименование'] in self.oboznach:
-                self.slovar[i]['Обозначение'] = str(self.slovar[i]['Обозначение']) + str(self.slovar[i]['тип'])
+                self.slovar[i]['Обозначение'] = str(self.slovar[i]['Обозначение'])
                 st = Font(name='Century Gothic', bold=True, color='000000')
             # для обозначения жирным шрифтом для обозначения подсборок
             elif self.slovar[i]['Наименование'] in self.oboznach_1:

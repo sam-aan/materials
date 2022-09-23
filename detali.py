@@ -144,7 +144,7 @@ class Detali:
                  '5000': [504, 245], '6300': ['X', 'Y']}
         self.A = L[str(self.nominal)][0]
         self.B = L[str(self.nominal)][1]
-        self.oboznachenie = '000 168'
+        self.oboznachenie = '000 170'
         self.naimenovanie = 'Фланец'
         self.print_rezult()
         return self.a
