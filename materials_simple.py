@@ -789,7 +789,7 @@ class vvod:
         self.itog.append(
             ['ст', 'Винт с цилин.гол. внутр.шестигр.М6х25 DIN912, 8,8', kol_boltm6x25 * 0.00666, 'кг.'])
         self.itog.append(['ст', 'Болт М10х25 8.8 DIN 933', kol_klips * 0.025, 'кг.'])
-        self.itog.append(['ст', 'шайба гровер 10', kol_klips * 0.00194, 'кг.'])
+        self.itog.append(['ст', 'Шайба-гровер М10 DIN127', kol_klips * 0.00194, 'кг.'])
         self.itog.append(['ст', 'гайка шестигранная М10', kol_klips, 'шт.'])
         self.itog.append(['ст', 'шайба плоская С.10', kol_klips * 2 * 0.00408, 'кг.'])
         self.itog.append(['ПИ', 'кронштейн', kol_klips, 'шт.'])

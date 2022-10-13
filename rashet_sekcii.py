@@ -1113,6 +1113,7 @@ class calculation:
 
         def one(x, y, z):
 
+
             if self.dat['Обозначение'] in ['kpfuv']:
                 itog[0][7] = 'kpfuv'
                 detali = [['n', 2], ['sux', 4], ['fl', 2]]

@@ -1007,9 +1007,9 @@ class Detali:
         self.A = '-'
         self.B = '-'
         self.C = '-'
-        if self.name in ['кп', 'kp']:
+        if self.name in ['кп', 'kp', 'kpfuv']:
             self.L = float(self.os) + float(self.H_stenka) / 2 - float(self.H_paketa) / 2 - float(self.S_stenka)
-        elif self.name in ['кл', 'kl']:
+        elif self.name in ['кл', 'kl', 'klfuv']:
             self.L = float(self.os) + float(self.H_stenka) / 2 + float(self.H_paketa) / 2
         self.oboznachenie = 'С2'
         self.naimenovanie = 'Стенка'
@@ -1797,7 +1797,7 @@ class Detali:
 
         BD = self.razvertka_XY(90, self.R, self.Ka, self.S_sh)
         self.A = round(float(self.X) - BD / 2, 1)
-        self.B = round(float(self.Y) - BD / 2 + self.L1_sh_b, 1) - 3    # технологический допуск
+        self.B = round(float(self.Y) - BD / 2 + self.L1_sh_b, 1)
         self.L = '-'
         self.L1 = round(float(self.A) + float(self.B), 1)
         self.oboznachenie = 'Ш12'
