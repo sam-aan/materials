@@ -8,25 +8,27 @@
 
 import os
 import re
-from PyQt5.QtWidgets import (QMainWindow, QTextEdit, QWidget, QMessageBox,
-                             QAction, QFileDialog, QApplication, QCheckBox, QLineEdit, QRadioButton, QInputDialog)
+from PyQt5.QtWidgets import (QMainWindow, QMessageBox, QFileDialog, QLineEdit, QRadioButton, QInputDialog)
 import rashet_sekcii
 import to_exl_main_mat
-from PyQt5 import QtCore, QtGui, QtWidgets
+from PyQt5 import QtCore, QtWidgets
 import logg_solaris
 import sys  # sys нужен для передачи argv в QApplication
 import xlrd
 import shutil
 import materials_simple
-import logging
 
-ORGANIZATION_NAME = 'Example App'
-ORGANIZATION_DOMAIN = 'example.com'
-APPLICATION_NAME = 'QSettings program'
+# import logging
+
+ORGANIZATION_NAME = 'PIK Solaris'
+ORGANIZATION_DOMAIN = 'www.piksolaris.ru'
+APPLICATION_NAME = 'Solaris_vedomost'
 SETTINGS_TRAY = 'settings/tray'
+
 
 class ExampleApp(QMainWindow):
     check_box = None
+
     def __init__(self, parent=None):
         # Это здесь нужно для доступа к переменным, методам
         # и т.д. в файле design.py
@@ -52,19 +54,19 @@ class ExampleApp(QMainWindow):
         self.pushButton = QtWidgets.QPushButton(self.centralwidget)
         self.pushButton.setGeometry(QtCore.QRect(20, 120, 75, 20))
         self.pushButton.setObjectName("pushButton")
-        self.pushButton.clicked.connect(self.nachalo)   # если кнопка нажата
+        self.pushButton.clicked.connect(self.nachalo)  # если кнопка нажата
 
         # Открываем файл
         self.pushButton2 = QtWidgets.QPushButton(self.centralwidget)
         self.pushButton2.setGeometry(QtCore.QRect(20, 80, 100, 20))
         self.pushButton2.setObjectName("pushButton2")
-        self.pushButton2.clicked.connect(self.showDialog)   # если кнопка нажата
+        self.pushButton2.clicked.connect(self.showDialog)  # если кнопка нажата
 
         # кнопка расчета материалов
         self.pushButton3 = QtWidgets.QPushButton(self.centralwidget)
         self.pushButton3.setGeometry(QtCore.QRect(220, 120, 150, 20))
         self.pushButton3.setObjectName("pushButton3")
-        self.pushButton3.clicked.connect(self.handleButton)     # если кнопка нажата
+        self.pushButton3.clicked.connect(self.handleButton)  # если кнопка нажата
 
         self.label_zakaz = QtWidgets.QLabel(self.centralwidget)
         self.label_zakaz.setGeometry(QtCore.QRect(20, 20, 100, 10))
@@ -96,7 +98,6 @@ class ExampleApp(QMainWindow):
         self.v2button.setGeometry(QtCore.QRect(20, 230, 100, 10))
         self.v2button.setChecked(True)
 
-
         MainWindow.setCentralWidget(self.centralwidget)
 
         self.fname = ''
@@ -112,7 +113,7 @@ class ExampleApp(QMainWindow):
 
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
-        MainWindow.setWindowTitle(_translate("MainWindow", "Solaris specification  V-131022-02"))
+        MainWindow.setWindowTitle(_translate("MainWindow", "Solaris specification  V-211122-01"))
         self.pushButton.setText(_translate("MainWindow", "Пуск"))
         self.pushButton2.setText(_translate("MainWindow", "Открыть файл"))
         self.pushButton3.setText(_translate("MainWindow", "Расчет материалов"))
@@ -148,7 +149,7 @@ class ExampleApp(QMainWindow):
             self.showDialog()
         elif self.atribut[0] == '':
             print(self.atribut)
-            #QMessageBox.question(self, 'Уведомление', 'Введите номер заказа', QMessageBox.Ok, QMessageBox.No)
+            # QMessageBox.question(self, 'Уведомление', 'Введите номер заказа', QMessageBox.Ok, QMessageBox.No)
             text, ok = QInputDialog.getText(self, 'Номер заказа', 'Введине номер заказа')
 
             if ok:
@@ -176,7 +177,6 @@ class ExampleApp(QMainWindow):
                 print('Рачсет для производственной площадки Солярис')
                 SS('Solaris')
 
-
     def saveFileDialog(self, spisok):
 
         # алгоритм сохранени в нужной папке и удалением исходника
@@ -192,11 +192,11 @@ class ExampleApp(QMainWindow):
             else:
                 print('не удаляем фаил ', i)
 
-        dict_path_save = re.findall(r'[^/]+', self.fname)   # разделили путь к файлу на список
-        fname = dict_path_save[-1]                          # узнали имя исходного файла
-        del dict_path_save[-1]                              # удалили последний элемент списка
-        path_save = '/'.join(dict_path_save)                # создали новй путь для сохранения
-        dirlist = QFileDialog.getExistingDirectory(self, "Выбрать папку", path_save)    # выбор пользователем пути сохра
+        dict_path_save = re.findall(r'[^/]+', self.fname)  # разделили путь к файлу на список
+        fname = dict_path_save[-1]  # узнали имя исходного файла
+        del dict_path_save[-1]  # удалили последний элемент списка
+        path_save = '/'.join(dict_path_save)  # создали новй путь для сохранения
+        dirlist = QFileDialog.getExistingDirectory(self, "Выбрать папку", path_save)  # выбор пользователем пути сохра
         print('Выбрана папка для сохранения: ', dirlist)
         print('SPISOK\n', spisok)
         dirlistNew = str(dirlist) + '/№' + str(self.atribut[0] +
@@ -214,7 +214,8 @@ class ExampleApp(QMainWindow):
         proverka(dirlistNew)
         # начинаем создавать свои папки для файлов
         spisokPapok = ['/1. Ведомость деталей/', '/2. КОВ/', '/3. Наклейки/',
-                       '/4. Программы/', '/5. Расходники/', '/6. Чертежи/', '/7. Материалы/', '/8. Спецификация заказа/']
+                       '/4. Программы/', '/5. Расходники/', '/6. Чертежи/', '/7. Материалы/',
+                       '/8. Спецификация заказа/']
         for i in spisokPapok:
             proverka(dirlistNew + i)
 
@@ -230,15 +231,17 @@ class ExampleApp(QMainWindow):
                                            spisok[1][i]['Nflanc'], spisok[1][i]['Lsvar_izd']).fg()
             print('Преобразование', rezult)
             to_exl_main_mat.preobrazovanie(rezult, [spisok[1][i]['seria'], spisok[1][i]['material'],
-                                           spisok[1][i]['nominal'], spisok[1][i]['dlina'],
-                                           spisok[1][i]['Nstik'], spisok[1][i]['Nsekc'], spisok[1][i]['Nkon_zag'],
-                                           spisok[1][i]['Nflanc'], spisok[1][i]['Lsvar_izd']])
+                                                    spisok[1][i]['nominal'], spisok[1][i]['dlina'],
+                                                    spisok[1][i]['Nstik'], spisok[1][i]['Nsekc'],
+                                                    spisok[1][i]['Nkon_zag'],
+                                                    spisok[1][i]['Nflanc'], spisok[1][i]['Lsvar_izd']])
             namefile = 'Расчет маетриалов Заказ №' + str(self.line_zakaz.text()) + ' Этап №' + str(
                 i) + ' ' + str(spisok[1][i]['seria']) + '-' + str(spisok[1][i]['material']) + '-' + str(
-                    spisok[1][i]['nominal']) + '-' + str(spisok[1][i]['dlina'])
+                spisok[1][i]['nominal']) + '-' + str(spisok[1][i]['dlina'])
             SaveFile("example2.xls", dirlistNew + spisokPapok[6] + namefile + '.xls', 0)
             print('fname', fname, '\n', self.fname)
             SaveFile(str(self.fname), dirlistNew + spisokPapok[7] + fname, 1)
+
 
 # расчет материалов
 class ExampleApp2(QtWidgets.QMainWindow):
@@ -401,9 +404,9 @@ class ExampleApp2(QtWidgets.QMainWindow):
                                        self.kol_flanc.text(), self.dlina_svarka.text()).fg()
         print('преобразование')
         to_exl_main_mat.preobrazovanie(rezult, [self.seria.currentText(), self.material.currentText(),
-                                       self.nominal.currentText(), self.dlina_trassi.text(),
-                                       self.kol_stik.text(), self.kol_seks.text(), self.kol_zag.text(),
-                                       self.kol_flanc.text(), self.dlina_svarka.text()])
+                                                self.nominal.currentText(), self.dlina_trassi.text(),
+                                                self.kol_stik.text(), self.kol_seks.text(), self.kol_zag.text(),
+                                                self.kol_flanc.text(), self.dlina_svarka.text()])
 
         self.saveFileDialog()
 
@@ -446,6 +449,7 @@ class ExampleApp2(QtWidgets.QMainWindow):
             zse = 0
             return zse
 
+
 def sorting_det(array):
     array2 = []
     kol_str = len(array)  # записываем клличесвто элементов в списке, оно же
@@ -485,8 +489,9 @@ def sorting_det(array):
         print('КОЛИЧЕСТВО СОВПАДЕНИЙ: ' + str(sov) + '\n')
 
     # записываем результат в файл
-    #array2.sort(key=lambda i: (i[3]))
+    # array2.sort(key=lambda i: (i[3]))
     return array2
+
 
 def main():
     sys.stdout = logg_solaris.print_to_txt("logfilename.txt")
@@ -495,9 +500,9 @@ def main():
     window.show()  # Показываем окно
     sys.exit(app.exec_())  # и запускаем приложение
 
+
 if __name__ == '__main__':  # Если мы запускаем файл напрямую, а не импортируем
     main()  # то запускаем функцию main()
-
 
 # pyinstaller --onefile --icon=sol.ico --noconsole Solaris_vedomost.py
 # В случае если не работает pyinstaller
