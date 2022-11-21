@@ -4,16 +4,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="89123829-8447-4316-aa24-a83a35692c1d" name="Changes" comment="13.10.2022-02 error correction">
-      <change beforePath="$PROJECT_DIR$/.idea/inspectionProfiles/profiles_settings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/profiles_settings.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+    <list default="true" id="89123829-8447-4316-aa24-a83a35692c1d" name="Changes" comment="21.11.2022-01 error correction">
       <change beforePath="$PROJECT_DIR$/Solaris_vedomost.py" beforeDir="false" afterPath="$PROJECT_DIR$/Solaris_vedomost.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/detali.py" beforeDir="false" afterPath="$PROJECT_DIR$/detali.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/line_raskroi.py" beforeDir="false" afterPath="$PROJECT_DIR$/line_raskroi.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/logfilename.txt" beforeDir="false" afterPath="$PROJECT_DIR$/logfilename.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/rashet_sekcii.py" beforeDir="false" afterPath="$PROJECT_DIR$/rashet_sekcii.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/to_exel.py" beforeDir="false" afterPath="$PROJECT_DIR$/to_exel.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/пример.xlsx" beforeDir="false" afterPath="$PROJECT_DIR$/пример.xlsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -298,7 +290,7 @@
       <workItem from="1668144622719" duration="3070000" />
       <workItem from="1668606590137" duration="647000" />
       <workItem from="1668672352525" duration="1271000" />
-      <workItem from="1669031027310" duration="5830000" />
+      <workItem from="1669031027310" duration="6180000" />
     </task>
     <task id="LOCAL-00001" summary="nakleika">
       <created>1643615263314</created>
@@ -440,7 +432,14 @@
       <option name="project" value="LOCAL" />
       <updated>1665638016988</updated>
     </task>
-    <option name="localTasksCounter" value="21" />
+    <task id="LOCAL-00021" summary="21.11.2022-01 error correction">
+      <created>1669041635058</created>
+      <option name="number" value="00021" />
+      <option name="presentableId" value="LOCAL-00021" />
+      <option name="project" value="LOCAL" />
+      <updated>1669041635058</updated>
+    </task>
+    <option name="localTasksCounter" value="22" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -489,7 +488,8 @@
     <MESSAGE value="PR ispravleno" />
     <MESSAGE value="13.10.2022-01 error correction" />
     <MESSAGE value="13.10.2022-02 error correction" />
-    <option name="LAST_COMMIT_MESSAGE" value="13.10.2022-02 error correction" />
+    <MESSAGE value="21.11.2022-01 error correction" />
+    <option name="LAST_COMMIT_MESSAGE" value="21.11.2022-01 error correction" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -513,6 +513,6 @@
     <SUITE FILE_PATH="coverage/materials$py_to_sql.coverage" NAME="py_to_sql Coverage Results" MODIFIED="1650889576760" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/materials$line_raskroi.coverage" NAME="line_raskroi Coverage Results" MODIFIED="1652719704595" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/materials$__.coverage" NAME="Расчет  тепловыделения Coverage Results" MODIFIED="1665491603508" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
-    <SUITE FILE_PATH="coverage/materials$Solaris_vedomost.coverage" NAME="Solaris_vedomost Coverage Results" MODIFIED="1669041293513" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/materials$Solaris_vedomost.coverage" NAME="Solaris_vedomost Coverage Results" MODIFIED="1669041331632" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
   </component>
 </project>
