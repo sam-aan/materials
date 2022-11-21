@@ -297,7 +297,7 @@ class writing_to_exl():
     def upakovka(self):
         print('УПАКОВКА ОТК')
         spis_dla_vozvrata = []
-        name_sheet = 'Упаковка'
+        name_sheet = 'Контрольная ведомость'
         self.wb.create_sheet(title=name_sheet, index=18)  # создаем первый лист
         w_rab_mesto = self.wb[name_sheet]  # создаем новую страницу
         w_rab_mesto.sheet_properties.pageSetUpPr.fitToPage = True
@@ -313,8 +313,8 @@ class writing_to_exl():
 
         # записываем первую строку
         x = 1
-        for i in ['№ п/п', 'Артикул', 'Серийный номер', 'Наименование', 'Размер, мм', 'Номер элемента', 'Отметка ОТК',
-                  'Место', 'Масса, кг.', 'Примечание']:
+        for i in ['№ п/п', 'Артикул', 'Серийный номер', 'Наименование', 'Размер, мм', 'Номер элемента',
+                  'Собрал', 'Упаковал', 'Отметка ОТК', 'Место', 'Масса, кг.', 'Примечание']:
             cell = w_rab_mesto.cell(row=1, column=x)
             cell.font = Font(name='Century Gothic', bold=True, color='000000')
             cell.value = i
@@ -407,8 +407,8 @@ class writing_to_exl():
             cell.value = self.slovar[i]['Номер элемента']
             spis_dla_vozvrata_2.append(self.slovar[i]['Номер элемента'])      # для возвращяемого списка
 
-            # 9 столбец масса
-            cell = w_rab_mesto.cell(row=y, column=9)
+            # 11 столбец масса
+            cell = w_rab_mesto.cell(row=y, column=11)
             cell.font = Font(name='Century Gothic')
 
             if self.slovar[i]['Наименование'] in ['Крепежная скоба', 'Крышка стыка', 'Пружинный подвес']:
@@ -418,8 +418,8 @@ class writing_to_exl():
                 cell.value = ves
                 spis_dla_vozvrata_2.append(ves)      # для возвращяемого списка
 
-            # 10 столбец примечание
-            cell = w_rab_mesto.cell(row=y, column=10)
+            # 12 столбец примечание
+            cell = w_rab_mesto.cell(row=y, column=12)
             cell.font = Font(name='Century Gothic')
             if self.slovar[i]['Обозначение'] in ['kz', 'op', 'ks', 'pp', 'gp', 'ad', 'ksb']:
                 cell.value = str(self.slovar[i]['Примечание']) + str(self.slovar[i]['Кол, шт']) + ' шт.'

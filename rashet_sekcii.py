@@ -416,7 +416,7 @@ class calculation:
         elif self.dat['Серия'] in ['CR1', 'CR2']:
 
             if str(self.dat['Кол. пров.']) in ['4', '3+1']:
-                detali = [['s', 4, self.os[0]], ['torcentr', 2], ['mfazcentr', round(int(self.L) / 400, 0)]]
+                detali = [['s_01', 4, self.os[0]], ['torcentr', 2], ['mfazcentr', round(int(self.L) / 400, 0)]]
 
                 if self.dat['Обозначение'] in ['пф', 'pf', 'pfk']:
                     self.spisok_dla_mater['Nflanc'] = self.spisok_dla_mater['Nflanc'] + int(self.dat['количество'])
@@ -427,12 +427,12 @@ class calculation:
                     detali.append(['fl', 2])
 
                 if self.dat['In'] in [3200, 4000, 5000]:
-                    detali.insert(0, ['s', 8, self.os[0]])
+                    detali.insert(0, ['s_01', 8, self.os[0]])
                 elif self.dat['In'] in [6300]:
-                    detali.insert(0, ['s', 12, self.os[0]])
+                    detali.insert(0, ['s_01', 12, self.os[0]])
 
             else:  # 3-х проводной
-                detali = [['s', 3, self.os[0]], ['torcentr', 2], ['mfazcentr', round(int(self.L) / 0.4)]]
+                detali = [['s_01', 3, self.os[0]], ['torcentr', 2], ['mfazcentr', round(int(self.L) / 0.4)]]
 
                 # нет чертежей для пф для заливки
                 if self.dat['Обозначение'] in ['пф', 'pf', 'pfk']:
@@ -443,7 +443,7 @@ class calculation:
                     detali.append(['fl', 2])
 
         for i in detali:
-            itog_det = self.detail(i, 's')
+            itog_det = self.detail(i, 's_01')
             if itog_det == 0:   # только что расчитывали сухарь, направляющую или фланец
                 continue
             else:
@@ -860,11 +860,20 @@ class calculation:
                                   ['С-СД13', 1, ['cB', 1, self.C], ['u', 2, 0], ['cC', 1, self.B], ['cA', 1, self.A]]]
                                   #['С-СД4', 1, ['c3', 1, self.os[0]], ['c3a', 1, self.os[1]], ['u', 1], ['cA', 1, self.os[2]]],
                                   #['С-СД4', 1, ['c3', 1, self.os[2]], ['c3a', 1, self.os[1]], ['u', 1], ['cA', 1, self.os[0]]]]
-            detali = [['n', 4], ['sux', 4],
-                      ['s13', 1, [self.A, self.B, self.C]],
-                      ['s14', 1, [self.A, self.B, self.C]],
-                      ['s15', 1, [self.A, self.B, self.C]],
-                      ['s16', 1, [self.A, self.B, self.C]]]
+
+            if self.dat['Серия'] in ['CR1', 'CR']:
+                detali = [['torcentr', 2], ['mfazcentr', round((int(self.os[0]) + int(self.os[1]) +
+                                                                int(self.os[2])) / 200, 0)],
+                          ['s46_1', 1, [self.A, self.B, self.C]],
+                          ['s46_2', 1, [self.A, self.B, self.C]],
+                          ['s46_3', 1, [self.A, self.B, self.C]],
+                          ['s46_4', 1, [self.A, self.B, self.C]]]
+            else:
+                detali = [['n', 4], ['sux', 4],
+                          ['s13', 1, [self.A, self.B, self.C]],
+                          ['s14', 1, [self.A, self.B, self.C]],
+                          ['s15', 1, [self.A, self.B, self.C]],
+                          ['s16', 1, [self.A, self.B, self.C]]]
 
             if self.dat['In'] in [2000, 2500]:
                 svar_det_one_floor[2] = ['С-СД13', 1, ['cB', 1, self.A], ['u', 2, 0], ['cC', 1, self.B], ['cA', 1, self.C]]
@@ -914,17 +923,21 @@ class calculation:
                                    ['cA', 1, self.C]],
                                   ['С-СД13', 1, ['cB', 1, self.C], ['u', 2, 0], ['cC', 1, self.B],
                                    ['cA', 1, self.A]]]
-
             detali = [['n', 4], ['sux', 4],
                       ['s13', 1, [self.A, self.B, self.C]],
                       ['s14', 1, [self.A, self.B, self.C]],
                       ['s15', 1, [self.A, self.B, self.C]],
                       ['s16', 1, [self.A, self.B, self.C]]]
 
-        for i in svar_det_one_floor:
-            itog_svar = self.welded_part(i)
-            for j in itog_svar:
-                itog.append(j)
+        if self.dat['Серия'] in ['CR1', 'CR']:
+            print('Нет сварных детлей')
+        else:
+
+            for i in svar_det_one_floor:
+
+                itog_svar = self.welded_part(i)
+                for j in itog_svar:
+                    itog.append(j)
 
         for j in detali:
             itog_det = self.detail(j, '')

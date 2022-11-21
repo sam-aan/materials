@@ -1404,6 +1404,18 @@ class Detali:
         self.profil(['профиль', 'Шина ' + sI, 'Ш_' + sI, '90 90'], self.L)
         return self.a
 
+    # проставок | для 3-х проводных П и УВ
+    def s_01(self):
+        self.A = '-'
+        self.B = '-'
+        self.C = '-'
+        self.L = float(self.os) - float(self.R_sh) * 2
+        self.oboznachenie = 'Ш-01'
+        self.naimenovanie = 'Шина'
+        sI = self.print_rezult()
+        self.profil(['профиль', 'Шина ' + sI, 'Ш_' + sI, '90 90'], self.L)
+        return self.a
+
     # для 3-х проводных УВ
     def sa(self):
         self.A = '-'
@@ -2230,6 +2242,67 @@ class Detali:
         self.L = '-'
         self.L1 = round(float(self.A) + float(self.B), 1)
         self.oboznachenie = 'Ш41'
+        self.naimenovanie = 'Шина (' + str(self.stp_L1) + ')'
+        s = self.print_rezult()
+        self.profil(['профиль', 'Шина ' + s, 'Ш_' + s, '90 90'], self.L1)
+        return self.a
+
+    # для Z-образной для CR1
+    def s46_1(self):  # Шина внешняя крайняя
+        self.X = float(float(self.os[0]) - float(self.R_sh) + float(self.S_sh_izol) * 3 + int(self.S_sh) * 2)
+        self.Y = float(float(self.os[2]) - float(self.R_sh) - float(self.S_sh_izol) * 3 - int(self.S_sh))
+        BD = self.razvertka_XY(90, self.R, self.Ka, self.S_sh)
+        self.A = round(float(self.X) - BD / 2 + self.L1_sh_b, 1)
+        self.B = round(float(self.os[1]) + int(self.S_sh) - BD, 1)
+        self.C = round(float(self.Y) - BD / 2 + self.L1_sh_b, 1)
+        self.L = '-'
+        self.L1 = round(float(self.A) + float(self.B) + float(self.C), 1)
+        self.oboznachenie = 'Ш46'
+        self.naimenovanie = 'Шина (' + str(self.stp_L1) + ')'
+        s = self.print_rezult()
+        self.profil(['профиль', 'Шина ' + s, 'Ш_' + s, '90 90'], self.L1)
+        return self.a
+
+    def s46_2(self):  # Шина внешняя средняя
+        self.X = float(float(self.os[0]) - float(self.R_sh) + float(self.S_sh_izol) + int(self.S_sh))
+        self.Y = float(float(self.os[2]) - float(self.R_sh) - float(self.S_sh_izol))
+        BD = self.razvertka_XY(90, self.R, self.Ka, self.S_sh)
+        self.A = round(float(self.X) - BD / 2 + self.L1_sh_m, 1)
+        self.B = round(float(self.os[1]) + int(self.S_sh) - BD, 1)
+        self.C = round(float(self.Y) - BD / 2 + self.L1_sh_m, 1)
+        self.L = '-'
+        self.L1 = round(float(self.A) + float(self.B) + float(self.C), 1)
+        self.oboznachenie = 'Ш46'
+        self.naimenovanie = 'Шина (' + str(self.stp_L2) + ')'
+        s = self.print_rezult()
+        self.profil(['профиль', 'Шина ' + s, 'Ш_' + s, '90 90'], self.L1)
+        return self.a
+
+    def s46_3(self):  # Шина внутреняя средняя
+        self.X = float(float(self.os[0]) - float(self.R_sh) - float(self.S_sh_izol))
+        self.Y = float(float(self.os[2]) - float(self.R_sh) + float(self.S_sh_izol) + int(self.S_sh))
+        BD = self.razvertka_XY(90, self.R, self.Ka, self.S_sh)
+        self.A = round(float(self.X) - BD / 2 + self.L1_sh_m, 1)
+        self.B = round(float(self.os[1]) + int(self.S_sh) - BD, 1)
+        self.C = round(float(self.Y) - BD / 2 + self.L1_sh_m, 1)
+        self.L = '-'
+        self.L1 = round(float(self.A) + float(self.B) + float(self.C), 1)
+        self.oboznachenie = 'Ш46'
+        self.naimenovanie = 'Шина (' + str(self.stp_L2) + ')'
+        s = self.print_rezult()
+        self.profil(['профиль', 'Шина ' + s, 'Ш_' + s, '90 90'], self.L1)
+        return self.a
+
+    def s46_4(self):  # Шина внутреняя крайняя
+        self.X = float(float(self.os[0]) - float(self.R_sh) - float(self.S_sh_izol) * 3 - int(self.S_sh))
+        self.Y = float(float(self.os[2]) - float(self.R_sh) + float(self.S_sh_izol) * 3 + int(self.S_sh) * 2)
+        BD = self.razvertka_XY(90, self.R, self.Ka, self.S_sh)
+        self.A = round(float(self.X) - BD / 2 + self.L1_sh_b, 1)
+        self.B = round(float(self.os[1]) + int(self.S_sh) - BD, 1)
+        self.C = round(float(self.Y) - BD / 2 + self.L1_sh_b, 1)
+        self.L = '-'
+        self.L1 = round(float(self.A) + float(self.B) + float(self.C), 1)
+        self.oboznachenie = 'Ш46'
         self.naimenovanie = 'Шина (' + str(self.stp_L1) + ')'
         s = self.print_rezult()
         self.profil(['профиль', 'Шина ' + s, 'Ш_' + s, '90 90'], self.L1)
