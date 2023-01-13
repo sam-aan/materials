@@ -3,7 +3,7 @@
 import math
 
 class vvod:
-    def __init__(self, seria, material, nominal, dlina, Nstik, Nsekc, Nkon_zag, Nflanc, Lsvar_izd):
+    def __init__(self, seria, material, nominal, dlina, Nstik, Nsekc, Nkon_zag, Nflanc, Lsvar_izd, KolProv):
         self.seria = seria
         self.material = material
         self.nominal = int(nominal)
@@ -28,6 +28,7 @@ class vvod:
         self.stenka_2500 = 2000
         self.S_sh = 0   # Площадь сечения шины
         self.itog = []
+        self.KolProv = int(KolProv)
 
     def fg(self):
         print("Расчет материалов\n")
@@ -405,7 +406,7 @@ class vvod:
             self.itog.append(['П', 'Стенка ' + str(self.nominal_2) + ' без покрытия 3м.', L, 'шт.'])
 
     def sh(self, os):   #расчет шины
-        L = round(math.ceil(os * 4 / 3), 2)
+        L = round(math.ceil(os * self.KolProv / 3), 2)
 
         if self.material in ['Алюминий', 'Al']:
             name2 = 'Шина '
@@ -428,8 +429,6 @@ class vvod:
             name = name2 + str(self.nominal)
 
         self.itog.append(['П', name, L, 'шт.'])
-
-
 
     def sux(self, kol):     # сухари
         sux_kol = int(kol) * 4
@@ -474,9 +473,9 @@ class vvod:
         razmer_dempf = 35
         razmer_list_sil = 500
         procent_dempf = (razmer_dempf ** 2) * 100 / (razmer_list_sil ** 2)
+        kol_plast = kol * self.KolProv * 2
 
         if self.nominal in [2000]:
-            kol_plast = kol * 8
             L_plastina = round(kol_plast * (self.s + 30 + 5) / 3000, 2)  # расчет пластины токопроводящей
             kol_b = kol * 2
             ves_vtul = round(kol * 2 * 0.05075, 2)  # вес втулки расчет
@@ -484,14 +483,13 @@ class vvod:
             #self.itog.append(['заг', 'Демпфер 25-35мм 8мм', kol_demp, 'шт.'])
             ves_demp = round(kol_demp * 0.008085, 2)  # вес всех демпферов
             itog_dempf = kol_demp * procent_dempf
-            isol_sr = kol * 3  # количество изоляторов средних
+            isol_sr = kol * self.KolProv - 1  # количество изоляторов средних
             isol_kr = kol * 2  # количество изоляторов крайних
             ves_izol_sr = 0.24
             ves_izol_kr = 0.235
             naz_sr = 'Изолятор 2000А  (Ср.)'  # название изолятора
             naz_kr = 'Изолятор 2000А  (Кр.)'  # название изолятора
         elif self.nominal in [2500]:
-            kol_plast = kol * 8
             L_plastina = round(kol_plast * (self.s + 30 + 5) / 3000, 2)  # расчет пластины токопроводящей
             kol_b = kol * 2
             ves_vtul = round(kol * 2 * 0.05075, 2)  # вес втулки расчет
@@ -499,14 +497,13 @@ class vvod:
             # self.itog.append(['заг', 'Демпфер 25-35мм 8мм', kol_demp, 'шт.'])
             ves_demp = round(kol_demp * 0.008085, 2)  # вес всех демпферов
             itog_dempf = kol_demp * procent_dempf
-            isol_sr = kol * 3  # количество изоляторов средних
+            isol_sr = kol * self.KolProv - 1  # количество изоляторов средних
             isol_kr = kol * 2  # количество изоляторов крайних
             ves_izol_sr = 0.24
             ves_izol_kr = 0.235
             naz_sr = 'Изолятор 2000А  (Ср.)'  # название изолятора
             naz_kr = 'Изолятор 2000А  (Кр.)'  # название изолятора
         elif self.nominal in [1600]:
-            kol_plast = kol * 8
             L_plastina = round(kol_plast * (self.s + 30 + 5) / 3000, 2)  # расчет пластины токопроводящей
             kol_b = kol * 2
             ves_vtul = round(kol * 2 * 0.05075, 2)  # вес втулки расчет
@@ -514,14 +511,13 @@ class vvod:
             itog_dempf = kol_demp * procent_dempf
             #self.itog.append(['заг', 'Демпфер 20-30мм 4мм', kol_demp, 'шт.'])
             ves_demp = round(kol_demp * 0.008085, 2)  # вес всех демпферов
-            isol_sr = kol * 3  # количество изоляторов средних
+            isol_sr = kol * self.KolProv - 1  # количество изоляторов средних
             isol_kr = kol * 2  # количество изоляторов крайних
             ves_izol_sr = 0.205
             ves_izol_kr = 0.195
             naz_sr = 'Изолятор 1600А  (Ср.)'  # название изолятора
             naz_kr = 'Изолятор 1600А  (Кр.)'  # название изолятора
         elif self.nominal in [3200]:
-            kol_plast = kol * 8
             L_plastina = round(kol_plast  * (self.s * 2 + 30 + 5) / 3000, 2)  # расчет пластины токопроводящей
             kol_b = kol * 4
             print('rolichestvo boltov', kol_b)
@@ -530,14 +526,13 @@ class vvod:
             itog_dempf = kol_demp * procent_dempf
             #self.itog.append(['заг', 'Демпфер 20-30мм 4мм', kol_demp, 'шт.'])
             ves_demp = round(kol_demp * 0.008085, 2)  # вес всех демпферов
-            isol_sr = kol * 6  # количество изоляторов средних
+            isol_sr = (kol * self.KolProv - 1) * 2  # количество изоляторов средних
             isol_kr = kol * 4  # количество изоляторов крайних
             ves_izol_sr = 0.205
             ves_izol_kr = 0.195
             naz_sr = 'Изолятор 1600А  (Ср.)'  # название изолятора
             naz_kr = 'Изолятор 1600А  (Кр.)'  # название изолятора
         elif self.nominal in [4000]:
-            kol_plast = kol * 8
             L_plastina = round(kol_plast * (self.s * 2 + 30 + 5) / 3000, 2)  # расчет пластины токопроводящей
             kol_b = kol * 4
             ves_vtul = round(kol * 2 * 0.05075, 2)  # вес втулки расчет
@@ -545,14 +540,13 @@ class vvod:
             itog_dempf = kol_demp * procent_dempf
             #self.itog.append(['заг', 'Демпфер 20-30мм 4мм', kol_demp, 'шт.'])
             ves_demp = round(kol_demp * 0.008085, 2)  # вес всех демпферов
-            isol_sr = kol * 6  # количество изоляторов средних
+            isol_sr = kol * (self.KolProv - 1) * 2  # количество изоляторов средних
             isol_kr = kol * 4  # количество изоляторов крайних
             ves_izol_sr = 0.24
             ves_izol_kr = 0.235
             naz_sr = 'Изолятор 2000А  (Ср.)'  # название изолятора
             naz_kr = 'Изолятор 2000А  (Кр.)'  # название изолятора
         elif self.nominal in [5000]:
-            kol_plast = kol * 8
             L_plastina = round(kol_plast * (self.s * 2 + 30 + 5) / 3000, 2)  # расчет пластины токопроводящей
             kol_b = kol * 4
             ves_vtul = round(kol * 2 * 0.05075, 2)  # вес втулки расчет
@@ -560,14 +554,13 @@ class vvod:
             itog_dempf = kol_demp * procent_dempf
             #self.itog.append(['заг', 'Демпфер 20-30мм 4мм', kol_demp, 'шт.'])
             ves_demp = round(kol_demp * 0.008085, 2)  # вес всех демпферов
-            isol_sr = kol * 6  # количество изоляторов средних
+            isol_sr = kol * (self.KolProv - 1) * 2  # количество изоляторов средних
             isol_kr = kol * 4  # количество изоляторов крайних
             ves_izol_sr = 0.24
             ves_izol_kr = 0.235
             naz_sr = 'Изолятор 2000А  (Ср.)'  # название изолятора
             naz_kr = 'Изолятор 2000А  (Кр.)'  # название изолятора
         elif self.nominal in [630]:
-            kol_plast = kol * 8
             L_plastina = round(kol_plast * (self.s + 30 + 5) / 3000, 2)  # расчет пластины токопроводящей
             kol_b = kol
             ves_vtul = round(kol * 0.05075, 2)  # вес втулки расчет
@@ -575,14 +568,13 @@ class vvod:
             itog_dempf = kol_demp * procent_dempf
             #self.itog.append(['заг', 'Демпфер 20-30мм 4мм', kol_demp, 'шт.'])
             ves_demp = round(kol_demp * 0.008085, 2)  # вес всех демпферов
-            isol_sr = kol * 3  # количество изоляторов средних
+            isol_sr = kol * self.KolProv - 1  # количество изоляторов средних
             isol_kr = kol * 2  # количество изоляторов крайних
             ves_izol_sr = 0.11
             ves_izol_kr = 0.105
             naz_sr = 'Изолятор 630А  (Ср.)'  # название изолятора
             naz_kr = 'Изолятор 630А  (Кр.)'  # название изолятора
         elif self.nominal in [1250]:
-            kol_plast = kol * 8
             L_plastina = round(kol_plast * (self.s + 30 + 5) / 3000, 2)  # расчет пластины токопроводящей
             kol_b = kol * 1
             ves_vtul = round(kol * 2 * 0.05075, 2)  # вес втулки расчет
@@ -590,14 +582,13 @@ class vvod:
             itog_dempf = kol_demp * procent_dempf
             # self.itog.append(['заг', 'Демпфер 20-30мм 4мм', kol_demp, 'шт.'])
             ves_demp = round(kol_demp * 0.008085, 2)  # вес всех демпферов
-            isol_sr = kol * 3  # количество изоляторов средних
+            isol_sr = kol * self.KolProv - 1  # количество изоляторов средних
             isol_kr = kol * 2  # количество изоляторов крайних
             ves_izol_sr = 0.16
             ves_izol_kr = 0.15
             naz_sr = 'Изолятор 1250А  (Ср.)'  # название изолятора
             naz_kr = 'Изолятор 1250А  (Кр.)'  # название изолятора
         elif self.nominal in [1250] and self.material in ['Cu']:
-            kol_plast = kol * 8
             L_plastina = round(kol_plast * (self.s + 30 + 5) / 3000, 2)  # расчет пластины токопроводящей
             kol_b = kol * 1
             ves_vtul = round(kol * 2 * 0.05075, 2)  # вес втулки расчет
@@ -605,7 +596,7 @@ class vvod:
             itog_dempf = kol_demp * procent_dempf
             # self.itog.append(['заг', 'Демпфер 20-30мм 4мм', kol_demp, 'шт.'])
             ves_demp = round(kol_demp * 0.008085, 2)  # вес всех демпферов
-            isol_sr = kol * 3  # количество изоляторов средних
+            isol_sr = kol * self.KolProv - 1  # количество изоляторов средних
             isol_kr = kol * 2  # количество изоляторов крайних
             ves_izol_sr = 0.105
             ves_izol_kr = 0.115
@@ -613,7 +604,6 @@ class vvod:
             naz_kr = 'Изолятор 800А  (Кр.)'  # название изолятора
         elif self.nominal in [6300]:
             # 6300
-            kol_plast = kol * 8
             L_plastina = round(kol_plast * (self.s * 3 + 30 + 5) / 3000, 2)  # расчет пластины токопроводящей
             kol_b = kol * 6
             ves_vtul = round(kol * 0.05075, 2)  # вес втулки расчет
@@ -621,14 +611,13 @@ class vvod:
             itog_dempf = kol_demp * procent_dempf
             #self.itog.append(['заг', 'Демпфер 20-30мм 4мм', kol_demp, 'шт.'])
             ves_demp = round(kol_demp * 0.008085, 2)  # вес всех демпферов
-            isol_sr = kol * 9  # количество изоляторов средних
+            isol_sr = kol * (self.KolProv - 1) * 3  # количество изоляторов средних
             isol_kr = kol * 6  # количество изоляторов крайних
             ves_izol_sr = 0.24
             ves_izol_kr = 0.235
             naz_sr = 'Изолятор 2000А  (Ср.)'  # название изолятора
             naz_kr = 'Изолятор 2000А  (Кр.)'  # название изолятора
         else:
-            kol_plast = kol * 8
             L_plastina = round(kol_plast * (self.s + 30 + 5) / 3000, 2)  # расчет пластины токопроводящей
             kol_b = kol
             ves_vtul = round(kol * 0.05075, 2)  # вес втулки расчет
@@ -708,13 +697,13 @@ class vvod:
             #self.itog.append(['М стык', 'Кварцевая мука', kv_pes, 'кг.'])
 
     def pos(self, pl):#ПОС порошок
-        plosh = self.s * 40 * pl * 16 + (self.s + 30) * 40 * pl * 16
+        plosh = self.s * 40 * pl * self.KolProv * 4 + (self.s + 30) * 40 * pl * self.KolProv * 4
         rash = round(plosh / 1000000 * 0.5, 2)
         self.itog.append(['М', 'Порошковый материал ТР-63-25', rash, 'кг.'])
 
     def zel(self, nominal, os):#расчет эпоксидной изоляции
         per = self.s * 2 + 6
-        plosh = per * 0.001 * os * 4
+        plosh = per * 0.001 * os * self.KolProv
         ves = round(plosh * 0.35, 2)
         self.itog.append(['М', 'Краска порошковая ОХТЭК - 3ГЛ RAL 6024 ТР9 (для шин, зеленая)', ves, 'кг.'])
 

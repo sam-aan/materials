@@ -225,10 +225,12 @@ class ExampleApp(QMainWindow):
             SaveFile(i[1], fileName, 0)
 
         for i in spisok[1]:
+
             rezult = materials_simple.vvod(spisok[1][i]['seria'], spisok[1][i]['material'],
                                            spisok[1][i]['nominal'], spisok[1][i]['dlina'],
                                            spisok[1][i]['Nstik'], spisok[1][i]['Nsekc'], spisok[1][i]['Nkon_zag'],
-                                           spisok[1][i]['Nflanc'], spisok[1][i]['Lsvar_izd']).fg()
+                                           spisok[1][i]['Nflanc'], spisok[1][i]['Lsvar_izd'],
+                                           4).fg()
             print('Преобразование', rezult)
             to_exl_main_mat.preobrazovanie(rezult, [spisok[1][i]['seria'], spisok[1][i]['material'],
                                                     spisok[1][i]['nominal'], spisok[1][i]['dlina'],
@@ -298,6 +300,17 @@ class ExampleApp2(QtWidgets.QMainWindow):
         self.nominal.addItem("")
         self.nominal.addItem("")
         self.verticalLayout.addWidget(self.nominal)
+
+        self.label_8 = QtWidgets.QLabel(self.layoutWidget)
+        self.label_8.setObjectName("label_8")
+        self.verticalLayout.addWidget(self.label_8)
+        self.KolProv = QtWidgets.QComboBox(self.layoutWidget)
+        self.KolProv.setObjectName("kolprov")
+        self.KolProv.addItem("")
+        self.KolProv.addItem("")
+        self.KolProv.addItem("")
+        self.verticalLayout.addWidget(self.KolProv)
+
         self.label_2 = QtWidgets.QLabel(self.layoutWidget)
         self.label_2.setObjectName("label_2")
         self.verticalLayout.addWidget(self.label_2)
@@ -357,11 +370,8 @@ class ExampleApp2(QtWidgets.QMainWindow):
     def retranslateUi(self, Dialog):
         _translate = QtCore.QCoreApplication.translate
         Dialog.setWindowTitle(_translate("Dialog", "Расчет материалов"))
-        self.label_1.setText(_translate("Dialog", "Серия шинопровода"))
         self.seria.setItemText(0, _translate("Dialog", "E3"))
         self.seria.setItemText(1, _translate("Dialog", "CR1"))
-
-        self.label_0.setText(_translate("Dialog", "Материал проводника"))
         self.material.setItemText(0, _translate("Dialog", "Алюминий"))
         self.material.setItemText(1, _translate("Dialog", "Медь"))
         self.label.setText(_translate("Dialog", "Номинал тока А."))
@@ -376,12 +386,18 @@ class ExampleApp2(QtWidgets.QMainWindow):
         self.nominal.setItemText(8, _translate("Dialog", "4000"))
         self.nominal.setItemText(9, _translate("Dialog", "5000"))
         self.nominal.setItemText(10, _translate("Dialog", "6300"))
+        self.KolProv.setItemText(0, _translate("Dialog", "3"))
+        self.KolProv.setItemText(1, _translate("Dialog", "4"))
+        self.KolProv.setItemText(2, _translate("Dialog", "5"))
+        self.label_0.setText(_translate("Dialog", "Материал проводника"))
+        self.label_1.setText(_translate("Dialog", "Серия шинопровода"))
         self.label_2.setText(_translate("Dialog", "Длина трассы м.п."))
         self.label_3.setText(_translate("Dialog", "Количество стыков шт."))
         self.label_4.setText(_translate("Dialog", "Количество секций шт."))
         self.label_5.setText(_translate("Dialog", "Количество концевых заглушек шт."))
         self.label_6.setText(_translate("Dialog", "Количество фланцевых блоков шт."))
         self.label_7.setText(_translate("Dialog", "Длина сварных изделий м.п."))
+        self.label_8.setText(_translate("Dialog", "Количество проводников"))
         self.pushButton.setText(_translate("Dialog", "Запустить"))
         self.pushButton2.setText(_translate("Dialog", "Объеденить файлы"))
 
@@ -401,7 +417,7 @@ class ExampleApp2(QtWidgets.QMainWindow):
         rezult = materials_simple.vvod(self.seria.currentText(), self.material.currentText(),
                                        self.nominal.currentText(), self.dlina_trassi.text(),
                                        self.kol_stik.text(), self.kol_seks.text(), self.kol_zag.text(),
-                                       self.kol_flanc.text(), self.dlina_svarka.text()).fg()
+                                       self.kol_flanc.text(), self.dlina_svarka.text(), self.KolProv.currentText()).fg()
         print('преобразование')
         to_exl_main_mat.preobrazovanie(rezult, [self.seria.currentText(), self.material.currentText(),
                                                 self.nominal.currentText(), self.dlina_trassi.text(),
