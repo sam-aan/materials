@@ -113,7 +113,7 @@ class ExampleApp(QMainWindow):
 
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
-        MainWindow.setWindowTitle(_translate("MainWindow", "Solaris specification  V-211122-01"))
+        MainWindow.setWindowTitle(_translate("MainWindow", "Solaris specification  V-180123-01"))
         self.pushButton.setText(_translate("MainWindow", "Пуск"))
         self.pushButton2.setText(_translate("MainWindow", "Открыть файл"))
         self.pushButton3.setText(_translate("MainWindow", "Расчет материалов"))
@@ -385,7 +385,7 @@ class ExampleApp2(QtWidgets.QMainWindow):
         self.nominal.setItemText(7, _translate("Dialog", "3200"))
         self.nominal.setItemText(8, _translate("Dialog", "4000"))
         self.nominal.setItemText(9, _translate("Dialog", "5000"))
-        self.nominal.setItemText(10, _translate("Dialog", "6300"))
+        self.nominal.setItemText(10, _translate("Dialog", "6400"))
         self.KolProv.setItemText(0, _translate("Dialog", "3"))
         self.KolProv.setItemText(1, _translate("Dialog", "4"))
         self.KolProv.setItemText(2, _translate("Dialog", "5"))

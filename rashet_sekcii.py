@@ -397,7 +397,7 @@ class calculation:
                     for i in [1, 2, 3]:
                         detali[i][1] = 4
                     detali.insert(1, ['kc', 1, self.os[0]])
-                elif self.dat['In'] in [6300]:
+                elif self.dat['In'] in [6400]:
                     detali.pop(0)
                     detali.insert(0, ['k', 2, self.os[0]])
                     for i in range(1, 4):
@@ -430,7 +430,7 @@ class calculation:
 
                 if self.dat['In'] in [3200, 4000, 5000]:
                     detali.insert(0, ['s_01', 8, self.os[0]])
-                elif self.dat['In'] in [6300]:
+                elif self.dat['In'] in [6400]:
                     detali.insert(0, ['s_01', 12, self.os[0]])
 
             else:  # 3-х проводной
@@ -542,7 +542,7 @@ class calculation:
                 for i in [2, 3, 4, 5]:
                     detali[i][1] = 2
 
-            elif self.dat['In'] in [6300]:
+            elif self.dat['In'] in [6400]:
 
                 if self.C != 90:
                     svar_det_one_floor = [['К-СД1', 1, ['k1', 1, self.A], ['k2', 1, self.B]],
@@ -796,7 +796,7 @@ class calculation:
                         for j in itog_svar:
                             itog.append(j)
 
-                #   elif self.dat['In'] in [6300]:
+                #   elif self.dat['In'] in [6400]:
                 else:
                     # первый этаж
                     x = int(self.A) + self.dat['разница между этажами']
@@ -907,7 +907,7 @@ class calculation:
                 svar_det_one_floor.append(['К-СД16', 1, ['kc1', 1, self.A], ['kc4', 1, self.B], ['kc1', 1, self.C]])
                 for i in [2, 3, 4, 5]:
                     detali[i][1] = 2
-            elif self.dat['In'] in [6300]:
+            elif self.dat['In'] in [6400]:
                 svar_det_one_floor[2] = ['С-СД13', 3, ['cB', 3, self.A],  ['u', 3, 0], ['cC', 3, self.B], ['cA', 3, self.C]]
                 svar_det_one_floor[3] = ['С-СД13', 3, ['cB', 3, self.C],  ['u', 3, 0], ['cC', 3, self.B], ['cA', 3, self.A]]
                 svar_det_one_floor.append(['К-СД16', 3, ['kc1', 3, self.A], ['kc4', 3, self.B], ['kc1', 3, self.C]])
@@ -1076,7 +1076,7 @@ class calculation:
                     for j in itog_svar:
                         itog.append(j)
 
-            #   elif self.dat['In'] in [6300]:
+            #   elif self.dat['In'] in [6400]:
             else:
                 # первый этаж
                 x = int(self.os[0]) + self.dat['разница между этажами']
@@ -1236,7 +1236,7 @@ class calculation:
                     for j in itog_svar:
                         itog.append(j)
 
-            elif self.dat['In'] in [6300]:
+            elif self.dat['In'] in [6400]:
                 x = int(self.os[0]) + self.dat['разница между этажами']
                 y = int(self.os[1]) + self.dat['разница между этажами']
                 z = int(self.os[2])
@@ -1376,7 +1376,7 @@ class calculation:
                     for j in itog_svar:
                         itog.append(j)
 
-            elif self.dat['In'] in [6300]:
+            elif self.dat['In'] in [6400]:
                 x = int(self.os[0]) + self.dat['разница между этажами']
                 y = int(self.os[1]) + self.dat['разница между этажами']
                 z = int(self.os[2])
@@ -1793,7 +1793,7 @@ class calculation:
                         ['Ш-СД21', 1, ['s1t', 2, [x, y]], ['s3t', 2, z]],
                         ['Ш-СД21-З', 1, ['s1t', 2, [y, x]], ['s3t', 2, z]]]
 
-        else:   # 6300
+        else:   # 6400
             detali = [['k', 1, [x, y]], ['n', 8], ['sux', 8]]
             svar_det = [['К-СД3', 1, ['k4', 1, x], ['k4', 1, z]],
                         ['С-СД11', 1, ['ct', 1, [x, y]], ['ctz', 1, z]],
@@ -1867,7 +1867,7 @@ class calculation:
                     for i in [1, 2, 3]:
                         detali[i][1] = 4
                     detali.insert(1, ['kc', 1, self.os[0]])
-                elif self.dat['In'] in [6300]:
+                elif self.dat['In'] in [6400]:
                     detali.pop(0)
                     detali.insert(0, ['k', 2, self.os[0]])
                     for i in range(1, 4):
@@ -1900,7 +1900,7 @@ class calculation:
 
                 if self.dat['In'] in [3200, 4000, 5000]:
                     detali.insert(0, ['s', 8, self.os[0]])
-                elif self.dat['In'] in [6300]:
+                elif self.dat['In'] in [6400]:
                     detali.insert(0, ['s', 12, self.os[0]])
 
             else:  # 3-х проводной
@@ -2035,7 +2035,7 @@ class calculation:
             self.C = 403
         elif self.dat['In'] in [4000, 5000]:
             self.C = 483
-        elif self.dat['In'] in [6300]:
+        elif self.dat['In'] in [6400]:
             self.C = '-'
 
         self.spisok_dla_mater['Nkon_zag'] = self.spisok_dla_mater['Nkon_zag'] + int(self.dat['количество'])

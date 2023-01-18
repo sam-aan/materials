@@ -54,7 +54,7 @@ class Detali:
     def lb(self):
         nominal = {'630': 113, '800': 128, '1000': 153, '1250': 183,
                    '1600': 233, '2000': 273, '2500': 273, '2600': 299,
-                   '3200': 399, '4000': 479, '5000': 479, '6300': '-'}
+                   '3200': 399, '4000': 479, '5000': 479, '6400': '-'}
         self.A = 150
         self.B = nominal[str(self.nominal)]
         self.C = '-'
@@ -76,7 +76,7 @@ class Detali:
     # Лист торцевой
     def lt(self):
         nominal = {'630': 117, '800': 132, '1000': 153, '1250': 187,
-                   '1600': 237, '2000': 277, '2500': 277, '2600': 303, '3200': 403, '4000': 483, '5000': 483, '6300': '-'}
+                   '1600': 237, '2000': 277, '2500': 277, '2600': 303, '3200': 403, '4000': 483, '5000': 483, '6400': '-'}
         self.A = 138
         self.B = nominal[str(self.nominal)]
         self.C = '-'
@@ -137,11 +137,11 @@ class Detali:
         if self.material == 'Al':  # алюминий
             L = {'630': [182, 200], '800': [200, 200], '1000': [226, 200], '1250': [249, 200], '1600': [305, 200],
                  '2000': [351, 200], '2500': [351, 245], '3200': [504, 245], '3201': [504, 245], '2600': [504, 245],
-                 '4000': [596, 245], '5000': [596, 245], '6300': [763, 245]}
+                 '4000': [596, 245], '5000': [596, 245], '6400': [763, 245]}
         else:
             L = {'630': ['X', 'Y'], '1000': [200, 200], '1250': [226, 200], '1600': [249, 200], '2000': [305, 200],
                  '2500': [305, 200], '3200': ['X', 'Y'], '3201': ['X', 'Y'], '4000': [504, 245],
-                 '5000': [504, 245], '6300': ['X', 'Y']}
+                 '5000': [504, 245], '6400': ['X', 'Y']}
         self.A = L[str(self.nominal)][0]
         self.B = L[str(self.nominal)][1]
         self.oboznachenie = '000 170'
@@ -159,14 +159,14 @@ class Detali:
         if self.material == 'Al':  # алюминий
             L = {'250': 30, '400': 68, '630': 66, '800': 80, '1000': 108, '1250': 138, '1600': 185, '2000': 226,
                  '2500': 226, '2600': 226, '3200': 360, '3201': 360,
-                 '4000': 434, '5000': 434, '6300': 660}
+                 '4000': 434, '5000': 434, '6400': 660}
             if str(self.nominal) == '2500' or str(self.nominal) == '5000':
                 self.profil(['профиль', self.naimenovanie + ' 2500', self.oboznachenie + '_2500', '90 90'], L[str(self.nominal)])
             else:
                 self.profil(['профиль', self.naimenovanie, self.oboznachenie, '90 90'], L[str(self.nominal)])
         else:
             L = {'630': 66, '800': 66, '1000': 80, '1250': 108, '1600': 138, '2000': 185, '2500': 185, '3200': 234,
-                 '4000': 360, '5000': 360, '6300': 540}
+                 '4000': 360, '5000': 360, '6400': 540}
             if str(self.nominal) == '2500' or str(self.nominal) == '5000':
                 self.profil(['профиль', self.naimenovanie + ' медная 2500', self.oboznachenie + '_2500', '90 90'], L[str(self.nominal)])
             else:
@@ -179,7 +179,7 @@ class Detali:
         self.A = '-'
         self.B = '-'
         self.C = '-'
-        if self.nominal != 2500 or self.nominal != 6300:
+        if self.nominal != 2500 or self.nominal != 6400:
             self.L = 72
         else:
             self.L = 86
@@ -232,9 +232,9 @@ class Detali:
 
         if self.nominal <= 2500:
             self.L = self.H_stenka + self.S_krishka * 2
-        elif self.nominal >= 3200 and self.nominal < 6300:
+        elif self.nominal >= 3200 and self.nominal < 6400:
             self.L = self.H_stenka * 2 + 3 + self.S_krishka * 2
-        else:   # для 6300
+        else:   # для 6400
             self.L = self.H_stenka * 3 + 6 + self.S_krishka * 2
 
         self.oboznachenie = 'СС'
@@ -263,9 +263,9 @@ class Detali:
 
         if self.nominal <= 2500:
             self.L = self.H_stenka + self.S_krishka * 2
-        elif self.nominal > 2500 and self.nominal < 6300:
+        elif self.nominal > 2500 and self.nominal < 6400:
             self.L = self.H_stenka * 2 + 3 + self.S_krishka * 2
-        else:   # для 6300
+        else:   # для 6400
             self.L = self.H_stenka * 3 + 6 + self.S_krishka * 2
 
         self.oboznachenie = 'Н'
@@ -287,10 +287,10 @@ class Detali:
         self.C = '-'
         if self.material == 'Al':  # алюминий
             L = {'630': 109, '800': 124, '1000': 149, '1250': 179, '1600': 229, '2000': 269, '2500': 269, '3200': 395,
-                 '4000': 475, '5000': 475, '6300': 681}
+                 '4000': 475, '5000': 475, '6400': 681}
         else:
             L = {'630': 109, '800': 124, '1000': 149, '1250': 149, '1600': 179, '2000': 229, '2500': 229, '3200': 295,
-                 '4000': 395, '5000': 395, '6300': 561}
+                 '4000': 395, '5000': 395, '6400': 561}
         self.L1 = '-'
         self.L = L[str(self.nominal)]
         self.oboznachenie = 'З-ТС'
@@ -2317,10 +2317,10 @@ class Detali:
                                                            'Изолятор средний', 'Направляющая']:
 
             if self.material in ['Al']:
-                nominalus = {3200: 1600, 2600: 1250, 4000: 2000, 5000: 2000, 6300: 2000, 3201: 2000}
+                nominalus = {3200: 1600, 2600: 1250, 4000: 2000, 5000: 2000, 6400: 2000, 3201: 2000}
                 nominal = nominalus[self.nominal]
             else:
-                nominalus = {3200: 1250, 4000: 1600, 5000: 1600, 6300: 1600}
+                nominalus = {3200: 1250, 4000: 1600, 5000: 1600, 6400: 1600}
                 nominal = nominalus[self.nominal]
 
             if self.naimenovanie in ['Стенка', 'Стенка крашенная']:
@@ -2331,7 +2331,7 @@ class Detali:
             if self.material in ['Al']:
 
                 if self.nominal > 2500 and re.findall(r'\w*', self.naimenovanie)[0] in ['Шина']:
-                    nominalus = {3200: 1600, 3201: 1600, 2600: 1250, 4000: 2000, 5000: 2500, 6300: 2500}
+                    nominalus = {3200: 1600, 3201: 1600, 2600: 1250, 4000: 2000, 5000: 2500, 6400: 2500}
                     nominal = str(nominalus[self.nominal]) + ' (Алюм)'
                 else:
                     nominal = str(self.nominal) + ' (Алюм)'
@@ -2339,7 +2339,7 @@ class Detali:
             else:  # self.material in ['Cu']:
 
                 if self.nominal > 2500 and re.findall(r'\w*', self.naimenovanie)[0] in ['Шина', 'Пластина']:
-                    nominalus = {3200: 1600, 4000: 2000, 5000: 2500, 6300: 2500}
+                    nominalus = {3200: 1600, 4000: 2000, 5000: 2500, 6400: 2500}
                     nominal = str(nominalus[self.nominal]) + ' (Медь)'
                 else:
                     nominal = str(self.nominal) + ' (Медь)'

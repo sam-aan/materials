@@ -205,7 +205,7 @@ class vvod:
                 self.S_sh = 1266.3   # площадь сечения
                 self.v_sh = 3.2
                 self.ves_flanca = 0.65
-        elif self.nominal in [2500, 5000, 6300]:
+        elif self.nominal in [2500, 5000, 6400]:
             self.nominal_2 = 2500
             self.stenka_2500 = 2000
             self.s = 200
@@ -301,7 +301,7 @@ class vvod:
             self.H_zag_bok = 231
             self.ves_zag_bok = 0.55
             self.ves_flanca = 0.65
-        elif self.nominal in [2500, 5000, 6300]:
+        elif self.nominal in [2500, 5000, 6400]:
             self.stenka_2500 = 1600
             self.nominal_2 = '2500 (160x8)'
             self.s = 160
@@ -324,7 +324,7 @@ class vvod:
                     - 0,10 кг отвердителя 0903,
                     -0,07 кг. отвердителя 0590,
                     -0,91 кг кварцевого песка. '''
-        if self.nominal in [3200, 4000, 5000, 6300]:
+        if self.nominal in [3200, 4000, 5000, 6400]:
             gabarit = [0.1, (self.s * 2 + 50) / 1000]   # габарит шинопрвода в метрах
         else:
             gabarit = [0.1, (self.s + 40) / 1000]   # габарит шинопрвода в метрах
@@ -332,7 +332,7 @@ class vvod:
         obem_shin = self.S_sh * os * 4 / 1000000    # объем шин
         print(obem_shin, 'obem shin')
 
-        if self.nominal in [3200, 4000, 5000, 6300]:
+        if self.nominal in [3200, 4000, 5000, 6400]:
             obem = round(gabarit[0] * gabarit[1] * os2 - obem_shin * 2, 5)   # объем шинопровода в м3 для двухэтажек
         else:
             obem = round(gabarit[0] * gabarit[1] * os2 - obem_shin, 5)   # объем шинопровода в м3
@@ -374,7 +374,7 @@ class vvod:
             self.itog.append(['П', 'Крышка окрашенная 2.82м.', L, 'шт.'])
             self.itog.append(['П', 'Крышка средняя окрашенная 2.82м.', L / 2, 'шт.'])
             self.itog.append(['П', 'Стенка ' + str(self.stenka_2500) + ' окрашенный 2.82м.', L1 * 2, 'шт.'])
-        elif self.nominal in [6300]:
+        elif self.nominal in [6400]:
             self.itog.append(['П', 'Крышка окрашенная 2.82м.', L, 'шт.'])
             self.itog.append(['П', 'Крышка средняя окрашенная 2.82м.', L, 'шт.'])
             self.itog.append(['П', 'Стенка ' + str(self.stenka_2500) + ' окрашенный 2.82м.', L1 * 3, 'шт.'])
@@ -397,7 +397,7 @@ class vvod:
             self.itog.append(['П', 'Крышка без покрытия 3м.', L, 'шт.'])
             self.itog.append(['П', 'Стенка ' + str(self.stenka_2500) + ' без покрытия 3м.', L * 2, 'шт.'])
             self.itog.append(['П', 'Крышка средняя без покрытия 3м.', L, 'шт.'])
-        elif self.nominal in [6300]:
+        elif self.nominal in [6400]:
             self.itog.append(['П', 'Крышка без покрытия 3м.', L, 'шт.'])
             self.itog.append(['П', 'Стенка ' + str(self.stenka_2500) + ' без покрытия 3м.', L * 3, 'шт.'])
             self.itog.append(['П', 'Крышка средняя без покрытия 3м.', L * 2, 'шт.'])
@@ -422,7 +422,7 @@ class vvod:
         elif self.nominal in [4000]:
             name = name2 + '2500'
             L = L * 2
-        elif self.nominal in [6300]:
+        elif self.nominal in [6400]:
             name = name2 + '2500'
             L = L * 3
         else:
@@ -440,13 +440,13 @@ class vvod:
 
         if self.nominal in [3200, 4000, 5000]:
             L = round(math.ceil((self.s * 2 + 66 + 5 + 3 + 3) * 4 * kol / 3000), 2)
-        elif self.nominal in [6300]:
+        elif self.nominal in [6400]:
             L = round(math.ceil((self.s * 3 + 66 + 5 + 6 + 3) * 4 * kol / 3000), 2)
         else:
             L = round(math.ceil((self.s + 66 + 5 + 3) * 4 * kol / 3000), 2)
         print('Направляющая', L, 'шт.')
 
-        if self.nominal in [2500, 5000, 6300]:
+        if self.nominal in [2500, 5000, 6400]:
             self.itog.append(['П', 'Направляющая ' + str(self.nominal), L, 'шт.'])
         else:
             self.itog.append(['П', 'Направляющая', L, 'шт.'])
@@ -602,8 +602,8 @@ class vvod:
             ves_izol_kr = 0.115
             naz_sr = 'Изолятор 800А  (Ср.)'  # название изолятора
             naz_kr = 'Изолятор 800А  (Кр.)'  # название изолятора
-        elif self.nominal in [6300]:
-            # 6300
+        elif self.nominal in [6400]:
+            # 6400
             L_plastina = round(kol_plast * (self.s * 3 + 30 + 5) / 3000, 2)  # расчет пластины токопроводящей
             kol_b = kol * 6
             ves_vtul = round(kol * 0.05075, 2)  # вес втулки расчет
@@ -640,7 +640,7 @@ class vvod:
         else:
             name_L_plastina = ' медная'
 
-        if self.nominal in [2500, 5000, 6300]:
+        if self.nominal in [2500, 5000, 6400]:
             self.itog.append(['П', 'Пластина токопроводящая 2500' + name_L_plastina, L_plastina, 'шт.'])
             self.itog.append(['Пи', 'Болт М12 со срывной головкой (номинал 2500) по чертежу 000 031-01', kol_b, 'шт.'])
             self.itog.append(['заг', 'Силикон листовой толщина 8 мм 500х500мм', itog_dempf, 'шт.'])
@@ -760,7 +760,7 @@ class vvod:
             k_zak = round(L / 150 * 4, 1)
         elif self.nominal in [5000]:
             k_zak = round(L / 150 * 6, 1)
-        #6300
+        #6400
         else:
             k_zak = round(L / 150 * 3 / 1000, 1)
         self.itog.append(['ст', 'Заклепка вытяжная AFT 4,8х12 мм Алюм/Сталь станд.бортик (0,5/5,0zac) ZAC', k_zak, 'тыс. шт.'])
