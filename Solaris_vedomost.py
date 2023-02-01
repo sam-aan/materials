@@ -113,7 +113,7 @@ class ExampleApp(QMainWindow):
 
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
-        MainWindow.setWindowTitle(_translate("MainWindow", "Solaris specification  V-180123-01"))
+        MainWindow.setWindowTitle(_translate("MainWindow", "Solaris specification  V-010223-01"))
         self.pushButton.setText(_translate("MainWindow", "Пуск"))
         self.pushButton2.setText(_translate("MainWindow", "Открыть файл"))
         self.pushButton3.setText(_translate("MainWindow", "Расчет материалов"))
