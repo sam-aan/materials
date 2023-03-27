@@ -119,7 +119,7 @@ class calculation:
         self.Y = '-'
         self.L = '-'
         self.L1 = '-'
-        self.spisok_dla_mater = spisok_dla_mater    # для расчета материалов
+        self.spisok_dla_mater = spisok_dla_mater                            # для расчета материалов
 
     def listsum(self, numList):
         '''модуль для разделения в размерах размеры секции от прочих параметров'''
@@ -144,7 +144,7 @@ class calculation:
                    'zv': 'z_v', 'zvf': 'z_v',
                    'zg': 'z_g', 'zgf': 'z_g', 'tv': 'tv', 'tg': 'tg', 'tsv': 'ts', 'sb': 'sb',
                    'сб': 'sb', 'pr': 'om', 'prf': 'omf', 'kz': 'kz', 'pn': 'pn', 'om': 'bom',
-                   'omf': 'bom', 'ks': 'ks', 'ksb': 'ksb', 'pp': 'pp'}
+                   'omf': 'bom', 'ks': 'ks', 'ksb': 'ksb', 'pp': 'pp', 'sk': 'sk'}
 
         if str(self.dat['Обозначение']) not in section:
             znach = False
@@ -163,29 +163,30 @@ class calculation:
         self.index += 1
         index = self.index
         #print(svar_det)
-        kol = int(svar_det[1]) * int(self.dat['количество'])
-        one_symbol = re.findall(r'\w+', svar_det[0])[0]
+        kol = int(svar_det[2]) * int(self.dat['количество'])
+        #one_symbol = re.findall(r'\w+', svar_det[0])[0]
         last_symbol = re.findall(r'\w+', svar_det[0])[-1]
         W_line1 = []
+        nominal = self.dat['In']
 
-        if one_symbol == 'К':
-            oboznach = 'Крышка СБ'
-            nominal = '-'
-        elif one_symbol == 'КВ':
-            oboznach = 'Крышка с выступом СБ'
-            nominal = '-'
-        elif one_symbol == 'С':
-            oboznach = 'Стенка СБ'
-            nominal = self.dat['In']
-        elif one_symbol == 'Ш':
-            oboznach = 'Шина СБ'
-            nominal = self.dat['In']
-        else:
-            oboznach = 'Сварная деталь СБ'
-            nominal = self.dat['In']
+        # if one_symbol == 'К':
+        #     oboznach = 'Крышка СБ'
+        #     nominal = '-'
+        # elif one_symbol == 'КВ':
+        #     oboznach = 'Крышка с выступом СБ'
+        #     nominal = '-'
+        # elif one_symbol == 'С':
+        #     oboznach = 'Стенка СБ'
+        #     nominal = self.dat['In']
+        # elif one_symbol == 'Ш':
+        #     oboznach = 'Шина СБ'
+        #     nominal = self.dat['In']
+        # else:
+        #     oboznach = 'Сварная деталь СБ'
+        #     nominal = self.dat['In']
 
         if last_symbol == 'З':
-            oboznach = oboznach + ' (Зеркальная)'
+            svar_det[0] = svar_det[0] + ' (Зеркальная)'
 
         A = '-'
         B = '-'
@@ -198,18 +199,18 @@ class calculation:
         if self.dat['Обозначение'] in ['тв', 'tv']:
             if svar_det[0] in ['С-СД14']:
                 if self.dat['In'] in [3200, 4000, 5000]:
-                    C = str(float(svar_det[2][2][0]) - float(self.dat['расстояние от оси до корпуса'])
+                    C = str(float(svar_det[3][2][0]) - float(self.dat['расстояние от оси до корпуса'])
                             - float(self.dat['ширина стенки']) - 1.5)
                 else:
-                    C = str(float(svar_det[2][2][0]) - float(self.dat['расстояние от оси до корпуса'])
+                    C = str(float(svar_det[3][2][0]) - float(self.dat['расстояние от оси до корпуса'])
                             - float(self.dat['ширина стенки']) / 2)
             elif svar_det[0] in ['Ш-СД22', 'Ш-СД22-З', 'Ш-СД21', 'Ш-СД21-З', 'Ш-СД15', 'Ш-СД15-З', 'Ш-СД16',
                                  'Ш-СД16-З']:
                 if self.dat['In'] in [3200, 4000, 5000]:
-                    C = str(float(svar_det[2][2][0]) - float(self.dat['расстояние от оси до шины'])
+                    C = str(float(svar_det[3][2][0]) - float(self.dat['расстояние от оси до шины'])
                             - float(self.dat['ширина шины']) - 3)
                 else:
-                    C = str(float(svar_det[2][2][0]) - float(self.dat['расстояние от оси до шины'])
+                    C = str(float(svar_det[3][2][0]) - float(self.dat['расстояние от оси до шины'])
                             - float(self.dat['ширина шины']) / 2)
             else:
                 C = '-'
@@ -220,16 +221,16 @@ class calculation:
         elif self.dat['Обозначение'] in ['ом', 'pr', 'омф', 'prf']:
 
             if int(self.tip[0]) in [1, 2]:
-                A = str(svar_det[4][0])
+                A = str(svar_det[5][0])
             elif int(self.tip[0]) in [3, 4]:
-                A = str(svar_det[4][0])
-                B = str(svar_det[4][1])
+                A = str(svar_det[5][0])
+                B = str(svar_det[5][1])
             elif int(self.tip[0]) in [5, 6]:
-                A = str(svar_det[4][0])
-                B = str(svar_det[4][1])
-                C = str(svar_det[4][1])
+                A = str(svar_det[5][0])
+                B = str(svar_det[5][1])
+                C = str(svar_det[5][1])
 
-            del svar_det[4]
+            del svar_det[5]
             #print(self.os)
             L = str(float(self.os[0]) - float(self.dat['расстояние от оси до шины']) * 2)
         elif self.dat['Обозначение'] in ['уг', 'ug']:
@@ -238,13 +239,14 @@ class calculation:
             C = '-'
 
         if self.dat['Обозначение'] in ['п', 'уг', 'ув', 'зг', 'зв', 'кп', 'кл', 'згф', 'звф', 'увф', 'угф', 'тв', 'тс',
-                                       'pt', 'ug', 'uv', 'zg', 'zv', 'kp', 'kl', 'zgf', 'zvf', 'uvf', 'ugf', 'tv', 'tsv']:
+                                       'pt', 'ug', 'uv', 'zg', 'zv', 'kp', 'kl', 'zgf', 'zvf', 'uvf', 'ugf', 'tv',
+                                       'tsv', 'sk']:
             nom_two = [A, B, C]
             nom_one = 0
             print(len(svar_det))
 
-            for i in range(2, len(svar_det)):
-                if svar_det[i][0] == 'u':
+            for i in range(3, len(svar_det)):
+                if svar_det[i][0] in ['u', 'ugol', 'ugol1', 'ugol2', 'ugol1_2', 'ugol_2', 'ugol2-z']:
                     result = self.detail(svar_det[i] + self.os, '')
                     W_line1.append(result)
                     continue
@@ -258,25 +260,26 @@ class calculation:
             B = nom_two[1]
             C = nom_two[2]
             print(A, B, C)
+
         else:   # для ОМ
             nom_one = 0
 
-            for i in range(2, len(svar_det)):
+            for i in range(3, len(svar_det)):
                 result = self.detail(svar_det[i], 's')
                 W_line1.append(result)
                 nom_one += 1
 
         W_line = [[index, self.dat['Серия'], self.dat['ip'], self.dat['Материал'], nominal,
-                   self.dat['Кол. пров.'], oboznach, svar_det[0], L, L1, A, B, C, kol,
+                   self.dat['Кол. пров.'], svar_det[1], svar_det[0], L, L1, A, B, C, kol,
                    'ведомость']]
         W_line = W_line + W_line1
         #print('W_line', W_line)
         return W_line
 
     def detail(self, detal, coating):
-        ''' detal  это список атрибутов детали: [Обозначение, количество, раземр по осям]
-            coating это атрибут покрытия (окрашенно "s", или не окрашено).'''
-        print('РАСЧЕТ ДЕТАЛИ', '| Обознач:', detal[0])
+        """ detal  это список атрибутов детали: [Обозначение, количество, раземр по осям]
+            coating это атрибут покрытия (окрашенно "s", или не окрашено)."""
+        print('РАСЧЕТ ДЕТАЛИ', '| Обознач:', str(detal[0]))
 
         if detal[0] in ['n', 'fl', 'zts', 'sux', 'mfazcentr', 'torcentr']:
             self.komplekt.append([self.dat['Кол. пров.'], self.dat['Материал'], self.dat['In'],
@@ -286,8 +289,10 @@ class calculation:
             #print(self.index)
             self.index = self.index + 1
             kol = detal[1] * self.dat['количество']
-            #print(detal)
-            itog = getattr(Detali(detal[2], self.dat, coating, kol, self.tip, [self.A, self.B, self.C], self.spis_kompl), detal[0])()
+            print('detal', detal)
+            itog = getattr(Detali(detal[2], self.dat, coating, kol, self.tip,
+                                  [self.A, self.B, self.C], self.spis_kompl), detal[0])()
+            print('itog', itog)
             itog.insert(0, self.index)
             itog.append(kol)
             itog.append('ведомость')
@@ -490,15 +495,15 @@ class calculation:
 
         if str(self.dat['Кол. пров.']) in ['4', '3+1']:
             if self.C != 90:
-                svar_det_one_floor = [['К-СД1', 1, ['k1', 1, self.A], ['k2', 1, self.B]],
-                                      ['К-СД1', 1, ['k1', 1, self.B], ['k2', 1, self.A]],
-                                      ['С-СД15', 1, ['c4', 1, self.A], ['c4', 1, self.B]],
-                                      ['С-СД16', 1, ['c3', 1, self.A], ['c3', 1, self.B]]]
+                svar_det_one_floor = [['К-СД1', 'Крышка СБ', 1, ['k1', 1, self.A], ['k2', 1, self.B]],
+                                      ['К-СД1', 'Крышка СБ', 1, ['k1', 1, self.B], ['k2', 1, self.A]],
+                                      ['С-СД15', 'Стенка СБ', 1, ['c4', 1, self.A], ['c4', 1, self.B]],
+                                      ['С-СД16', 'Стенка СБ', 1, ['c3', 1, self.A], ['c3', 1, self.B]]]
             else:
-                svar_det_one_floor = [['К-СД1', 1, ['k1', 1, self.A], ['k2', 1, self.B]],
-                                      ['К-СД1', 1, ['k1', 1, self.B], ['k2', 1, self.A]],
-                                      ['С-СД12', 1, ['cB', 1, self.A], ['cB', 1, self.B], ['u', 1, 0]],
-                                      ['С-СД2', 1, ['cA', 1, self.A], ['cA', 1, self.B], ['u', 1, 0]]]
+                svar_det_one_floor = [['К-СД1', 'Крышка СБ', 1, ['k1', 1, self.A], ['k2', 1, self.B]],
+                                      ['К-СД1', 'Крышка СБ', 1, ['k1', 1, self.B], ['k2', 1, self.A]],
+                                      ['С-СД12', 'Стенка СБ', 1, ['cB', 1, self.A], ['cB', 1, self.B], ['u', 1, 0]],
+                                      ['С-СД2', 'Стенка СБ', 1, ['cA', 1, self.A], ['cA', 1, self.B], ['u', 1, 0]]]
 
             detali = [['n', 4], ['sux', 4],
                       ['s5', 1, [self.A, self.B]],
@@ -509,17 +514,17 @@ class calculation:
             if self.dat['In'] in [2600, 3200, 4000, 5000]:
 
                 if self.C != 90:
-                    svar_det_one_floor = [['К-СД1', 1, ['k1', 1, self.A], ['k2', 1, self.B]],
-                                          ['К-СД1', 1, ['k1', 1, self.B], ['k2', 1, self.A]],
-                                          ['С-СД15', 2, ['c4', 2, self.A], ['c4', 2, self.B]],
-                                          ['С-СД16', 2, ['c3', 2, self.A], ['c3', 2, self.B]],
+                    svar_det_one_floor = [['К-СД1', 'Крышка СБ', 1, ['k1', 1, self.A], ['k2', 1, self.B]],
+                                          ['К-СД1', 'Крышка СБ', 1, ['k1', 1, self.B], ['k2', 1, self.A]],
+                                          ['С-СД15', 'Стенка СБ', 2, ['c4', 2, self.A], ['c4', 2, self.B]],
+                                          ['С-СД16', 'Стенка СБ', 2, ['c3', 2, self.A], ['c3', 2, self.B]],
                                           ['К-СД14', 1, ['kc1', 1, self.A], ['kc1', 1, self.B]]]
                 else:
-                    svar_det_one_floor = [['К-СД1', 1, ['k1', 1, self.A], ['k2', 1, self.B]],
-                                          ['К-СД1', 1, ['k1', 1, self.B], ['k2', 1, self.A]],
-                                          ['С-СД12', 2, ['cB', 2, self.A], ['cB', 2, self.B], ['u', 2, 0]],
-                                          ['С-СД2', 2, ['cA', 2, self.A], ['cA', 2, self.B], ['u', 2, 0]],
-                                          ['К-СД14', 1, ['kc1', 1, self.A], ['kc1', 1, self.B]]]
+                    svar_det_one_floor = [['К-СД1', 'Крышка СБ', 1, ['k1', 1, self.A], ['k2', 1, self.B]],
+                                          ['К-СД1', 'Крышка СБ', 1, ['k1', 1, self.B], ['k2', 1, self.A]],
+                                          ['С-СД12', 'Стенка СБ', 2, ['cB', 2, self.A], ['cB', 2, self.B], ['u', 2, 0]],
+                                          ['С-СД2', 'Стенка СБ', 2, ['cA', 2, self.A], ['cA', 2, self.B], ['u', 2, 0]],
+                                          ['К-СД14', 'Крышка СБ', 1, ['kc1', 1, self.A], ['kc1', 1, self.B]]]
 
                 for i in [2, 3, 4, 5]:
                     detali[i][1] = 2
@@ -527,17 +532,17 @@ class calculation:
             elif self.dat['In'] in [4000, 5000]:
 
                 if self.C != 90:
-                    svar_det_one_floor = [['К-СД1', 1, ['k1', 1, self.A], ['k2', 1, self.B]],
-                                          ['К-СД1', 1, ['k1', 1, self.B], ['k2', 1, self.A]],
-                                          ['С-СД15', 2, ['c4', 2, self.A], ['c4', 2, self.B]],
-                                          ['С-СД16', 2, ['c3', 2, self.A], ['c3', 2, self.B]],
-                                          ['К-СД14', 1, ['kc1', 1, self.A], ['kc1', 1, self.B]]]
+                    svar_det_one_floor = [['К-СД1', 'Крышка СБ', 1, ['k1', 1, self.A], ['k2', 1, self.B]],
+                                          ['К-СД1', 'Крышка СБ', 1, ['k1', 1, self.B], ['k2', 1, self.A]],
+                                          ['С-СД15', 'Стенка СБ', 2, ['c4', 2, self.A], ['c4', 2, self.B]],
+                                          ['С-СД16', 'Стенка СБ', 2, ['c3', 2, self.A], ['c3', 2, self.B]],
+                                          ['К-СД14', 'Крышка СБ', 1, ['kc1', 1, self.A], ['kc1', 1, self.B]]]
                 else:
-                    svar_det_one_floor = [['К-СД1', 1, ['k1', 1, self.A], ['k2', 1, self.B]],
-                                          ['К-СД1', 1, ['k1', 1, self.B], ['k2', 1, self.A]],
-                                          ['С-СД12', 2, ['cB', 2, self.A], ['cB', 2, self.B], ['u', 2, 0]],
-                                          ['С-СД2', 2, ['cA', 2, self.A], ['cA', 2, self.B], ['u', 2, 0]],
-                                          ['К-СД14', 1, ['kc1', 1, self.A], ['kc1', 1, self.B]]]
+                    svar_det_one_floor = [['К-СД1', 'Крышка СБ', 1, ['k1', 1, self.A], ['k2', 1, self.B]],
+                                          ['К-СД1', 'Крышка СБ', 1, ['k1', 1, self.B], ['k2', 1, self.A]],
+                                          ['С-СД12', 'Стенка СБ', 2, ['cB', 2, self.A], ['cB', 2, self.B], ['u', 2, 0]],
+                                          ['С-СД2', 'Стенка СБ', 2, ['cA', 2, self.A], ['cA', 2, self.B], ['u', 2, 0]],
+                                          ['К-СД14', 'Крышка СБ', 1, ['kc1', 1, self.A], ['kc1', 1, self.B]]]
 
                 for i in [2, 3, 4, 5]:
                     detali[i][1] = 2
@@ -545,17 +550,17 @@ class calculation:
             elif self.dat['In'] in [6400]:
 
                 if self.C != 90:
-                    svar_det_one_floor = [['К-СД1', 1, ['k1', 1, self.A], ['k2', 1, self.B]],
-                                          ['К-СД1', 1, ['k1', 1, self.B], ['k2', 1, self.A]],
-                                          ['С-СД15', 3, ['c4', 3, self.A], ['c4', 3, self.B]],
-                                          ['С-СД16', 3, ['c3', 3, self.A], ['c3', 3, self.B]],
-                                          ['К-СД14', 2, ['kc1', 2, self.A], ['kc1', 2, self.B]]]
+                    svar_det_one_floor = [['К-СД1', 'Крышка СБ', 1, ['k1', 1, self.A], ['k2', 1, self.B]],
+                                          ['К-СД1', 'Крышка СБ', 1, ['k1', 1, self.B], ['k2', 1, self.A]],
+                                          ['С-СД15', 'Стенка СБ', 3, ['c4', 3, self.A], ['c4', 3, self.B]],
+                                          ['С-СД16', 'Стенка СБ', 3, ['c3', 3, self.A], ['c3', 3, self.B]],
+                                          ['К-СД14', 'Крышка СБ', 2, ['kc1', 2, self.A], ['kc1', 2, self.B]]]
                 else:
-                    svar_det_one_floor = [['К-СД1', 1, ['k1', 1, self.A], ['k2', 1, self.B]],
-                                          ['К-СД1', 1, ['k1', 1, self.B], ['k2', 1, self.A]],
-                                          ['С-СД12', 3, ['cB', 3, self.A], ['cB', 3, self.B], ['u', 3, 0]],
-                                          ['С-СД2', 3, ['cA', 3, self.A], ['cA', 3, self.B], ['u', 3, 0]],
-                                          ['К-СД14', 2, ['kc1', 2, self.A], ['kc1', 2, self.B]]]
+                    svar_det_one_floor = [['К-СД1', 'Крышка СБ', 1, ['k1', 1, self.A], ['k2', 1, self.B]],
+                                          ['К-СД1', 'Крышка СБ', 1, ['k1', 1, self.B], ['k2', 1, self.A]],
+                                          ['С-СД12', 'Стенка СБ', 3, ['cB', 3, self.A], ['cB', 3, self.B], ['u', 3, 0]],
+                                          ['С-СД2', 'Стенка СБ', 3, ['cA', 3, self.A], ['cA', 3, self.B], ['u', 3, 0]],
+                                          ['К-СД14', 'Крышка СБ', 2, ['kc1', 2, self.A], ['kc1', 2, self.B]]]
 
                 for i in [2, 3, 4, 5]:
                     detali[i][1] = 3
@@ -563,29 +568,29 @@ class calculation:
             if self.os[0] == self.os[1] and self.dat['Обозначение'] not in ['угф', 'ugf']:
                 #print(' Симетричные оси')
                 svar_det_one_floor.pop(0)           # удаляем первую крышку К-СД1
-                svar_det_one_floor[0][1] *= 2       # умножаем на 2 К-СД1
-                svar_det_one_floor[0][2][1] *= 2    # умножаем на 2 к1
-                svar_det_one_floor[0][3][1] *= 2    # умножаем на 2 к2
+                svar_det_one_floor[0][2] *= 2       # умножаем на 2 К-СД1
+                svar_det_one_floor[0][3][1] *= 2    # умножаем на 2 к1
+                svar_det_one_floor[0][4][1] *= 2    # умножаем на 2 к2
                 svar_det_one_floor[1].pop(3)        # удаляем стенку с3 в С-СД1
-                svar_det_one_floor[1][2][1] *= 2    # умножаем на 2 c3
+                svar_det_one_floor[1][3][1] *= 2    # умножаем на 2 c3
                 svar_det_one_floor[2].pop(3)        # удаляем стенку сА в С-СД2
-                svar_det_one_floor[2][2][1] *= 2    # умножаем на 2 c3
+                svar_det_one_floor[2][3][1] *= 2    # умножаем на 2 c3
 
             if self.dat['Обозначение'] in ['угф', 'ugf']:
                 self.spisok_dla_mater['Nflanc'] = self.spisok_dla_mater['Nflanc'] + int(self.dat['количество'])
                 self.spisok_dla_mater['KolProv'] = self.dat['Кол. пров.']
                 itog[0][7] = 'ugf'
                 #print('УГФ')
-                svar_det_one_floor[0][2][0] = 'k2f'
-                svar_det_one_floor[1][3][0] = 'k1f'
-                svar_det_one_floor[2][2][0] = 'cBf'
+                svar_det_one_floor[0][3][0] = 'k2f'
+                svar_det_one_floor[1][4][0] = 'k1f'
+                svar_det_one_floor[2][3][0] = 'cBf'
                 svar_det_one_floor[3][2][0] = 'cAf'
 
                 if len(svar_det_one_floor) == 5:    # для двухэтажек
 
                     for i in svar_det_one_floor:
                         print(i)
-                    svar_det_one_floor[4][2][0] = 'kc1f'
+                    svar_det_one_floor[4][3][0] = 'kc1f'
                 dictionary = {2: 's19', 3: 's20', 4: 's21', 5: 's22'}
 
                 for i in dictionary:
@@ -610,10 +615,10 @@ class calculation:
                               ['torcentr', 2], ['mfazcentr', round((int(self.os[0]) + int(self.os[1])) / 200, 0)]]
 
         else:
-            svar_det_one_floor = [['К-СД1', 1, ['k1', 1, self.A], ['k2', 1, self.B]],
-                                  ['К-СД1', 1, ['k1', 1, self.os[1]], ['k2', 1, self.A]],
-                                  ['С-СД12', 1, ['cB', 1, self.A], ['cB', 1, self.B], ['u', 1, 0]],
-                                  ['С-СД2', 1, ['cA', 1, self.A], ['cA', 1, self.B], ['u', 1, 0]]]
+            svar_det_one_floor = [['К-СД1', 'Крышка СБ', 1, ['k1', 1, self.A], ['k2', 1, self.B]],
+                                  ['К-СД1', 'Крышка СБ', 1, ['k1', 1, self.os[1]], ['k2', 1, self.A]],
+                                  ['С-СД12', 'Стенка СБ', 1, ['cB', 1, self.A], ['cB', 1, self.B], ['u', 1, 0]],
+                                  ['С-СД2', 'Стенка СБ', 1, ['cA', 1, self.A], ['cA', 1, self.B], ['u', 1, 0]]]
             detali = [['n', 4], ['sux', 4],
                       ['s5', 1, [self.A, self.B]],
                       ['s38', 1, [self.A, self.B]],
@@ -665,10 +670,10 @@ class calculation:
 
             if self.dat['Обозначение'] in ["uvf", "увф"]:
                 detali = [['torcentr', 2], ['mfazcentr', round((int(self.os[0]) + int(self.os[1])) / 200, 0)]]
-                svar_det = [['Ш-СД31', 4, ['s', 4, [self.A, 'x']], ['s', 4, [self.B, 'y']]]]
+                svar_det = [['Ш-СД31', 'Шина СБ', 4, ['s', 4, [self.A, 'x']], ['s', 4, [self.B, 'y']]]]
             else:
                 detali = [['torcentr', 2], ['mfazcentr', round((int(self.os[0]) + int(self.os[1])) / 200, 0)]]
-                svar_det = [['Ш-СД31', 4, ['s', 4, [self.A, 'x']], ['s', 4, [self.B, 'y']]]]
+                svar_det = [['Ш-СД31', 'Шина СБ', 4, ['s', 4, [self.A, 'x']], ['s', 4, [self.B, 'y']]]]
 
             for i in svar_det:
                 itog_svar = self.welded_part(i)
@@ -695,24 +700,24 @@ class calculation:
                     self.spisok_dla_mater['KolProv'] = self.dat['Кол. пров.']
                     itog[0][7] = 'uvf'
                     detali = [['n', 2], ['sux', 4], ['fl', 2]]
-                    svar_det_one_floor = [['К-СД2', 1, ['k3f', 1, x], ['k3', 1, y]],
-                                          ['К-СД3', 1, ['k4f', 1, x], ['k4', 1, y]],
-                                          ['С-СД3', 1, ['c1f', 1, x], ['c2', 1, y]],
-                                          ['С-СД3', 1, ['c1', 1, y], ['c2f', 1, x]],
-                                          ['Ш-СД17', 1, ['s36', 1, x], ['s3', 1, y]],
-                                          ['Ш-СД17-З', 1, ['s36', 1, x], ['s3', 1, y]],
-                                          ['Ш-СД18', 1, ['s37', 1, x], ['s4', 1, y]],
-                                          ['Ш-СД18-З', 1, ['s37', 1, x], ['s4', 1, y]]]
+                    svar_det_one_floor = [['К-СД2', 'Крышка СБ', 1, ['k3f', 1, x], ['k3', 1, y]],
+                                          ['К-СД3', 'Крышка СБ', 1, ['k4f', 1, x], ['k4', 1, y]],
+                                          ['С-СД3', 'Стенка СБ', 1, ['c1f', 1, x], ['c2', 1, y]],
+                                          ['С-СД3', 'Стенка СБ', 1, ['c1', 1, y], ['c2f', 1, x]],
+                                          ['Ш-СД17', 'Шина СБ', 1, ['s36', 1, x], ['s3', 1, y]],
+                                          ['Ш-СД17-З', 'Шина СБ', 1, ['s36', 1, x], ['s3', 1, y]],
+                                          ['Ш-СД18', 'Шина СБ', 1, ['s37', 1, x], ['s4', 1, y]],
+                                          ['Ш-СД18-З', 'Шина СБ', 1, ['s37', 1, x], ['s4', 1, y]]]
                 else:
                     detali = [['n', 4], ['sux', 4]]
-                    svar_det_one_floor = [['К-СД2', 1, ['k3', 1, x], ['k3', 1, y]],
-                                          ['К-СД3', 1, ['k4', 1, x], ['k4', 1, y]],
-                                          ['С-СД3', 1, ['c1', 1, x], ['c2', 1, y]],
-                                          ['С-СД3', 1, ['c1', 1, y], ['c2', 1, x]],
-                                          ['Ш-СД1', 1, ['s3', 1, x], ['s3a', 1, y]],
-                                          ['Ш-СД1-З', 1, ['s3', 1, x], ['s3a', 1, y]],
-                                          ['Ш-СД2', 1, ['s4', 1, x], ['s4a', 1, y]],
-                                          ['Ш-СД2-З', 1, ['s4', 1, x], ['s4a', 1, y]]]
+                    svar_det_one_floor = [['К-СД2', 'Крышка СБ', 1, ['k3', 1, x], ['k3', 1, y]],
+                                          ['К-СД3', 'Крышка СБ', 1, ['k4', 1, x], ['k4', 1, y]],
+                                          ['С-СД3', 'Стенка СБ', 1, ['c1', 1, x], ['c2', 1, y]],
+                                          ['С-СД3', 'Стенка СБ', 1, ['c1', 1, y], ['c2', 1, x]],
+                                          ['Ш-СД1', 'Шина СБ', 1, ['s3', 1, x], ['s3a', 1, y]],
+                                          ['Ш-СД1-З', 'Шина СБ', 1, ['s3', 1, x], ['s3a', 1, y]],
+                                          ['Ш-СД2', 'Шина СБ', 1, ['s4', 1, x], ['s4a', 1, y]],
+                                          ['Ш-СД2-З', 'Шина СБ', 1, ['s4', 1, x], ['s4a', 1, y]]]
 
                 for j in detali:
                     itog_det = self.detail(j, '')
@@ -732,13 +737,13 @@ class calculation:
                     else:
                         itog.append(itog_det)
 
-                svar_det_one_floor = [['К-СД2', 1, ['k3', 1, x], ['k3', 1, y]],
-                                      ['К-СД3', 1, ['k4', 1, x], ['k4', 1, y]],
-                                      ['С-СД3', 1, ['c1', 1, x], ['c2', 1, y]],
-                                      ['С-СД3', 1, ['c1', 1, y], ['c2', 1, x]],
-                                      ['Ш-СД1', 1, ['s3', 1, x], ['s3a', 1, y]],
-                                      ['Ш-СД31', 1, ['s', 1, x], ['sa', 1, y]],
-                                      ['Ш-СД1-З', 1, ['s3', 1, x], ['s3a', 1, y]]]
+                svar_det_one_floor = [['К-СД2', 'Крышка СБ', 1, ['k3', 1, x], ['k3', 1, y]],
+                                      ['К-СД3', 'Крышка СБ', 1, ['k4', 1, x], ['k4', 1, y]],
+                                      ['С-СД3', 'Стенка СБ', 1, ['c1', 1, x], ['c2', 1, y]],
+                                      ['С-СД3', 'Стенка СБ', 1, ['c1', 1, y], ['c2', 1, x]],
+                                      ['Ш-СД1', 'Шина СБ', 1, ['s3', 1, x], ['s3a', 1, y]],
+                                      ['Ш-СД31', 'Шина СБ', 1, ['s', 1, x], ['sa', 1, y]],
+                                      ['Ш-СД1-З', 'Шина СБ', 1, ['s3', 1, x], ['s3a', 1, y]]]
 
                 return svar_det_one_floor
 
@@ -746,15 +751,15 @@ class calculation:
             def ayna(svar_det_one_floor):
                 if x == y and self.dat['Обозначение'] not in ['увф', 'uvf']:
                     svar_det_one_floor.pop(3)       # С-СД3
-                    svar_det_one_floor[2][1] *= 2
-                    svar_det_one_floor[2][2][1] *= 2
+                    svar_det_one_floor[2][2] *= 2
                     svar_det_one_floor[2][3][1] *= 2
+                    svar_det_one_floor[2][4][1] *= 2
 
                     svar_det_one_floor[0].pop(3)    # К-СД2
-                    svar_det_one_floor[0][2][1] = 2
+                    svar_det_one_floor[0][3][1] = 2
 
                     svar_det_one_floor[1].pop(3)    # К-СД3
-                    svar_det_one_floor[1][2][1] = 2
+                    svar_det_one_floor[1][3][1] = 2
                     return svar_det_one_floor
                 else:
                     return svar_det_one_floor
@@ -778,11 +783,11 @@ class calculation:
                         self.spisok_dla_mater['Nflanc'] = self.spisok_dla_mater['Nflanc'] + int(self.dat['количество'])
                         self.spisok_dla_mater['KolProv'] = self.dat['Кол. пров.']
                         itog[0][7] = 'uvf'
-                        svar_det_one_floor[1][2][0] = 'kc2f'
+                        svar_det_one_floor[1][3][0] = 'kc2f'
                     else:
-                        svar_det_one_floor[1][2][0] = 'kc2'
+                        svar_det_one_floor[1][3][0] = 'kc2'
 
-                    svar_det_one_floor[1][3][0] = 'kc2'
+                    svar_det_one_floor[1][4][0] = 'kc2'
                     svar_det_one_floor = ayna(svar_det_one_floor)
                     #   второй этаж
                     x = int(self.A) - self.dat['разница между этажами']
@@ -808,12 +813,12 @@ class calculation:
                         self.spisok_dla_mater['Nflanc'] = self.spisok_dla_mater['Nflanc'] + int(self.dat['количество'])
                         self.spisok_dla_mater['KolProv'] = self.dat['Кол. пров.']
                         itog[0][7] = 'uvf'
-                        svar_det_one_floor[1][2][0] = 'kc2f'
+                        svar_det_one_floor[1][3][0] = 'kc2f'
                     else:
-                        svar_det_one_floor[1][2][0] = 'kc2'
+                        svar_det_one_floor[1][3][0] = 'kc2'
 
-                    svar_det_one_floor[1][2][0] = 'kc2'
                     svar_det_one_floor[1][3][0] = 'kc2'
+                    svar_det_one_floor[1][4][0] = 'kc2'
                     #   второй этаж
                     svar_det_two_floor = one(self.A, self.B)
                     svar_det_two_floor[1][0] = 'К-СД13'
@@ -822,12 +827,12 @@ class calculation:
                         self.spisok_dla_mater['Nflanc'] = self.spisok_dla_mater['Nflanc'] + int(self.dat['количество'])
                         self.spisok_dla_mater['KolProv'] = self.dat['Кол. пров.']
                         itog[0][7] = 'uvf'
-                        svar_det_one_floor[1][2][0] = 'kc2f'
+                        svar_det_one_floor[1][3][0] = 'kc2f'
                     else:
-                        svar_det_one_floor[1][2][0] = 'kc2'
+                        svar_det_one_floor[1][3][0] = 'kc2'
 
-                    svar_det_two_floor[1][2][0] = 'kc2'
                     svar_det_two_floor[1][3][0] = 'kc2'
+                    svar_det_two_floor[1][4][0] = 'kc2'
                     svar_det_two_floor.pop(0)
                     #   третий этаж
                     x = int(self.A) - self.dat['разница между этажами']
@@ -871,10 +876,10 @@ class calculation:
                  self.dat['количество'], 'спецификация']]
 
         if str(self.dat['Кол. пров.']) in ['4', '3+1']:
-            svar_det_one_floor = [['К-СД4', 1, ['k2', 1, self.A], ['k7', 1, self.B], ['k2', 1, self.C]],
-                                  ['К-СД5', 1, ['k1', 1, self.A], ['k8', 1, self.B], ['k1', 1, self.C]],
-                                  ['С-СД13', 1, ['cB', 1, self.A], ['u', 2, 0], ['cC', 1, self.B], ['cA', 1, self.C]],
-                                  ['С-СД13', 1, ['cB', 1, self.C], ['u', 2, 0], ['cC', 1, self.B], ['cA', 1, self.A]]]
+            svar_det_one_floor = [['К-СД4', 'Крышка СБ', 1, ['k2', 1, self.A], ['k7', 1, self.B], ['k2', 1, self.C]],
+                                  ['К-СД5', 'Крышка СБ', 1, ['k1', 1, self.A], ['k8', 1, self.B], ['k1', 1, self.C]],
+                                  ['С-СД13', 'Стенка СБ', 1, ['cB', 1, self.A], ['u', 2, 0], ['cC', 1, self.B], ['cA', 1, self.C]],
+                                  ['С-СД13', 'Стенка СБ', 1, ['cB', 1, self.C], ['u', 2, 0], ['cC', 1, self.B], ['cA', 1, self.A]]]
                                   #['С-СД4', 1, ['c3', 1, self.os[0]], ['c3a', 1, self.os[1]], ['u', 1], ['cA', 1, self.os[2]]],
                                   #['С-СД4', 1, ['c3', 1, self.os[2]], ['c3a', 1, self.os[1]], ['u', 1], ['cA', 1, self.os[0]]]]
 
@@ -893,24 +898,24 @@ class calculation:
                           ['s16', 1, [self.A, self.B, self.C]]]
 
             if self.dat['In'] in [2000, 2500]:
-                svar_det_one_floor[2] = ['С-СД13', 1, ['cB', 1, self.A], ['u', 2, 0], ['cC', 1, self.B], ['cA', 1, self.C]]
-                svar_det_one_floor[3] = ['С-СД13', 1, ['cB', 1, self.C], ['u', 2, 0], ['cC', 1, self.B], ['cA', 1, self.A]]
+                svar_det_one_floor[2] = ['С-СД13', 'Стенка СБ', 1, ['cB', 1, self.A], ['u', 2, 0], ['cC', 1, self.B], ['cA', 1, self.C]]
+                svar_det_one_floor[3] = ['С-СД13', 'Стенка СБ', 1, ['cB', 1, self.C], ['u', 2, 0], ['cC', 1, self.B], ['cA', 1, self.A]]
             elif self.dat['In'] in [2600, 3200]:
-                svar_det_one_floor[2] = ['С-СД13', 2, ['cB', 2, self.A],  ['u', 2, 0], ['cC', 2, self.B], ['cA', 2, self.C]]
-                svar_det_one_floor[3] = ['С-СД13', 2, ['cB', 2, self.C],  ['u', 2, 0], ['cC', 2, self.B], ['cA', 2, self.A]]
-                svar_det_one_floor.append(['К-СД16', 1, ['kc1', 1, self.A], ['kc4', 1, self.B], ['kc1', 1, self.C]])
+                svar_det_one_floor[2] = ['С-СД13', 'Стенка СБ', 2, ['cB', 2, self.A],  ['u', 2, 0], ['cC', 2, self.B], ['cA', 2, self.C]]
+                svar_det_one_floor[3] = ['С-СД13', 'Стенка СБ', 2, ['cB', 2, self.C],  ['u', 2, 0], ['cC', 2, self.B], ['cA', 2, self.A]]
+                svar_det_one_floor.append(['К-СД16', 'Крышка СБ', 1, ['kc1', 1, self.A], ['kc4', 1, self.B], ['kc1', 1, self.C]])
                 for i in [2, 3, 4, 5]:
                     detali[i][1] = 2
             elif self.dat['In'] in [4000, 5000]:
-                svar_det_one_floor[2] = ['С-СД13', 2, ['cB', 2, self.A], ['u', 2, 0], ['cC', 2, self.B], ['cA', 2, self.C]]
-                svar_det_one_floor[3] = ['С-СД13', 2, ['cB', 2, self.C], ['u', 2, 0], ['cC', 2, self.B], ['cA', 2, self.A]]
-                svar_det_one_floor.append(['К-СД16', 1, ['kc1', 1, self.A], ['kc4', 1, self.B], ['kc1', 1, self.C]])
+                svar_det_one_floor[2] = ['С-СД13', 'Стенка СБ', 2, ['cB', 2, self.A], ['u', 2, 0], ['cC', 2, self.B], ['cA', 2, self.C]]
+                svar_det_one_floor[3] = ['С-СД13', 'Стенка СБ', 2, ['cB', 2, self.C], ['u', 2, 0], ['cC', 2, self.B], ['cA', 2, self.A]]
+                svar_det_one_floor.append(['К-СД16', 'Крышка СБ', 1, ['kc1', 1, self.A], ['kc4', 1, self.B], ['kc1', 1, self.C]])
                 for i in [2, 3, 4, 5]:
                     detali[i][1] = 2
             elif self.dat['In'] in [6400]:
-                svar_det_one_floor[2] = ['С-СД13', 3, ['cB', 3, self.A],  ['u', 3, 0], ['cC', 3, self.B], ['cA', 3, self.C]]
-                svar_det_one_floor[3] = ['С-СД13', 3, ['cB', 3, self.C],  ['u', 3, 0], ['cC', 3, self.B], ['cA', 3, self.A]]
-                svar_det_one_floor.append(['К-СД16', 3, ['kc1', 3, self.A], ['kc4', 3, self.B], ['kc1', 3, self.C]])
+                svar_det_one_floor[2] = ['С-СД13', 'Стенка СБ', 3, ['cB', 3, self.A],  ['u', 3, 0], ['cC', 3, self.B], ['cA', 3, self.C]]
+                svar_det_one_floor[3] = ['С-СД13', 'Стенка СБ', 3, ['cB', 3, self.C],  ['u', 3, 0], ['cC', 3, self.B], ['cA', 3, self.A]]
+                svar_det_one_floor.append(['К-СД16', 'Крышка СБ', 3, ['kc1', 3, self.A], ['kc4', 3, self.B], ['kc1', 3, self.C]])
                 for i in [2, 3, 4, 5]:
                     detali[i][1] = 3
 
@@ -924,21 +929,21 @@ class calculation:
             if self.dat['Обозначение'] in ['згф', 'zgf']:
                 self.spisok_dla_mater['Nflanc'] = self.spisok_dla_mater['Nflanc'] + int(self.dat['количество'])
                 itog[0][7] = 'zgf'
-                svar_det_one_floor[0][2][0] = 'k2f'
-                svar_det_one_floor[1][2][0] = 'k1f'
-                svar_det_one_floor[2][2][0] = 'cBf'
-                svar_det_one_floor[3][5][0] = 'cAf'
+                svar_det_one_floor[0][3][0] = 'k2f'
+                svar_det_one_floor[1][3][0] = 'k1f'
+                svar_det_one_floor[2][3][0] = 'cBf'
+                svar_det_one_floor[3][6][0] = 'cAf'
                 dictionary = {2: 's27', 3: 's28', 4: 's29', 5: 's30'}
                 for i in dictionary:
                     detali[i][0] = dictionary[i]
                 detali.append(['fl', 2])
 
         else:   # 3-х проводной
-            svar_det_one_floor = [['К-СД4', 1, ['k2', 1, self.A], ['k7', 1, self.B], ['k2', 1, self.C]],
-                                  ['К-СД5', 1, ['k1', 1, self.A], ['k8', 1, self.B], ['k1', 1, self.C]],
-                                  ['С-СД13', 1, ['cB', 1, self.A], ['u', 2, 0], ['cC', 1, self.B],
+            svar_det_one_floor = [['К-СД4', 'Крышка СБ', 1, ['k2', 1, self.A], ['k7', 1, self.B], ['k2', 1, self.C]],
+                                  ['К-СД5', 'Крышка СБ', 1, ['k1', 1, self.A], ['k8', 1, self.B], ['k1', 1, self.C]],
+                                  ['С-СД13', 'Стенка СБ', 1, ['cB', 1, self.A], ['u', 2, 0], ['cC', 1, self.B],
                                    ['cA', 1, self.C]],
-                                  ['С-СД13', 1, ['cB', 1, self.C], ['u', 2, 0], ['cC', 1, self.B],
+                                  ['С-СД13', 'Стенка СБ', 1, ['cB', 1, self.C], ['u', 2, 0], ['cC', 1, self.B],
                                    ['cA', 1, self.A]]]
             detali = [['n', 4], ['sux', 4],
                       ['s13', 1, [self.A, self.B, self.C]],
@@ -988,27 +993,27 @@ class calculation:
 
         def one(x, y, z):
             detali = [['n', 4], ['sux', 4]]
-            svar_det_one_floor = [['К-СД6', 1, ['k3', 1, x], ['k9', 1, y], ['k4', 1, z]],
-                                  ['К-СД6', 1, ['k3', 1, z], ['k9', 1, y], ['k4', 1, x]],
-                                  ['С-СД5', 1, ['c2', 1, x], ['c7', 1, y], ['c2', 1, z]],
-                                  ['С-СД6', 1, ['c1', 1, x], ['c8', 1, y], ['c1', 1, z]],
-                                  ['Ш-СД3', 1, ['s3', 1, x], ['s', 1, y], ['s3', 1, z]],
-                                  ['Ш-СД3-З', 1, ['s3', 1, x], ['s', 1, y], ['s3', 1, z]],
-                                  ['Ш-СД4', 1, ['s4', 1, x], ['s', 1, y], ['s4', 1, z]],
-                                  ['Ш-СД4-З', 1, ['s4', 1, x], ['s', 1, y], ['s4', 1, z]]]
+            svar_det_one_floor = [['К-СД6', 'Крышка СБ', 1, ['k3', 1, x], ['k9', 1, y], ['k4', 1, z]],
+                                  ['К-СД6', 'Крышка СБ', 1, ['k3', 1, z], ['k9', 1, y], ['k4', 1, x]],
+                                  ['С-СД5', 'Стенка СБ', 1, ['c2', 1, x], ['c7', 1, y], ['c2', 1, z]],
+                                  ['С-СД6', 'Стенка СБ', 1, ['c1', 1, x], ['c8', 1, y], ['c1', 1, z]],
+                                  ['Ш-СД3', 'Шина СБ', 1, ['s3', 1, x], ['s', 1, y], ['s3', 1, z]],
+                                  ['Ш-СД3-З', 'Шина СБ', 1, ['s3', 1, x], ['s', 1, y], ['s3', 1, z]],
+                                  ['Ш-СД4', 'Шина СБ', 1, ['s4', 1, x], ['s', 1, y], ['s4', 1, z]],
+                                  ['Ш-СД4-З', 'Шина СБ', 1, ['s4', 1, x], ['s', 1, y], ['s4', 1, z]]]
 
             if self.dat['Обозначение'] in ['звф', 'zvf']:
                 self.spisok_dla_mater['Nflanc'] = self.spisok_dla_mater['Nflanc'] + int(self.dat['количество'])
                 itog[0][7] = 'zvf'
                 detali = [['n', 4], ['sux', 4], ['fl', 2]]
-                svar_det_one_floor = [['К-СД6', 1, ['k3f', 1, x], ['k9', 1, y], ['k4', 1, z]],
-                                      ['К-СД6-З', 1, ['k3', 1, z], ['k9', 1, y], ['k4f', 1, x]],
-                                      ['С-СД5', 1, ['c2f', 1, x], ['c7', 1, y], ['c2', 1, z]],
-                                      ['С-СД6', 1, ['c1f', 1, x], ['c8', 1, y], ['c1', 1, z]],
-                                      ['Ш-СД19', 1, ['s37', 1, x], ['s', 1, y], ['s3', 1, z]],
-                                      ['Ш-СД20', 1, ['s36', 1, x], ['s', 1, y], ['s3', 1, z]],
-                                      ['Ш-СД19-З', 1, ['s37', 1, x], ['s', 1, y], ['s4', 1, z]],
-                                      ['Ш-СД20-З', 1, ['s36', 1, x], ['s', 1, y], ['s4', 1, z]]]
+                svar_det_one_floor = [['К-СД6', 'Крышка СБ', 1, ['k3f', 1, x], ['k9', 1, y], ['k4', 1, z]],
+                                      ['К-СД6-З', 'Крышка СБ', 1, ['k3', 1, z], ['k9', 1, y], ['k4f', 1, x]],
+                                      ['С-СД5', 'Стенка СБ', 1, ['c2f', 1, x], ['c7', 1, y], ['c2', 1, z]],
+                                      ['С-СД6', 'Стенка СБ', 1, ['c1f', 1, x], ['c8', 1, y], ['c1', 1, z]],
+                                      ['Ш-СД19', 'Шина СБ', 1, ['s37', 1, x], ['s', 1, y], ['s3', 1, z]],
+                                      ['Ш-СД20', 'Шина СБ', 1, ['s36', 1, x], ['s', 1, y], ['s3', 1, z]],
+                                      ['Ш-СД19-З', 'Шина СБ', 1, ['s37', 1, x], ['s', 1, y], ['s4', 1, z]],
+                                      ['Ш-СД20-З', 'Шина СБ', 1, ['s36', 1, x], ['s', 1, y], ['s4', 1, z]]]
 
             for j in detali:
                 itog_det = self.detail(j, '')
@@ -1029,13 +1034,13 @@ class calculation:
                 else:
                     itog.append(itog_det)
 
-            svar_det_one_floor = [['К-СД6', 1, ['k3', 1, x], ['k9', 1, y], ['k4', 1, z]],
-                                  ['К-СД6', 1, ['k3', 1, z], ['k9', 1, y], ['k4', 1, x]],
-                                  ['С-СД5', 1, ['c2', 1, x], ['c7', 1, y], ['c2', 1, z]],
-                                  ['С-СД6', 1, ['c1', 1, x], ['c8', 1, y], ['c1', 1, z]],
-                                  ['Ш-СД3', 1, ['s3', 1, x], ['s', 1, y], ['s3', 1, z]],
-                                  ['Ш-СД3-З', 1, ['s3', 1, x], ['s', 1, y], ['s3', 1, z]],
-                                  ['Ш-СД30', 1, ['s_3', 1, x], ['s', 1, y], ['s_3', 1, z]]]
+            svar_det_one_floor = [['К-СД6', 'Крышка СБ', 1, ['k3', 1, x], ['k9', 1, y], ['k4', 1, z]],
+                                  ['К-СД6', 'Крышка СБ', 1, ['k3', 1, z], ['k9', 1, y], ['k4', 1, x]],
+                                  ['С-СД5', 'Стенка СБ', 1, ['c2', 1, x], ['c7', 1, y], ['c2', 1, z]],
+                                  ['С-СД6', 'Стенка СБ', 1, ['c1', 1, x], ['c8', 1, y], ['c1', 1, z]],
+                                  ['Ш-СД3', 'Шина СБ', 1, ['s3', 1, x], ['s', 1, y], ['s3', 1, z]],
+                                  ['Ш-СД3-З', 'Шина СБ', 1, ['s3', 1, x], ['s', 1, y], ['s3', 1, z]],
+                                  ['Ш-СД30', 'Шина СБ', 1, ['s_3', 1, x], ['s', 1, y], ['s_3', 1, z]]]
 
             return svar_det_one_floor
 
@@ -1059,9 +1064,9 @@ class calculation:
                 if self.dat['Обозначение'] in ['звф', 'zvf']:
                     self.spisok_dla_mater['Nflanc'] = self.spisok_dla_mater['Nflanc'] + int(self.dat['количество'])
                     itog[0][7] = 'zvf'
-                    svar_det_one_floor[1] = ['К-СД15', 1, ['kc2f', 1, x], ['kc5', 1, self.B], ['kc2a', 1, z]]
+                    svar_det_one_floor[1] = ['К-СД15', 'Крышка СБ', 1, ['kc2f', 1, x], ['kc5', 1, self.B], ['kc2a', 1, z]]
                 else:
-                    svar_det_one_floor[1] = ['К-СД15', 1, ['kc2', 1, x], ['kc5', 1, self.B], ['kc2a', 1, z]]
+                    svar_det_one_floor[1] = ['К-СД15', 'Крышка СБ', 1, ['kc2', 1, x], ['kc5', 1, self.B], ['kc2a', 1, z]]
 
                 #   второй этаж
                 x = int(self.os[0]) - self.dat['разница между этажами']
@@ -1086,17 +1091,17 @@ class calculation:
                 if self.dat['Обозначение'] in ['звф', 'zvf']:
                     self.spisok_dla_mater['Nflanc'] = self.spisok_dla_mater['Nflanc'] + int(self.dat['количество'])
                     itog[0][7] = 'zvf'
-                    svar_det_one_floor[1] = ['К-СД15', 1, ['kc2f', 1, x], ['kc5', 1, self.B], ['kc2a', 1, z]]
+                    svar_det_one_floor[1] = ['К-СД15', 'Крышка СБ', 1, ['kc2f', 1, x], ['kc5', 1, self.B], ['kc2a', 1, z]]
                 else:
-                    svar_det_one_floor[1] = ['К-СД15', 1, ['kc2', 1, x], ['kc5', 1, self.B], ['kc2a', 1, z]]
+                    svar_det_one_floor[1] = ['К-СД15', 'Крышка СБ', 1, ['kc2', 1, x], ['kc5', 1, self.B], ['kc2a', 1, z]]
 
                 #   второй этаж
                 svar_det_two_floor = one(self.A, self.B, self.C)
 
                 if self.dat['Обозначение'] == 'звф':
-                    svar_det_one_floor[1] = ['К-СД15', 1, ['kc2f', 1, x], ['kc5', 1, self.B], ['kc2a', 1, z]]
+                    svar_det_one_floor[1] = ['К-СД15', 'Крышка СБ', 1, ['kc2f', 1, x], ['kc5', 1, self.B], ['kc2a', 1, z]]
                 else:
-                    svar_det_one_floor[1] = ['К-СД15', 1, ['kc2', 1, x], ['kc5', 1, self.B], ['kc2a', 1, z]]
+                    svar_det_one_floor[1] = ['К-СД15', 'Крышка СБ', 1, ['kc2', 1, x], ['kc5', 1, self.B], ['kc2a', 1, z]]
 
                 svar_det_two_floor.pop(0)
                 #   третий этаж
@@ -1153,24 +1158,24 @@ class calculation:
             if self.dat['Обозначение'] in ['kpfuv']:
                 itog[0][7] = 'kpfuv'
                 detali = [['n', 2], ['sux', 4], ['fl', 2]]
-                svar_det_one_floor = [['К-СД9', 1, ['k3f', 1, x], ['k13', 1, y], ['k2', 1, z]],
-                                      ['К-СД10', 1, ['k4f', 1, x], ['k16', 1, y], ['k1', 1, z]],
-                                      ['С-СД9', 1, ['c2f', 1, x], ['c1a', 1, y], ['u', 1, 0], ['cB', 1, z]],
-                                      ['С-СД10', 1, ['c1f', 1, x], ['c2a', 1, y], ['u', 1, 0], ['cA', 1, z]],
-                                      ['Ш-СД39', 1, ['s36', 1, x], ['s12', 1, [y, z]]],
-                                      ['Ш-СД40', 1, ['s36', 1, x], ['s11', 1, [y, z]]],
-                                      ['Ш-СД41', 1, ['s37', 1, x], ['s10', 1, [y, z]]],
-                                      ['Ш-СД42', 1, ['s37', 1, x], ['s9', 1, [y, z]]]]
+                svar_det_one_floor = [['К-СД9', 'Крышка СБ', 1, ['k3f', 1, x], ['k13', 1, y], ['k2', 1, z]],
+                                      ['К-СД10', 'Крышка СБ', 1, ['k4f', 1, x], ['k16', 1, y], ['k1', 1, z]],
+                                      ['С-СД9', 'Стенка СБ', 1, ['c2f', 1, x], ['c1a', 1, y], ['u', 1, 0], ['cB', 1, z]],
+                                      ['С-СД10', 'Стенка СБ', 1, ['c1f', 1, x], ['c2a', 1, y], ['u', 1, 0], ['cA', 1, z]],
+                                      ['Ш-СД39', 'Шина СБ', 1, ['s36', 1, x], ['s12', 1, [y, z]]],
+                                      ['Ш-СД40', 'Шина СБ', 1, ['s36', 1, x], ['s11', 1, [y, z]]],
+                                      ['Ш-СД41', 'Шина СБ', 1, ['s37', 1, x], ['s10', 1, [y, z]]],
+                                      ['Ш-СД42', 'Шина СБ', 1, ['s37', 1, x], ['s9', 1, [y, z]]]]
             else:
                 detali = [['n', 4], ['sux', 4]]
-                svar_det_one_floor = [['К-СД9', 1, ['k3', 1, x], ['k13', 1, y], ['k2', 1, z]],
-                                      ['К-СД10', 1, ['k4', 1, x], ['k16', 1, y], ['k1', 1, z]],
-                                      ['С-СД9', 1, ['c2', 1, x], ['c1a', 1, y], ['u', 1, 0], ['cB', 1, z]],
-                                      ['С-СД10', 1, ['c1', 1, x], ['c2a', 1, y], ['u', 1, 0], ['cA', 1, z]],
-                                      ['Ш-СД11', 1, ['s3', 1, x], ['s12', 1, [y, z]]],
-                                      ['Ш-СД12', 1, ['s3', 1, x], ['s11', 1, [y, z]]],
-                                      ['Ш-СД13', 1, ['s4', 1, x], ['s10', 1, [y, z]]],
-                                      ['Ш-СД14', 1, ['s4', 1, x], ['s9', 1, [y, z]]]]
+                svar_det_one_floor = [['К-СД9', 'Крышка СБ', 1, ['k3', 1, x], ['k13', 1, y], ['k2', 1, z]],
+                                      ['К-СД10', 'Крышка СБ', 1, ['k4', 1, x], ['k16', 1, y], ['k1', 1, z]],
+                                      ['С-СД9', 'Стенка СБ', 1, ['c2', 1, x], ['c1a', 1, y], ['u', 1, 0], ['cB', 1, z]],
+                                      ['С-СД10', 'Стенка СБ', 1, ['c1', 1, x], ['c2a', 1, y], ['u', 1, 0], ['cA', 1, z]],
+                                      ['Ш-СД11', 'Шина СБ', 1, ['s3', 1, x], ['s12', 1, [y, z]]],
+                                      ['Ш-СД12', 'Шина СБ', 1, ['s3', 1, x], ['s11', 1, [y, z]]],
+                                      ['Ш-СД13', 'Шина СБ', 1, ['s4', 1, x], ['s10', 1, [y, z]]],
+                                      ['Ш-СД14', 'Шина СБ', 1, ['s4', 1, x], ['s9', 1, [y, z]]]]
 
             for j in detali:
                 itog_det = self.detail(j, '')
@@ -1193,13 +1198,13 @@ class calculation:
                 else:
                     itog.append(itog_det)
 
-            svar_det_one_floor = [['К-СД9', 1, ['k3', 1, x], ['k13', 1, y], ['k2', 1, z]],
-                                  ['К-СД10', 1, ['k4', 1, x], ['k16', 1, y], ['k1', 1, z]],
-                                  ['С-СД9', 1, ['c2', 1, x], ['c1a', 1, y], ['u', 1, 0], ['cB', 1, z]],
-                                  ['С-СД10', 1, ['c1', 1, x], ['c2a', 1, y], ['u', 1, 0], ['cA', 1, z]],
-                                  ['Ш-СД11', 1, ['s3', 1, x], ['s12', 1, [y, z]]],
-                                  ['Ш-СД32', 1, ['s_3', 1, x], ['s38', 1, [y, z]]],  # нужен новый чертеж
-                                  ['Ш-СД14', 1, ['s3', 1, x], ['s9', 1, [y, z]]]]
+            svar_det_one_floor = [['К-СД9', 'Крышка СБ', 1, ['k3', 1, x], ['k13', 1, y], ['k2', 1, z]],
+                                  ['К-СД10', 'Крышка СБ', 1, ['k4', 1, x], ['k16', 1, y], ['k1', 1, z]],
+                                  ['С-СД9', 'Стенка СБ', 1, ['c2', 1, x], ['c1a', 1, y], ['u', 1, 0], ['cB', 1, z]],
+                                  ['С-СД10', 'Стенка СБ', 1, ['c1', 1, x], ['c2a', 1, y], ['u', 1, 0], ['cA', 1, z]],
+                                  ['Ш-СД11', 'Шина СБ', 1, ['s3', 1, x], ['s12', 1, [y, z]]],
+                                  ['Ш-СД32', 'Шина СБ', 1, ['s_3', 1, x], ['s38', 1, [y, z]]],  # нужен новый чертеж
+                                  ['Ш-СД14', 'Шина СБ', 1, ['s3', 1, x], ['s9', 1, [y, z]]]]
             return svar_det_one_floor
 
         if str(self.dat['Кол. пров.']) in ['4', '3+1']:
@@ -1221,7 +1226,7 @@ class calculation:
                 y = int(self.os[1]) + self.dat['разница между этажами']
                 z = self.os[2]
                 svar_det_one_floor = one(x, y, z)
-                svar_det_one_floor[1] = ['К-СД12', 1, ['kc2', 1, x], ['kc9', 1, y], ['kc1', 1, z]]
+                svar_det_one_floor[1] = ['К-СД12', 'Крышка СБ', 1, ['kc2', 1, x], ['kc9', 1, y], ['kc1', 1, z]]
 
                 x = int(self.os[0]) - self.dat['разница между этажами']
                 y = int(self.os[1]) - self.dat['разница между этажами']
@@ -1241,13 +1246,13 @@ class calculation:
                 y = int(self.os[1]) + self.dat['разница между этажами']
                 z = int(self.os[2])
                 svar_det_one_floor = one(x, y, z)
-                svar_det_one_floor[1] = ['К-СД12', 1, ['kc2', 1, x], ['kc9', 1, y], ['kc1', 1, z]]
+                svar_det_one_floor[1] = ['К-СД12', 'Крышка СБ', 1, ['kc2', 1, x], ['kc9', 1, y], ['kc1', 1, z]]
 
                 x = int(self.os[0])
                 y = int(self.os[1])
                 z = int(self.os[2])
                 svar_det_two_floor = one(x, y, z)
-                svar_det_one_floor[1] = ['К-СД12', 1, ['kc2', 1, x], ['kc9', 1, y], ['kc1', 1, z]]
+                svar_det_one_floor[1] = ['К-СД12', 'Крышка СБ', 1, ['kc2', 1, x], ['kc9', 1, y], ['kc1', 1, z]]
 
                 x = int(self.os[0]) - self.dat['разница между этажами']
                 y = int(self.os[1]) - self.dat['разница между этажами']
@@ -1303,24 +1308,24 @@ class calculation:
             if self.dat['Обозначение'] in ['klfuv']:
                 itog[0][7] = 'klfuv'
                 detali = [['n', 2], ['sux', 4], ['fl', 2]]
-                svar_det_one_floor = [['К-СД7', 1, ['k3f', 1, x], ['k14', 1, y], ['k2', 1, z]],
-                                      ['К-СД8', 1, ['k4f', 1, x], ['k15', 1, y], ['k1', 1, z]],
-                                      ['С-СД7', 1, ['c1f', 1, x], ['c2a', 1, y], ['u', 1, 0], ['cB', 1, z]],
-                                      ['С-СД8', 1, ['c2f', 1, x], ['c1a', 1, y], ['u', 1, 0], ['cA', 1, z]],
-                                      ['Ш-СД37', 1, ['s36', 1, x], ['s9', 1, [y, z]]],
-                                      ['Ш-СД38', 1, ['s37', 1, x], ['s10', 1, [y, z]]],
-                                      ['Ш-СД39', 1, ['s37', 1, x], ['s11', 1, [y, z]]],
-                                      ['Ш-СД40', 1, ['s36', 1, x], ['s12', 1, [y, z]]]]
+                svar_det_one_floor = [['К-СД7', 'Крышка СБ', 1, ['k3f', 1, x], ['k14', 1, y], ['k2', 1, z]],
+                                      ['К-СД8', 'Крышка СБ', 1, ['k4f', 1, x], ['k15', 1, y], ['k1', 1, z]],
+                                      ['С-СД7', 'Стенка СБ', 1, ['c1f', 1, x], ['c2a', 1, y], ['u', 1, 0], ['cB', 1, z]],
+                                      ['С-СД8', 'Стенка СБ', 1, ['c2f', 1, x], ['c1a', 1, y], ['u', 1, 0], ['cA', 1, z]],
+                                      ['Ш-СД37', 'Шина СБ', 1, ['s36', 1, x], ['s9', 1, [y, z]]],
+                                      ['Ш-СД38', 'Шина СБ', 1, ['s37', 1, x], ['s10', 1, [y, z]]],
+                                      ['Ш-СД39', 'Шина СБ', 1, ['s37', 1, x], ['s11', 1, [y, z]]],
+                                      ['Ш-СД40', 'Шина СБ', 1, ['s36', 1, x], ['s12', 1, [y, z]]]]
             else:
                 detali = [['n', 4], ['sux', 4]]
-                svar_det_one_floor = [['К-СД7', 1, ['k3', 1, x], ['k14', 1, y], ['k1', 1, z]],
-                                      ['К-СД8', 1, ['k4', 1, x], ['k15', 1, y], ['k2', 1, z]],
-                                      ['С-СД7', 1, ['c1', 1, x], ['c2a', 1, y], ['u', 1, 0], ['cB', 1, z]],
-                                      ['С-СД8', 1, ['c2', 1, x], ['c1a', 1, y], ['u', 1, 0], ['cA', 1, z]],
-                                      ['Ш-СД7', 1, ['s3', 1, x], ['s12', 1, [y, z]]],
-                                      ['Ш-СД8', 1, ['s3', 1, x], ['s11', 1, [y, z]]],
-                                      ['Ш-СД9', 1, ['s4', 1, x], ['s10', 1, [y, z]]],
-                                      ['Ш-СД10', 1, ['s4', 1, x], ['s9', 1, [y, z]]]]
+                svar_det_one_floor = [['К-СД7', 'Крышка СБ', 1, ['k3', 1, x], ['k14', 1, y], ['k1', 1, z]],
+                                      ['К-СД8', 'Крышка СБ', 1, ['k4', 1, x], ['k15', 1, y], ['k2', 1, z]],
+                                      ['С-СД7', 'Стенка СБ', 1, ['c1', 1, x], ['c2a', 1, y], ['u', 1, 0], ['cB', 1, z]],
+                                      ['С-СД8', 'Стенка СБ', 1, ['c2', 1, x], ['c1a', 1, y], ['u', 1, 0], ['cA', 1, z]],
+                                      ['Ш-СД7', 'Шина СБ', 1, ['s3', 1, x], ['s12', 1, [y, z]]],
+                                      ['Ш-СД8', 'Шина СБ', 1, ['s3', 1, x], ['s11', 1, [y, z]]],
+                                      ['Ш-СД9', 'Шина СБ', 1, ['s4', 1, x], ['s10', 1, [y, z]]],
+                                      ['Ш-СД10', 'Шина СБ', 1, ['s4', 1, x], ['s9', 1, [y, z]]]]
             for j in detali:
                 itog_det = self.detail(j, '')
                 if itog_det == 0:  # только что расчитывали сухарь, направляющую или фланец
@@ -1338,13 +1343,13 @@ class calculation:
                     continue
                 else:
                     itog.append(itog_det)
-            svar_det_one_floor = [['К-СД7', 1, ['k3', 1, x], ['k14', 1, y], ['k1', 1, z]],
-                                  ['К-СД8', 1, ['k4', 1, x], ['k15', 1, y], ['k2', 1, z]],
-                                  ['С-СД7', 1, ['c1', 1, x], ['c2a', 1, y], ['u', 1, 0], ['cB', 1, z]],
-                                  ['С-СД8', 1, ['c2', 1, x], ['c1a', 1, y], ['u', 1, 0], ['cA', 1, z]],
-                                  ['Ш-СД7', 1, ['s3', 1, x], ['s12', 1, [y, z]]],
-                                  ['Ш-СД29', 1, ['s_3', 1, x], ['s38', 1, [y, z]]],
-                                  ['Ш-СД10', 1, ['s4', 1, x], ['s9', 1, [y, z]]]]
+            svar_det_one_floor = [['К-СД7', 'Крышка СБ', 1, ['k3', 1, x], ['k14', 1, y], ['k1', 1, z]],
+                                  ['К-СД8', 'Крышка СБ', 1, ['k4', 1, x], ['k15', 1, y], ['k2', 1, z]],
+                                  ['С-СД7', 'Стенка СБ', 1, ['c1', 1, x], ['c2a', 1, y], ['u', 1, 0], ['cB', 1, z]],
+                                  ['С-СД8', 'Стенка СБ', 1, ['c2', 1, x], ['c1a', 1, y], ['u', 1, 0], ['cA', 1, z]],
+                                  ['Ш-СД7', 'Шина СБ', 1, ['s3', 1, x], ['s12', 1, [y, z]]],
+                                  ['Ш-СД29', 'Шина СБ', 1, ['s_3', 1, x], ['s38', 1, [y, z]]],
+                                  ['Ш-СД10', 'Шина СБ', 1, ['s4', 1, x], ['s9', 1, [y, z]]]]
             return svar_det_one_floor
 
         if str(self.dat['Кол. пров.']) in ['4', '3+1']:
@@ -1363,7 +1368,7 @@ class calculation:
                 y = int(self.os[1]) + self.dat['разница между этажами']
                 z = self.os[2]
                 svar_det_one_floor = one(x, y, z)
-                svar_det_one_floor[1] = ['К-СД11', 1, ['kc2', 1, x], ['kc8', 1, y], ['kc1', 1, z]]
+                svar_det_one_floor[1] = ['К-СД11', 'Крышка СБ', 1, ['kc2', 1, x], ['kc8', 1, y], ['kc1', 1, z]]
 
                 x = int(self.os[0]) - self.dat['разница между этажами']
                 y = int(self.os[1]) - self.dat['разница между этажами']
@@ -1381,13 +1386,13 @@ class calculation:
                 y = int(self.os[1]) + self.dat['разница между этажами']
                 z = int(self.os[2])
                 svar_det_one_floor = one(x, y, z)
-                svar_det_one_floor[1] = ['К-СД11', 1, ['kc2', 1, x], ['kc8', 1, y], ['kc1', 1, z]]
+                svar_det_one_floor[1] = ['К-СД11', 'Крышка СБ', 1, ['kc2', 1, x], ['kc8', 1, y], ['kc1', 1, z]]
 
                 x = int(self.os[0])
                 y = int(self.os[1])
                 z = int(self.os[2])
                 svar_det_two_floor = one(x, y, z)
-                svar_det_one_floor[1] = ['К-СД11', 1, ['kc2', 1, x], ['kc8', 1, y], ['kc1', 1, z]]
+                svar_det_one_floor[1] = ['К-СД11', 'Крышка СБ', 1, ['kc2', 1, x], ['kc8', 1, y], ['kc1', 1, z]]
 
                 x = int(self.os[0]) - self.dat['разница между этажами']
                 y = int(self.os[1]) - self.dat['разница между этажами']
@@ -1461,22 +1466,22 @@ class calculation:
                         detali = [['kv18', 1, L], ['kv18', 1, L], ['c', 2, L], ['n', 4], ['sux', 4]]
 
                 if int(self.tip[0]) in [1]:
-                    svar_det = [['Ш-СД33', 1, ['s1_01', 1, L], ['stp09v', 1, 0],
+                    svar_det = [['Ш-СД33', 'Шина СБ', 1, ['s1_01', 1, L], ['stp09v', 1, 0],
                                  [float(L - A - calc['расстояние от оси до шины'] - 20 + 98)]],
-                                ['Ш-СД34', 1, ['s2_01', 1, L], ['stp09v', 1, 0],
+                                ['Ш-СД34', 'Шина СБ', 1, ['s2_01', 1, L], ['stp09v', 1, 0],
                                  [float(L - A - calc['расстояние от оси до шины'] - 20 - 46)]],
-                                ['Ш-СД34', 1, ['s2_01', 1, L], ['stp09v', 1, 0],
+                                ['Ш-СД34', 'Шина СБ', 1, ['s2_01', 1, L], ['stp09v', 1, 0],
                                  [float(A - calc['расстояние от оси до шины'] - 20 - 46)]],
-                                ['Ш-СД33', 1, ['s1_01', 1, L], ['stp09v', 1, 0],
+                                ['Ш-СД33', 'Шина СБ', 1, ['s1_01', 1, L], ['stp09v', 1, 0],
                                  [float(A - calc['расстояние от оси до шины'] - 20 + 98)]]]
                 else:
-                    svar_det = [['Ш-СД33-01', 1, ['s1_01', 1, L], ['stp09v', 2, 0],
+                    svar_det = [['Ш-СД33-01', 'Шина СБ', 1, ['s1_01', 1, L], ['stp09v', 2, 0],
                                  [float(L - A - calc['расстояние от оси до шины'] - 20 + 98)]],
-                                ['Ш-СД34-01', 1, ['s2_01', 1, L], ['stp09v', 2, 0],
+                                ['Ш-СД34-01', 'Шина СБ', 1, ['s2_01', 1, L], ['stp09v', 2, 0],
                                  [float(L - A - calc['расстояние от оси до шины'] - 20 - 46)]],
-                                ['Ш-СД34-01', 1, ['s2_01', 1, L], ['stp09v', 2, 0],
+                                ['Ш-СД34-01', 'Шина СБ', 1, ['s2_01', 1, L], ['stp09v', 2, 0],
                                  [float(A - calc['расстояние от оси до шины'] - 20 - 46)]],
-                                ['Ш-СД33-01', 1, ['s1_01', 1, L], ['stp09v', 2, 0],
+                                ['Ш-СД33-01', 'Шина СБ', 1, ['s1_01', 1, L], ['stp09v', 2, 0],
                                  [float(A - calc['расстояние от оси до шины'] - 20 + 98)]]]
 
                 return [detali, svar_det, A, B, C]
@@ -1520,22 +1525,22 @@ class calculation:
                         detali = [['kv18_01', 1, L], ['kv18_01', 1, L], ['c', 2, L], ['n', 4], ['sux', 4]]
 
                 if int(self.tip[0]) in [3]:
-                    svar_det = [['Ш-СД33-02', 1, ['s1_01', 1, L], ['stp09v', 2, 0],
+                    svar_det = [['Ш-СД33-02', 'Шина СБ', 1, ['s1_01', 1, L], ['stp09v', 2, 0],
                                  [float(L - A - B - calc['расстояние от оси до шины'] - 20 + 98), B]],
-                                ['Ш-СД34-02', 1, ['s2_01', 1, L], ['stp09v', 2, 0],
+                                ['Ш-СД34-02', 'Шина СБ', 1, ['s2_01', 1, L], ['stp09v', 2, 0],
                                  [float(L - A - calc['расстояние от оси до шины'] - 20 - 46 - B), B]],
-                                ['Ш-СД34-02', 1, ['s2_01', 1, L], ['stp09v', 2, 0],
+                                ['Ш-СД34-02', 'Шина СБ', 1, ['s2_01', 1, L], ['stp09v', 2, 0],
                                  [float(A - calc['расстояние от оси до шины'] - 20 - 46), B]],
-                                ['Ш-СД33-02', 1, ['s1_01', 1, L], ['stp09v', 2, 0],
+                                ['Ш-СД33-02', 'Шина СБ', 1, ['s1_01', 1, L], ['stp09v', 2, 0],
                                  [float(A - calc['расстояние от оси до шины'] - 20 + 98), B]]]
                 else:
-                    svar_det = [['Ш-СД33-03', 1, ['s1_01', 1, L], ['stp09v', 4, 0],
+                    svar_det = [['Ш-СД33-03', 'Шина СБ', 1, ['s1_01', 1, L], ['stp09v', 4, 0],
                                  [float(L - A - B - calc['расстояние от оси до шины'] - 20 + 98), B]],
-                                ['Ш-СД34-03', 1, ['s2_01', 1, L], ['stp09v', 4, 0],
+                                ['Ш-СД34-03', 'Шина СБ', 1, ['s2_01', 1, L], ['stp09v', 4, 0],
                                  [float(L - A - calc['расстояние от оси до шины'] - 20 - 46 - B), B]],
-                                ['Ш-СД34-03', 1, ['s2_01', 1, L], ['stp09v', 4, 0],
+                                ['Ш-СД34-03', 'Шина СБ', 1, ['s2_01', 1, L], ['stp09v', 4, 0],
                                  [float(A - calc['расстояние от оси до шины'] - 20 - 46), B]],
-                                ['Ш-СД33-03', 1, ['s1_01', 1, L], ['stp09v', 4, 0],
+                                ['Ш-СД33-03', 'Шина СБ', 1, ['s1_01', 1, L], ['stp09v', 4, 0],
                                  [float(A - calc['расстояние от оси до шины'] - 20 + 98), B]]]
 
                 return [detali, svar_det, A, B, C]
@@ -1569,22 +1574,22 @@ class calculation:
                             detali = [['kv18_02', 1, L], ['kv18_02', 1, L], ['c', 2, L], ['n', 4], ['sux', 4]]
 
                     if int(self.tip[0]) in [5]:
-                        svar_det = [['Ш-СД33-04', 1, ['s1_01', 1, L], ['stp09v', 3, 0],
+                        svar_det = [['Ш-СД33-04', 'Шина СБ', 1, ['s1_01', 1, L], ['stp09v', 3, 0],
                                      [float(L - A - B - C - calc['расстояние от оси до шины'] - 20 + 98), B, C]],
-                                    ['Ш-СД34-04', 1, ['s2_01', 1, L], ['stp09v', 3, 0],
+                                    ['Ш-СД34-04', 'Шина СБ', 1, ['s2_01', 1, L], ['stp09v', 3, 0],
                                      [float(L - A - B - C - calc['расстояние от оси до шины'] - 20 - 46), B, C]],
-                                    ['Ш-СД34-04', 1, ['s2_01', 1, L], ['stp09v', 3, 0],
+                                    ['Ш-СД34-04', 'Шина СБ', 1, ['s2_01', 1, L], ['stp09v', 3, 0],
                                      [float(A - calc['расстояние от оси до шины'] - 20 - 46), B, C]],
-                                    ['Ш-СД33-04', 1, ['s1_01', 1, L], ['stp09v', 3, 0],
+                                    ['Ш-СД33-04', 'Шина СБ', 1, ['s1_01', 1, L], ['stp09v', 3, 0],
                                      [float(A - calc['расстояние от оси до шины'] - 20 + 98), B, C]]]
                     else:
-                        svar_det = [['Ш-СД33-05', 1, ['s1_01', 1, L], ['stp09v', 6, 0],
+                        svar_det = [['Ш-СД33-05', 'Шина СБ', 1, ['s1_01', 1, L], ['stp09v', 6, 0],
                                      [float(L - A - B - C - calc['расстояние от оси до шины'] - 20 + 98), B, C]],
-                                    ['Ш-СД34-05', 1, ['s2_01', 1, L], ['stp09v', 6, 0],
+                                    ['Ш-СД34-05', 'Шина СБ', 1, ['s2_01', 1, L], ['stp09v', 6, 0],
                                      [float(L - A - B - C - calc['расстояние от оси до шины'] - 20 - 46), B, C]],
-                                    ['Ш-СД34-05', 1, ['s2_01', 1, L], ['stp09v', 6, 0],
+                                    ['Ш-СД34-05', 'Шина СБ', 1, ['s2_01', 1, L], ['stp09v', 6, 0],
                                      [float(A - calc['расстояние от оси до шины'] - 20 - 46), B, C]],
-                                    ['Ш-СД33-05', 1, ['s1_01', 1, L], ['stp09v', 6, 0],
+                                    ['Ш-СД33-05', 'Шина СБ', 1, ['s1_01', 1, L], ['stp09v', 6, 0],
                                      [float(A - calc['расстояние от оси до шины'] - 20 + 98), B, C]]]
 
                     return [detali, svar_det, A, B, C]
@@ -1661,10 +1666,10 @@ class calculation:
                 else:
                     detali = [['kv', 1, os], ['kv20', 1, os], ['kv21', 1, os], ['c', 2, os], ['n', 4], ['sux', 4]]
 
-                svar_det = [['Ш-СД35', 1, ['s1', 1, os], ['stp026v', 1, 0], [A]],
-                            ['Ш-СД36', 1, ['s2_01', 1, os], ['stp09v', 1, 0], [A]],
-                            ['Ш-СД36-З', 1, ['s2_01', 1, os], ['stp09v', 1, 0], [A]],
-                            ['Ш-СД35-З', 1, ['s1_01', 1, os], ['stp09v', 1, 0], [A]]]
+                svar_det = [['Ш-СД35', 'Шина СБ', 1, ['s1', 1, os], ['stp026v', 1, 0], [A]],
+                            ['Ш-СД36', 'Шина СБ', 1, ['s2_01', 1, os], ['stp09v', 1, 0], [A]],
+                            ['Ш-СД36-З', 'Шина СБ', 1, ['s2_01', 1, os], ['stp09v', 1, 0], [A]],
+                            ['Ш-СД35-З', 'Шина СБ', 1, ['s1_01', 1, os], ['stp09v', 1, 0], [A]]]
                 return [detali, svar_det, A, B, C]
 
             elif int(tip[0]) in [3, 4]:
@@ -1703,10 +1708,10 @@ class calculation:
                     else:
                         detali = [['kv18_01', 1, os], ['kv18_01', 1, os], ['c', 2, os], ['n', 4], ['sux', 4]]
 
-                svar_det = [['Ш-СД33', 1, ['s1_01', 1, os], ['stp09v', 1, 0], [float(os - A - B - calc['расстояние от оси до шины'] - 20 + 98), B]],
-                            ['Ш-СД34', 1, ['s2_01', 1, os], ['stp09v', 1, 0], [float(os - A - calc['расстояние от оси до шины'] - 20 - 46 - B), B]],
-                            ['Ш-СД34', 1, ['s2_01', 1, os], ['stp09v', 1, 0], [float(A - calc['расстояние от оси до шины'] - 20 - 46), B]],
-                            ['Ш-СД33', 1, ['s1_01', 1, os], ['stp09v', 1, 0], [float(A - calc['расстояние от оси до шины'] - 20 + 98), B]]]
+                svar_det = [['Ш-СД33', 'Шина СБ', 1, ['s1_01', 1, os], ['stp09v', 1, 0], [float(os - A - B - calc['расстояние от оси до шины'] - 20 + 98), B]],
+                            ['Ш-СД34', 'Шина СБ', 1, ['s2_01', 1, os], ['stp09v', 1, 0], [float(os - A - calc['расстояние от оси до шины'] - 20 - 46 - B), B]],
+                            ['Ш-СД34', 'Шина СБ', 1, ['s2_01', 1, os], ['stp09v', 1, 0], [float(A - calc['расстояние от оси до шины'] - 20 - 46), B]],
+                            ['Ш-СД33', 'Шина СБ', 1, ['s1_01', 1, os], ['stp09v', 1, 0], [float(A - calc['расстояние от оси до шины'] - 20 + 98), B]]]
                 return [detali, svar_det, A, B, C]
 
             else:
@@ -1773,35 +1778,35 @@ class calculation:
 
         if self.dat['In'] in [630, 800, 1000, 1250, 1600, 2000, 2500]:
             detali = [['k', 1, [x, y]], ['n', 8], ['sux', 8]]
-            svar_det = [['К-СД3', 1, ['k4', 1, x], ['k4', 1, z]],
-                        ['К-СД3', 1, ['k4', 1, x], ['k4', 1, z]],
-                        ['С-СД11', 1, ['ct', 1, [x, y]], ['ctz', 1, z]],
-                        ['С-СД11', 1, ['ct', 1, [y, x]], ['ctz', 1, z]],
-                        ['Ш-СД15', 1, ['s2t', 1, [x, y]], ['s4t', 1, z]],
-                        ['Ш-СД15-З', 1, ['s2t', 1, [y, x]], ['s4t', 1, z]],
-                        ['Ш-СД16', 1, ['s1t', 1, [x, y]], ['s3t', 1, z]],
-                        ['Ш-СД16-З', 1, ['s1t', 1, [y, x]], ['s3t', 1, z]]]
+            svar_det = [['К-СД3', 'Крышка СБ', 1, ['k4', 1, x], ['k4', 1, z]],
+                        ['К-СД3', 'Крышка СБ', 1, ['k4', 1, x], ['k4', 1, z]],
+                        ['С-СД11', 'Стенка СБ', 1, ['ct', 1, [x, y]], ['ctz', 1, z]],
+                        ['С-СД11', 'Стенка СБ', 1, ['ct', 1, [y, x]], ['ctz', 1, z]],
+                        ['Ш-СД15', 'Шина СБ', 1, ['s2t', 1, [x, y]], ['s4t', 1, z]],
+                        ['Ш-СД15-З', 'Шина СБ', 1, ['s2t', 1, [y, x]], ['s4t', 1, z]],
+                        ['Ш-СД16', 'Шина СБ', 1, ['s1t', 1, [x, y]], ['s3t', 1, z]],
+                        ['Ш-СД16-З', 'Шина СБ', 1, ['s1t', 1, [y, x]], ['s3t', 1, z]]]
 
         elif self.dat['In'] in [2600, 3200, 4000, 5000]:
             detali = [['k', 2, [x, y]], ['n', 8], ['sux', 8]]
-            svar_det = [['К-СД3', 1, ['k4t', 1, x], ['k4t', 1, z]],
-                        ['К-СД3', 1, ['k4t', 1, y], ['k4t', 1, z]],
-                        ['С-СД14', 1, ['ct', 2, [x, y]], ['ctz', 2, z]],
-                        ['С-СД14', 1, ['ct', 2, [y, x]], ['ctz', 2, z]],
-                        ['Ш-СД22', 1, ['s2t', 2, [x, y]], ['s4t', 2, z]],
-                        ['Ш-СД22-З', 1, ['s2t', 2, [y, x]], ['s4t', 2, z]],
-                        ['Ш-СД21', 1, ['s1t', 2, [x, y]], ['s3t', 2, z]],
-                        ['Ш-СД21-З', 1, ['s1t', 2, [y, x]], ['s3t', 2, z]]]
+            svar_det = [['К-СД3', 'Крышка СБ', 1, ['k4t', 1, x], ['k4t', 1, z]],
+                        ['К-СД3', 'Крышка СБ', 1, ['k4t', 1, y], ['k4t', 1, z]],
+                        ['С-СД14', 'Стенка СБ', 1, ['ct', 2, [x, y]], ['ctz', 2, z]],
+                        ['С-СД14', 'Стенка СБ', 1, ['ct', 2, [y, x]], ['ctz', 2, z]],
+                        ['Ш-СД22', 'Шина СБ', 1, ['s2t', 2, [x, y]], ['s4t', 2, z]],
+                        ['Ш-СД22-З', 'Шина СБ', 1, ['s2t', 2, [y, x]], ['s4t', 2, z]],
+                        ['Ш-СД21', 'Шина СБ', 1, ['s1t', 2, [x, y]], ['s3t', 2, z]],
+                        ['Ш-СД21-З', 'Шина СБ', 1, ['s1t', 2, [y, x]], ['s3t', 2, z]]]
 
         else:   # 6400
             detali = [['k', 1, [x, y]], ['n', 8], ['sux', 8]]
-            svar_det = [['К-СД3', 1, ['k4', 1, x], ['k4', 1, z]],
-                        ['С-СД11', 1, ['ct', 1, [x, y]], ['ctz', 1, z]],
-                        ['С-СД11', 1, ['ct', 1, [y, x]], ['ctz', 1, z]],
-                        ['Ш-СД15', 1, ['s2t', 1, [x, y]], ['s4t', 1, z]],
-                        ['Ш-СД15-З', 1, ['s2t', 1, [y, x]], ['s4t', 1, z]],
-                        ['Ш-СД16', 1, ['s1t', 1, [x, y]], ['s3t', 1, z]],
-                        ['Ш-СД16-З', 1, ['s1t', 1, [y, x]], ['s3t', 1, z]]]
+            svar_det = [['К-СД3', 'Крышка СБ', 1, ['k4', 1, x], ['k4', 1, z]],
+                        ['С-СД11', 'Стенка СБ', 1, ['ct', 1, [x, y]], ['ctz', 1, z]],
+                        ['С-СД11', 'Стенка СБ', 1, ['ct', 1, [y, x]], ['ctz', 1, z]],
+                        ['Ш-СД15', 'Шина СБ', 1, ['s2t', 1, [x, y]], ['s4t', 1, z]],
+                        ['Ш-СД15-З', 'Шина СБ', 1, ['s2t', 1, [y, x]], ['s4t', 1, z]],
+                        ['Ш-СД16', 'Шина СБ', 1, ['s1t', 1, [x, y]], ['s3t', 1, z]],
+                        ['Ш-СД16-З', 'Шина СБ', 1, ['s1t', 1, [y, x]], ['s3t', 1, z]]]
 
         for i in svar_det:
             itog_svar = self.welded_part(i)
@@ -1828,102 +1833,70 @@ class calculation:
         self.nestandart()
         return False
 
-    # Секция компенсации не готово
+    # Секция компенсации
     def sk(self):
+        self.A = self.os[0]
 
-        self.nestandart()
+        self.spisok_dla_mater['dlina'] = round(self.spisok_dla_mater['dlina'] + int(self.dat['количество'])
+                                               * int(self.A) / 1000, 0)
         self.spisok_dla_mater['Nsekc'] = self.spisok_dla_mater['Nsekc'] + int(self.dat['количество'])
+        self.spisok_dla_mater['Lsvar_izd'] = round(self.spisok_dla_mater['Lsvar_izd'] + int(self.dat['количество'])
+                                                   * int(self.A) / 1000, 0)
+        self.spisok_dla_mater['KolProv'] = self.dat['Кол. пров.']
+        self.spisok_dla_mater['Nflanc'] = (self.spisok_dla_mater['Nflanc'] + int(self.dat['количество']) *2)
 
-        '''self.L = self.os[0]
         self.index = self.index + 1
-
-        self.spisok_dla_mater['dlina'] = round(self.spisok_dla_mater['dlina'] + int(self.dat['количество']) * int(self.L) / 1000, 0)
 
         itog = [[self.index, self.dat['Серия'], self.dat['ip'], self.dat['Материал'], self.dat['In'],
                  self.dat['Кол. пров.'], self.dat['Наименование'], 'sk',
                  self.L, self.L1, self.A, self.B, self.C,
                  self.dat['количество'], 'спецификация']]
 
-        if self.dat['Серия'] in ['Е3', 'E3']:
+        # CR  нестандарт не производим
+        if self.dat['Серия'] in ['CR1', 'CR2']:
+            self.nestandart()
+            self.spisok_dla_mater['Nsekc'] = self.spisok_dla_mater['Nsekc'] + int(self.dat['количество'])
 
-            if str(self.dat['Кол. пров.']) in ['4', '3+1']:
-                detali = [['kv', 2, self.os[0]], ['c', 2, self.os[0]], ['s1', 2, self.os[0]], ['s2', 2, self.os[0]],
-                          ['n', 4], ['sux', 4]]
+        #E3
+        else:
 
-                if self.dat['Обозначение'] in ['пф', 'pf', 'pfk']:
-                    self.spisok_dla_mater['Nflanc'] = self.spisok_dla_mater['Nflanc'] + int(self.dat['количество'])
-                    itog[0][7] = 'pf'
-                    detali[2][0] = 's17'
-                    detali[3][0] = 's18'
-                    detali[4][1] = 2
-                    detali.append(['fl', 2])
+            if str(self.dat['Кол. пров.']) in ['4', '3+1'] and self.dat['In'] < 2600:
+                detali = [['n', 4], ['sux', 4], ['c', 4, self.A], ['k', 4, self.A], ['sk_tr', 4, 0],
+                          ['A000_125', 1, 0], ['A000_125_01', 1, 0], ['A000_125_02', 1, 0], ['A000_125_03', 1, 0]]
+                svar_det = [['000 777', 'Шина средняя Ск', 2, ['A000_120', 2, 0]],
+                            ['000 776', 'Шина крайняя Ск', 2, ['A000_119', 2, 0]],
+                            ['k_pe', 'Шина PE в сборе', 1, ['A000_128', 2, 0]],
+                            ['ksm', 'Кожух СК -01', 1, ['lvn', 2, 0], ['klb', 2, 0]],
+                            ['km', 'Каркас кожуха-01', 1, ['ugol2', 2, 0], ['ugol1', 2, 0], ['ugol2_z', 2, 0],
+                             ['ugol', 2, 0]],
+                            ['kcb', 'Кожух СК-02', 1, ['lvb', 2, 0], ['lbm', 2, 0]],
+                            ['kb', 'Каркас кожуха-02', 1, ['ugol2', 2, 0], ['ugol1_2', 2, 0], ['ugol2_z', 2, 0],
+                             ['ugol_2', 2, 0]],
+                            ['000 124', 'Компенсационная шина СБ', 5, ['A000_108', 5 * 7, 0]]]
 
                 if self.dat['In'] in [2500]:
-                    detali.pop(0)
-                    detali.insert(0, ['k', 2, self.os[0]])
-                elif self.dat['In'] in [2600, 3200, 4000, 5000]:
-                    detali.pop(0)
-                    detali.insert(0, ['k', 2, self.os[0]])
-                    for i in [1, 2, 3]:
-                        detali[i][1] = 4
-                    detali.insert(1, ['kc', 1, self.os[0]])
-                elif self.dat['In'] in [6400]:
-                    detali.pop(0)
-                    detali.insert(0, ['k', 2, self.os[0]])
-                    for i in range(1, 4):
-                        detali[i][1] = 6
-                    detali.insert(1, ['kc', 2, self.os[0]])
+                    svar_det[7][2][1] = 5 * 9
 
-            else:   # 3-х проводной
-                detali = [['kv', 2, self.os[0]], ['c', 2, self.os[0]], ['s1', 2, self.os[0]], ['s', 1, self.os[0]],
-                          ['n', 4], ['sux', 4]]
+                for j in detali:
+                    itog_det = self.detail(j, '')
+                    if itog_det == 0:  # только что расчитывали сухарь, направляющую или фланец
+                        continue
+                    else:
+                        itog.append(itog_det)
 
-                if self.dat['Обозначение'] in ['пф', 'pf', 'pfk']:
-                    self.spisok_dla_mater['Nflanc'] = self.spisok_dla_mater['Nflanc'] + int(self.dat['количество'])
-                    itog[0][7] = 'pf'
-                    detali[2][0] = 's17'
-                    detali[4][1] = 2
-                    detali.append(['fl', 2])
+                for i in svar_det:
+                    itog_svar = self.welded_part(i)
+                    for j in itog_svar:
+                        itog.append(j)
 
-        elif self.dat['Серия'] in ['CR', 'CRM', 'CR1', 'CR2']:
-
-            if str(self.dat['Кол. пров.']) in ['4', '3+1']:
-                detali = [['s', 4, self.os[0]], ['torcentr', 2], ['mfazcentr', round(int(self.L) / 0.4)]]
-
-                if self.dat['Обозначение'] in ['пф', 'pf', 'pfk']:
-                    self.spisok_dla_mater['Nflanc'] = self.spisok_dla_mater['Nflanc'] + int(self.dat['количество'])
-                    itog[0][7] = 'pf'
-                    detali[2][0] = 's17'
-                    detali[3][0] = 's18'
-                    detali[4][1] = 2
-                    detali.append(['fl', 2])
-
-                if self.dat['In'] in [3200, 4000, 5000]:
-                    detali.insert(0, ['s', 8, self.os[0]])
-                elif self.dat['In'] in [6400]:
-                    detali.insert(0, ['s', 12, self.os[0]])
-
-            else:  # 3-х проводной
-                detali = [['s', 3, self.os[0]], ['torcentr', 2], ['mfazcentr', round(int(self.L) / 0.4)]]
-
-                # нет чертежей для пф для заливки
-                if self.dat['Обозначение'] in ['пф', 'pf', 'pfk']:
-                    self.spisok_dla_mater['Nflanc'] = self.spisok_dla_mater['Nflanc'] + int(self.dat['количество'])
-                    itog[0][7] = 'pf'
-                    detali[2][0] = 's17'
-                    detali[4][1] = 2
-                    detali.append(['fl', 2])
-
-        for i in detali:
-            itog_det = self.detail(i, 's')
-            if itog_det == 0:   # только что расчитывали сухарь, направляющую или фланец
-                continue
+            # нестандарт. на двух этажные и трех этажные документы не разработаны на три и пять проводнико не разработано
             else:
-                itog.append(itog_det)
-        self.prints(itog)
+                self.nestandart()
+                self.spisok_dla_mater['Nsekc'] = self.spisok_dla_mater['Nsekc'] + int(self.dat['количество'])
 
-        line_raskroi.komlektuyushie(self.dat, self.length_OS, self.spis_kompl).standart_izdel()
-        return True'''
+            self.prints(itog)
+            line_raskroi.komlektuyushie(self.dat, self.length_OS, self.spis_kompl).standart_izdel()
+            return True
 
     def ts(self):
         print('5. Расчет трансформаторной секции:')
@@ -1974,20 +1947,20 @@ class calculation:
                  4: ['N', 'C', 'B', 'A']}
         detali = [['kv', 1, os], ['k19', 1, os], ['c', 2, os], ['n', 2], ['sux', 4], ['zts', 1], ['A000_774_01', 2, os],
                   ['A000_774_02', 2, os]]
-        svar_det = [['Ш-СД25', 1, ['s3', 1, trans_v[tip1][ctp_v[tip2][0]]], ['s33', 1, vivod]],
-                    ['Ш-СД26', 1, ['s4', 1, trans_v[tip1][ctp_v[tip2][1]]], ['s33', 1, vivod]],
-                    ['Ш-СД27', 1, ['s4', 1, trans_v[tip1][ctp_v[tip2][2]]], ['s33', 1, vivod]],
-                    ['Ш-СД28', 1, ['s3', 1, trans_v[tip1][ctp_v[tip2][3]]], ['s33', 1, vivod]]]
+        svar_det = [['Ш-СД25', 'Шина СБ', 1, ['s3', 1, trans_v[tip1][ctp_v[tip2][0]]], ['s33', 1, vivod]],
+                    ['Ш-СД26', 'Шина СБ', 1, ['s4', 1, trans_v[tip1][ctp_v[tip2][1]]], ['s33', 1, vivod]],
+                    ['Ш-СД27', 'Шина СБ', 1, ['s4', 1, trans_v[tip1][ctp_v[tip2][2]]], ['s33', 1, vivod]],
+                    ['Ш-СД28', 'Шина СБ', 1, ['s3', 1, trans_v[tip1][ctp_v[tip2][3]]], ['s33', 1, vivod]]]
 
         if self.dat['In'] in [2500]:
             detali[0][0] = 'k'
         elif self.dat['In'] in [3200, 4000, 5000]:
             detali = [['kv', 1, os], ['k19', 1, os], ['c', 4, os], ['n', 2], ['sux', 4], ['zts', 1],
                       ['A000_774_01', 2, os], ['A000_774_02', 2, os]]
-            svar_det = [['Ш-СД25', 2, ['s3', 2, trans_v[tip1][ctp_v[tip2][0]]], ['s33', 1, vivod], ['s33i', 1, vivod]],
-                        ['Ш-СД26', 2, ['s4', 2, trans_v[tip1][ctp_v[tip2][1]]], ['s33', 1, vivod], ['s33i', 1, vivod]],
-                        ['Ш-СД27', 2, ['s4', 2, trans_v[tip1][ctp_v[tip2][2]]], ['s33', 1, vivod], ['s33i', 1, vivod]],
-                        ['Ш-СД28', 2, ['s3', 2, trans_v[tip1][ctp_v[tip2][3]]], ['s33', 1, vivod], ['s33i', 1, vivod]]]
+            svar_det = [['Ш-СД25', 'Шина СБ', 2, ['s3', 2, trans_v[tip1][ctp_v[tip2][0]]], ['s33', 1, vivod], ['s33i', 1, vivod]],
+                        ['Ш-СД26', 'Шина СБ', 2, ['s4', 2, trans_v[tip1][ctp_v[tip2][1]]], ['s33', 1, vivod], ['s33i', 1, vivod]],
+                        ['Ш-СД27', 'Шина СБ', 2, ['s4', 2, trans_v[tip1][ctp_v[tip2][2]]], ['s33', 1, vivod], ['s33i', 1, vivod]],
+                        ['Ш-СД28', 'Шина СБ', 2, ['s3', 2, trans_v[tip1][ctp_v[tip2][3]]], ['s33', 1, vivod], ['s33i', 1, vivod]]]
 
         self.index = self.index + 1
         itog = [[self.index, self.dat['Серия'], self.dat['ip'], self.dat['Материал'], self.dat['In'],

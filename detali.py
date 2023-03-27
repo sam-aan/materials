@@ -345,6 +345,372 @@ class Detali:
         self.print_rezult()
         return self.a
 
+    # для секции компенсации
+    def sk_tr(self):
+        self.L = 515.8
+        self.oboznachenie = 'Ск-Тр'
+        self.naimenovanie = 'Скоба транспортировочная'
+        self.A = '-'  #
+        self.B = '-'  #
+        self.C = '-'  #
+        self.print_rezult()
+        return self.a
+
+    def A000_125(self):
+        self.oboznachenie = '000 125'
+        self.naimenovanie = 'Фланец СК'
+        if self.nominal == 630:
+            self.A = '189'  #
+            self.B = '140'  #
+            self.C = '48'  #
+        elif self.nominal == 800:
+            self.A = '204'  #
+            self.B = '140'  #
+            self.C = '63'  #
+        elif self.nominal == 1000:
+            self.A = '219'  #
+            self.B = '140'  #
+            self.C = '88'  #
+        elif self.nominal == 1250:
+            self.A = '249'  #
+            self.B = '140'  #
+            self.C = '118'  #
+        elif self.nominal == 1600:
+            self.A = '299'  #
+            self.B = '140'  #
+            self.C = '168'  #
+        elif self.nominal == 2000:
+            self.A = '339'  #
+            self.B = '140'  #
+            self.C = '208'  #
+        elif self.nominal == 2500:
+            self.A = '339'  #
+            self.B = '145'  #
+            self.C = '208'  #
+        self.print_rezult()
+        return self.a
+
+    def A000_125_01(self):
+        self.oboznachenie = '000 125-01'
+        self.naimenovanie = 'Фланец СК'
+        if self.nominal == 630:
+            self.A = '189'  #
+            self.B = '140'  #
+            self.C = '48'  #
+        elif self.nominal == 800:
+            self.A = '204'  #
+            self.B = '140'  #
+            self.C = '63'  #
+        elif self.nominal == 1000:
+            self.A = '219'  #
+            self.B = '140'  #
+            self.C = '88'  #
+        elif self.nominal == 1250:
+            self.A = '249'  #
+            self.B = '140'  #
+            self.C = '118'  #
+        elif self.nominal == 1600:
+            self.A = '299'  #
+            self.B = '140'  #
+            self.C = '168'  #
+        elif self.nominal == 2000:
+            self.A = '339'  #
+            self.B = '140'  #
+            self.C = '208'  #
+        elif self.nominal == 2500:
+            self.A = '339'  #
+            self.B = '145'  #
+            self.C = '208'  #
+        self.print_rezult()
+        return self.a
+
+    def A000_125_02(self):
+        self.oboznachenie = '000 125-02'
+        self.naimenovanie = 'Фланец СК'
+        if self.nominal == 630:
+            self.A = '208'  #
+            self.B = '149'  #
+            self.C = '48'  #
+        elif self.nominal == 800:
+            self.A = '223'  #
+            self.B = '149'  #
+            self.C = '66'  #
+        elif self.nominal == 1000:
+            self.A = '238'  #
+            self.B = '149'  #
+            self.C = '88'  #
+        elif self.nominal == 1250:
+            self.A = '268'  #
+            self.B = '149'  #
+            self.C = '118'  #
+        elif self.nominal == 1600:
+            self.A = '318'  #
+            self.B = '149'  #
+            self.C = '168'  #
+        elif self.nominal == 2000:
+            self.A = '358'  #
+            self.B = '149'  #
+            self.C = '208'  #
+        elif self.nominal == 2500:
+            self.A = '358'  #
+            self.B = '154'  #
+            self.C = '208'  #
+        self.print_rezult()
+        return self.a
+
+    def A000_125_03(self):
+        self.oboznachenie = '000 125-03'
+        self.naimenovanie = 'Фланец СК'
+        if self.nominal == 630:
+            self.A = '208'  #
+            self.B = '149'  #
+            self.C = '48'  #
+        elif self.nominal == 800:
+            self.A = '223'  #
+            self.B = '149'  #
+            self.C = '66'  #
+        elif self.nominal == 1000:
+            self.A = '238'  #
+            self.B = '149'  #
+            self.C = '88'  #
+        elif self.nominal == 1250:
+            self.A = '268'  #
+            self.B = '149'  #
+            self.C = '118'  #
+        elif self.nominal == 1600:
+            self.A = '318'  #
+            self.B = '149'  #
+            self.C = '168'  #
+        elif self.nominal == 2000:
+            self.A = '358'  #
+            self.B = '149'  #
+            self.C = '208'  #
+        elif self.nominal == 2500:
+            self.A = '358'  #
+            self.B = '154'  #
+            self.C = '208'  #
+        self.print_rezult()
+        return self.a
+
+    def A000_120(self):
+        self.L = 624.5
+        self.L1 = 625.4
+        self.oboznachenie = '000 120'
+        self.naimenovanie = 'Шина'
+        self.A = '-'  #
+        self.B = '-'  #
+        self.C = '-'  #
+        self.print_rezult()
+        return self.a
+
+    def A000_119(self):
+        self.L = 624.5
+        self.L1 = 633.1
+        self.oboznachenie = '000 119'
+        self.naimenovanie = 'Шина'
+        self.A = '-'  #
+        self.B = '-'  #
+        self.C = '-'  #
+        self.print_rezult()
+        return self.a
+
+    def A000_128(self):
+        self.L = 94
+
+        if self.nominal < 2500:
+            self.L1 = 121.1
+        else:
+            self.L1 = 120.5
+
+        self.oboznachenie = '000 128'
+        self.naimenovanie = 'Шина PE ФБ'
+        self.A = '-'  #
+        self.B = '-'  #
+        self.C = '-'  #
+        self.print_rezult()
+        return self.a
+
+    def lvn(self):
+        self.L = 282
+
+        if self.nominal < 2500:
+            self.L1 = 296
+        else:
+            self.L1 = 306
+
+        self.oboznachenie = 'ЛВ/Н'
+        self.naimenovanie = 'Лист верхний/нижний'
+        self.A = '-'  #
+        self.B = '-'  #
+        self.C = '-'  #
+        self.print_rezult()
+        return self.a
+
+    def klb(self):
+
+        if self.nominal == 630:
+            self.A = '205'  #
+        elif self.nominal == 800:
+            self.A = '220'  #
+        elif self.nominal == 1000:
+            self.A = '235'  #
+        elif self.nominal == 1250:
+            self.A = '265'  #
+        elif self.nominal == 1600:
+            self.A = '315'  #
+        elif self.nominal == 2000:
+            self.A = '355'  #
+        elif self.nominal == 2500:
+            self.A = '355'  #
+
+        self.oboznachenie = 'КЛБ'
+        self.naimenovanie = 'Лист боковой'
+        self.B = '282'  #
+        self.C = '-'  #
+        self.print_rezult()
+        return self.a
+
+    def lvb(self):
+
+        if self.nominal < 2500:
+            self.A = '315'  #
+        else:
+            self.A = '325'  #
+
+        self.oboznachenie = 'ЛВБ'
+        self.naimenovanie = 'Лист верхний/нижний Б'
+        self.B = '282'  #
+        self.C = '-'  #
+        self.print_rezult()
+        return self.a
+
+    def lbm(self):
+        if self.nominal == 630:
+            self.A = '224'  #
+        elif self.nominal == 800:
+            self.A = '239'  #
+        elif self.nominal == 1000:
+            self.A = '254'  #
+        elif self.nominal == 1250:
+            self.A = '284'  #
+        elif self.nominal == 1600:
+            self.A = '334'  #
+        elif self.nominal == 2000:
+            self.A = '374'  #
+        elif self.nominal == 2500:
+            self.A = '374'  #
+
+        self.oboznachenie = 'ЛБМ'
+        self.naimenovanie = 'Лист боковой Б'
+        self.B = '282'  #
+        self.C = '-'  #
+        self.print_rezult()
+        return self.a
+
+    def ugol2(self):
+        self.L = '282'
+        self.oboznachenie = 'У2'
+        self.naimenovanie = 'Уголок'
+        self.A = '30'
+        self.B = '30'  #
+        self.C = '-'  #
+        self.print_rezult()
+        return self.a
+
+    def ugol1(self):
+        if self.nominal in [2500]:
+            self.L = '325'
+        else:
+            self.L = '315'
+        self.oboznachenie = 'У1'
+        self.naimenovanie = 'Уголок'
+        self.A = '30'
+        self.B = '30'  #
+        self.C = '-'  #
+        self.print_rezult()
+        return self.a
+
+    def ugol1_2(self):
+        if self.nominal in [2500]:
+            self.L = '296'
+        else:
+            self.L = '306'
+        self.oboznachenie = 'У1'
+        self.naimenovanie = 'Уголок'
+        self.A = '30'
+        self.B = '30'  #
+        self.C = '-'  #
+        self.print_rezult()
+        return self.a
+
+    def ugol(self):
+        if self.nominal in [630]:
+            self.L = '164'
+        elif self.nominal in [800]:
+            self.L = '179'
+        elif self.nominal in [1000]:
+            self.L = '194'
+        elif self.nominal in [1250]:
+            self.L = '224'
+        elif self.nominal in [1600]:
+            self.L = '274'
+        elif self.nominal in [2000]:
+            self.L = '314'
+        elif self.nominal in [2500]:
+            self.L = '314'
+        self.oboznachenie = 'У'
+        self.naimenovanie = 'Уголок'
+        self.A = '30'
+        self.B = '30'  #
+        self.C = '-'  #
+        self.print_rezult()
+        return self.a
+
+    def ugol_2(self):
+        if self.nominal in [630]:
+            self.L = '145'
+        elif self.nominal in [800]:
+            self.L = '160'
+        elif self.nominal in [1000]:
+            self.L = '175'
+        elif self.nominal in [1250]:
+            self.L = '205'
+        elif self.nominal in [1600]:
+            self.L = '255'
+        elif self.nominal in [2000]:
+            self.L = '295'
+        elif self.nominal in [2500]:
+            self.L = '295'
+        self.oboznachenie = 'У2'
+        self.naimenovanie = 'Уголок'
+        self.A = '30'
+        self.B = '30'  #
+        self.C = '-'  #
+        self.print_rezult()
+        return self.a
+
+    def ugol2_z(self):
+        self.L = '282'
+        self.oboznachenie = 'У2-З'
+        self.naimenovanie = 'Уголок'
+        self.A = '30'
+        self.B = '30'  #
+        self.C = '-'  #
+        self.print_rezult()
+        return self.a
+
+    def A000_108(self):
+        self.L = '210'
+        self.L1 = '224.2'
+        self.oboznachenie = '000 108'
+        self.naimenovanie = 'Шина компенсации'
+        self.A = '30'
+        self.B = '30'  #
+        self.C = '-'  #
+        self.print_rezult()
+        return self.a
+
+
     def k(self):
         self.A = '-'
         self.B = '-'
