@@ -17,6 +17,7 @@ import sys  # sys нужен для передачи argv в QApplication
 import xlrd
 import shutil
 import materials_simple
+import tools
 
 # import logging
 
@@ -50,28 +51,37 @@ class ExampleApp(QMainWindow):
         self.verticalLayout = QtWidgets.QVBoxLayout()
         self.verticalLayout.setObjectName("verticalLayout")
 
-        # Начинаем расчет (Запуск, Начать)
-        self.pushButton = QtWidgets.QPushButton(self.centralwidget)
-        self.pushButton.setGeometry(QtCore.QRect(20, 120, 75, 20))
-        self.pushButton.setObjectName("pushButton")
-        self.pushButton.clicked.connect(self.nachalo)  # если кнопка нажата
-
         # Открываем файл
         self.pushButton2 = QtWidgets.QPushButton(self.centralwidget)
-        self.pushButton2.setGeometry(QtCore.QRect(20, 80, 100, 20))
+        self.pushButton2.setGeometry(QtCore.QRect(120, 100, 100, 20))
         self.pushButton2.setObjectName("pushButton2")
         self.pushButton2.clicked.connect(self.showDialog)  # если кнопка нажата
 
+        # выпадающий список
+        self.zadacha = QtWidgets.QComboBox(self.centralwidget)
+        self.zadacha.setObjectName("material")
+        self.zadacha.setGeometry(QtCore.QRect(240, 100, 200, 20))
+        self.zadacha.addItem("Создать ЦВ")
+        self.zadacha.addItem("Переработать ЦВ")
+        self.zadacha.addItem("Объеденить")
+
+        # Начинаем расчет (Запуск, Начать)
+        self.pushButton = QtWidgets.QPushButton(self.centralwidget)
+        self.pushButton.setGeometry(QtCore.QRect(20, 165, 75, 20))
+        self.pushButton.setStyleSheet('background: rgb(131, 230, 144);')
+        self.pushButton.setObjectName("pushButton")
+        self.pushButton.clicked.connect(self.nachalo)  # если кнопка нажата
+
         # кнопка расчета материалов
         self.pushButton3 = QtWidgets.QPushButton(self.centralwidget)
-        self.pushButton3.setGeometry(QtCore.QRect(220, 120, 150, 20))
+        self.pushButton3.setGeometry(QtCore.QRect(220, 165, 150, 20))
         self.pushButton3.setObjectName("pushButton3")
         self.pushButton3.clicked.connect(self.handleButton)  # если кнопка нажата
 
         self.label_zakaz = QtWidgets.QLabel(self.centralwidget)
         self.label_zakaz.setGeometry(QtCore.QRect(20, 20, 100, 10))
         self.label_zakaz.setObjectName("label")
-        self.label_zakaz.setText('№ заказа')
+        self.label_zakaz.setText('№ Заказа')
         self.line_zakaz = QLineEdit(self)
         self.line_zakaz.move(20, 40)
         self.line_zakaz.resize(80, 20)
@@ -91,6 +101,14 @@ class ExampleApp(QMainWindow):
         self.line_project_name = QLineEdit(self)
         self.line_project_name.move(250, 40)
         self.line_project_name.resize(180, 20)
+
+        self.label_stage = QtWidgets.QLabel(self.centralwidget)
+        self.label_stage.setGeometry(QtCore.QRect(20, 60, 80, 40))
+        self.label_stage.setObjectName("label")
+        self.label_stage.setText('№ Этапа')
+        self.line_stage = QLineEdit(self)
+        self.line_stage.move(20, 100)
+        self.line_stage.resize(80, 20)
 
         self.v1button = QRadioButton("Питон Кама", self)
         self.v1button.setGeometry(QtCore.QRect(20, 200, 100, 10))
@@ -113,7 +131,7 @@ class ExampleApp(QMainWindow):
 
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
-        MainWindow.setWindowTitle(_translate("MainWindow", "Solaris specification  V-270323-01"))
+        MainWindow.setWindowTitle(_translate("MainWindow", "Solaris specification  V-050423-01"))
         self.pushButton.setText(_translate("MainWindow", "Пуск"))
         self.pushButton2.setText(_translate("MainWindow", "Открыть файл"))
         self.pushButton3.setText(_translate("MainWindow", "Расчет материалов"))
@@ -134,10 +152,13 @@ class ExampleApp(QMainWindow):
         print('Открыть файл: ', self.fname)
 
     def nachalo(self):
-        self.atribut = [self.line_zakaz.text(), self.line_project.text(), self.line_project_name.text()]
 
-        def SS(PP):
-            spisok = rashet_sekcii.rashet(self.atribut, self.fname, PP).zapusk()
+        self.atribut = [self.line_zakaz.text(), self.line_project.text(), self.line_project_name.text(),
+                        self.line_stage.text(), 'Solaris']
+
+        def SS(prom):
+            spisok = rashet_sekcii.rashet(self.atribut, self.fname, prom).zapusk()
+            print(spisok)
             self.saveFileDialog(spisok)
             QtWidgets.QMessageBox.question(self, 'Уведомление', 'Расчет окончен!', QtWidgets.QMessageBox.Ok)
             print('конец расчетов')
@@ -150,7 +171,7 @@ class ExampleApp(QMainWindow):
         elif self.atribut[0] == '':
             print(self.atribut)
             # QMessageBox.question(self, 'Уведомление', 'Введите номер заказа', QMessageBox.Ok, QMessageBox.No)
-            text, ok = QInputDialog.getText(self, 'Номер заказа', 'Введине номер заказа')
+            text, ok = QInputDialog.getText(self, 'Номер заказа', 'Введите номер заказа')
 
             if ok:
                 self.atribut[0] = str(text)
@@ -162,25 +183,74 @@ class ExampleApp(QMainWindow):
         if self.atribut[2] == '':
             self.atribut[2] = 'Без проекта'
 
+
         # проверянм оператора уверен ли он в том, что выбрал правильное проивзоство
         if self.v1button.isChecked() == True:
             reply = QMessageBox.question(self, 'Уведомление', 'Расчет для Питон Кама!', QMessageBox.Yes, QMessageBox.No)
 
             if reply == QMessageBox.Yes:
                 print('Расчет для производственной площадки Питон Кама')
-                SS('Kama')
+                self.atribut[4] = 'Kama'
 
         else:
             reply = QMessageBox.question(self, 'Уведомление', 'Расчет для Солярис!', QMessageBox.Yes, QMessageBox.No)
 
             if reply == QMessageBox.Yes:
                 print('Рачсет для производственной площадки Солярис')
-                SS('Solaris')
+                self.atribut[4] = 'Solaris'
+
+        # выбираем что будем запускать: создание цеховой ведомости, изменение маршрутной карты или объединение
+        # нескольких цеховых ведомостей
+
+        if self.zadacha.currentText() == 'Создать ЦВ':
+            SS(self.atribut[4])
+        elif self.zadacha.currentText() == 'Переработать ЦВ':
+
+            if self.atribut[3] == '':
+                print('атрибуты ', self.atribut)
+                text, ok = QInputDialog.getText(self, 'Номер заказа', 'Введине номер этапа')
+
+                if ok:
+                    self.atribut[3] = str(text)
+                    print('Введен номер этапа: ', self.atribut[3])
+
+            item = tools.exl_to_list('all', 'all', self.fname, 'Маршрутная карта').reading()
+
+            if item == False:
+                QtWidgets.QMessageBox.question(self, 'Уведомление', 'Нет нужного листа в книге',
+                                               QtWidgets.QMessageBox.Ok)
+                print('нет нужного листа в книге')
+                self.fname = ''
+            else:
+                item = tools.list_to_dict(item, self.zadacha.currentText()).transformation()
+                Fn = tools.writeToExl(item, self.atribut, self.fname, self.zadacha.currentText()).Deleting_sheets()
+                Fn = tools.writeToExl(item, self.atribut, Fn, self.zadacha.currentText()).Write()
+                self.saveFileDialog2(Fn)
+                QtWidgets.QMessageBox.question(self, 'Уведомление', 'Расчет окончен!', QtWidgets.QMessageBox.Ok)
+                print('конец расчетов')
+                self.fname = ''
+        else:
+            QtWidgets.QMessageBox.question(self, 'Уведомление', 'Еще не готово!', QtWidgets.QMessageBox.Ok)
+
+    # N-значение цеховая ведомость или маршрутная карта
+    def saveFileDialog2(self, Fn):
+        dict_path_save = re.findall(r'[^/]+', self.fname)  # разделили путь к файлу на список
+        fname = dict_path_save[-1]  # узнали имя исходного файла
+        del dict_path_save[-1]  # удалили последний элемент списка
+        path_save = '/'.join(dict_path_save)  # создали новый путь для сохранения
+        dirlist = QFileDialog.getSaveFileName(self, "Выбрать папку", self.fname, 'XML files (*.xml *.xlsx)')  # выбор пользователем пути сохра
+        print('Выбрана путь для сохранения: ', dirlist[0])
+        print('Сохранить файл: ', fname)
+        put = os.path.abspath(str(Fn))  # находим путь исходного файла
+        print('Путь ', put)
+        shutil.copyfile(put, dirlist[0])  # копируем исходный файл в нужную дирректорию
+        print('удаляем фаил ', put)
+        os.remove(str(put))
 
     def saveFileDialog(self, spisok):
-
         # алгоритм сохранени в нужной папке и удалением исходника
-        def SaveFile(i, fileName, znach):  # i-имя файла, fileName-путь до файла
+        # i-имя файла, fileName-путь до файла
+        def SaveFile(i, fileName, znach):
             print('Сохранить файл: ', fileName)
             put = os.path.abspath(str(i))  # находим путь исходного файла
             print('Путь ', put)
@@ -211,21 +281,24 @@ class ExampleApp(QMainWindow):
                 print('Записываем новую папку')
                 os.mkdir(fileP)
 
-        proverka(dirlistNew)
+        # создаем стандартные папки и запускаем расчет материалов.
+        proverka(dirlistNew)            # проверяем наличие папок
         # начинаем создавать свои папки для файлов
         spisokPapok = ['/1. Ведомость деталей/', '/2. КОВ/', '/3. Наклейки/',
                        '/4. Программы/', '/5. Расходники/', '/6. Чертежи/', '/7. Материалы/',
                        '/8. Спецификация заказа/']
+
+        # проверяем наличие папок
         for i in spisokPapok:
             proverka(dirlistNew + i)
 
+        # перезаписываем файлы созданные при расчете ЦВ
         for i in spisok[0]:
             print('Файл:', i)
             fileName = dirlistNew + spisokPapok[i[0]] + str(i[1])  # создаем новый путь для сохранения файла
             SaveFile(i[1], fileName, 0)
 
         for i in spisok[1]:
-
             rezult = materials_simple.vvod(spisok[1][i]['seria'], spisok[1][i]['material'],
                                            spisok[1][i]['nominal'], spisok[1][i]['dlina'],
                                            spisok[1][i]['Nstik'], spisok[1][i]['Nsekc'], spisok[1][i]['Nkon_zag'],
@@ -243,7 +316,6 @@ class ExampleApp(QMainWindow):
             SaveFile("example2.xls", dirlistNew + spisokPapok[6] + namefile + '.xls', 0)
             print('fname', fname, '\n', self.fname)
             SaveFile(str(self.fname), dirlistNew + spisokPapok[7] + fname, 1)
-
 
 # расчет материалов
 class ExampleApp2(QtWidgets.QMainWindow):

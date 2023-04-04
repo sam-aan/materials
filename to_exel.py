@@ -187,11 +187,11 @@ class writing_to_exl():
         """модуль записывает в файл эксель данные для нач. смены и раб. мест."""
 
         print('создана страница для начальника смены')
-        self.wb.create_sheet(title='Ведомость Нач.смен', index=1)  # создаем первый лист
-        sheet = self.wb['Ведомость Нач.смен']
+        self.wb.create_sheet(title='Маршрутная карта', index=1)  # создаем первый лист
+        sheet = self.wb['Маршрутная карта']
         sheet.sheet_properties.pageSetUpPr.fitToPage = True
         sheet.page_setup.fitToHeight = False
-        self.kolontitul('Ведомость Нач.смен')
+        self.kolontitul('Маршрутная карта')
         x = 1
         operation = ['05', '10', '15', '20', '25', '30', '35', '40', '45', '50', '55', '60']
         # записываем первую строку для ведомости нач. смены с раб. местами.
@@ -256,7 +256,7 @@ class writing_to_exl():
             # начинаем вычислять какая строчка нам нужна для формулы значения
             nS_schet = 1                                        # номер счетчика
 
-            for cell in self.wb['Ведомость Нач.смен']['A']:     # перебираем столбец А в списке нач смен
+            for cell in self.wb['Маршрутная карта']['A']:     # перебираем столбец А в списке нач смен
                 #print(cell.value)
                 #print('i', i)
                 if cell.value == i:                             # ищем нужную сточку
