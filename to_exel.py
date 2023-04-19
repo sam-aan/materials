@@ -278,7 +278,7 @@ class writing_to_exl():
                               self.slovar[i]['Наименование'],
                               self.slovar[i]['Обозначение'], self.slovar[i]['Разм.L'], self.slovar[i]['Разм.L1'],
                               self.slovar[i]['Разм.A'], self.slovar[i]['Разм.B'], self.slovar[i]['Разм.C'],
-                              '''='Ведомость Нач.смен'!N''' + str(znchStr) + '''-'Ведомость Нач.смен'!'''
+                              '''='Маршрутная карта'!N''' + str(znchStr) + '''-'Маршрутная карта'!'''
                               + rab_mesto[j] + str(znchStr)]
 
                     xxx = 1
