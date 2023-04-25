@@ -141,6 +141,7 @@ class calculation:
                    'ом': 'om', 'омф': 'omf', 'пф': 'p', 'згф': 'z_g', 'звф': 'z_v', 'увф': 'uv', 'угф': 'ug',
                    'тв': 'tv', 'тс': 'ts', 'pt': 'p', 'pf': 'p', 'pfk': 'p', 'ug': 'ug', 'ugf': 'ug',
                    'uv': 'uv', 'uvf': 'uv', 'kp': 'k_p', 'kl': 'k_l', 'kpfuv': 'k_p', 'klfuv': 'k_l',
+                   'kpfug': 'k_p', 'klfug': 'k_l',
                    'zv': 'z_v', 'zvf': 'z_v',
                    'zg': 'z_g', 'zgf': 'z_g', 'tv': 'tv', 'tg': 'tg', 'tsv': 'ts', 'sb': 'sb',
                    'сб': 'sb', 'pr': 'om', 'prf': 'omf', 'kz': 'kz', 'pn': 'pn', 'om': 'bom',
@@ -584,7 +585,7 @@ class calculation:
                 svar_det_one_floor[0][3][0] = 'k2f'
                 svar_det_one_floor[1][4][0] = 'k1f'
                 svar_det_one_floor[2][3][0] = 'cBf'
-                svar_det_one_floor[3][2][0] = 'cAf'
+                svar_det_one_floor[3][4][0] = 'cAf'
 
                 if len(svar_det_one_floor) == 5:    # для двухэтажек
 

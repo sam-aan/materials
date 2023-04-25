@@ -59,17 +59,18 @@ class InOut:
         del spis[0]  # удаляем первую строку
 
         for i in spis:
-            if i[0] in ('Итог', 'Итог:', 'Итого', 'Итого:', 'итог', 'итог:', 'итого', 'итого:'):
-                print('пропускаем строчку')
+            if i[0] in ('Итог', 'Итог:', 'Итого', 'Итого:', 'итог', 'итог:', 'итого', 'итого:', 'None'):
+                print('удаляем строчку ', spis.index(i))
+                del spis[spis.index(i)]
                 continue
             else:
                 print(i)
                 kol_povt = int(i[11])
                 i.pop(11)
 
-                while kol_povt >= 1:
-                    array.append(i)
-                    kol_povt = kol_povt - 1
+            while kol_povt >= 1:
+                array.append(i)
+                kol_povt = kol_povt - 1
 
         # меняем формат значения этапа на цифренное
         for s in array:
@@ -179,6 +180,7 @@ class InOut:
                 di[i] = array
         return di
 
+#
     def slovar_raskritii(self, array):
         """модуль для создания словаря из раскрытого списка"""
         print('РАСКРЫТЫЙ СЛОВАРЬ')
@@ -199,6 +201,10 @@ class InOut:
                     i.pop(11)
                     s += 1
                     kol_povt = 1
+                elif i[0] in ('Итог', 'Итог:', 'Итого', 'Итого:', 'итог', 'итог:', 'итого', 'итого:', 'None'):
+                    print('удаляем сточку ',  spis.index(i))
+                    del spis[spis.index(i)]
+                    continue
                 else:
                     print(i)
                     kol_povt = int(i[11])
