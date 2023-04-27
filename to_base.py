@@ -4,13 +4,20 @@ from psycopg2.extensions import ISOLATION_LEVEL_AUTOCOMMIT
 
 try:
     # Подключение к существующей базе данных
-    conn = psycopg2.connect(user='solaris',
-                            password='solaris',
-                            #host='192.168.98.157',
-                            host='95.80.93.177',
+    # conn = psycopg2.connect(user='solaris',
+    #                         password='solaris',
+    #                         #host='192.168.98.157',
+    #                         host='95.80.93.177',
+    #                         port="5432",
+    #                         dbname='test',)
+
+    conn = psycopg2.connect(user='postgres',
+                            password='sam-aan2020',
+                            host='localhost',
                             port="5432",
-                            dbname='test',)
-    conn.set_isolation_level(ISOLATION_LEVEL_AUTOCOMMIT)
+                            dbname='test', )
+
+    '''conn.set_isolation_level(ISOLATION_LEVEL_AUTOCOMMIT)
     # Курсор для выполнения операций с базой данных
     cursor = conn.cursor()
     #sql_create_database = 'create database postgres_db'
@@ -23,7 +30,7 @@ try:
     cursor.execute("SELECT version();")
     # Получить результат
     record = cursor.fetchone()
-    print("Вы подключены к - ", record, "\n")
+    print("Вы подключены к - ", record, "\n")'''
 
 
 

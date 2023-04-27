@@ -248,7 +248,7 @@ class Detali:
         self.A = '-'
         self.B = '-'
         self.C = '-'
-        self.L = 40
+        self.L = 20
         self.oboznachenie = 'СУ'
         self.naimenovanie = 'Сухарь'
         self.print_rezult()
