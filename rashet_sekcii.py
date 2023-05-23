@@ -1369,7 +1369,7 @@ class calculation:
                 y = int(self.os[1]) + self.dat['разница между этажами']
                 z = self.os[2]
                 svar_det_one_floor = one(x, y, z)
-                svar_det_one_floor[1] = ['К-СД11', 'Крышка СБ', 1, ['kc2', 1, x], ['kc8', 1, y], ['kc1', 1, z]]
+                svar_det_one_floor[1] = ['КС-СД11', 'Крышка СБ', 1, ['kc2', 1, x], ['kc8', 1, y], ['kc1', 1, z]]
 
                 x = int(self.os[0]) - self.dat['разница между этажами']
                 y = int(self.os[1]) - self.dat['разница между этажами']

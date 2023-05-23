@@ -710,7 +710,6 @@ class Detali:
         self.print_rezult()
         return self.a
 
-
     def k(self):
         self.A = '-'
         self.B = '-'
@@ -1329,7 +1328,7 @@ class Detali:
         self.A = '-'
         self.B = '-'
         self.C = '-'
-        if self.name in ['кп', 'kp']:
+        if self.name in ['кп', 'kp', 'kpfuv']:
             self.L = float(self.os) + float(self.H_stenka) / 2 + float(self.H_paketa) / 2
         elif self.name in ['кл', 'kl']:
             self.L = float(self.os) + float(self.H_stenka) / 2 - float(self.H_paketa) / 2 - float(self.S_stenka)
@@ -1623,7 +1622,10 @@ class Detali:
         self.A = '-'
         self.B = '-'
         self.C = '-'
-        self.L = float(self.os) - float(self.R_kor) - float(self.H_stenka) / 2 + 18.5   # 18.5-потому что по центру
+        for self.name in ['klfuv']:
+            self.L = float(self.os) - 4 - float(self.H_stenka) / 2 + 18.5  # 18.5-потому что по центру
+        else:
+            self.L = float(self.os) - float(self.R_kor) - float(self.H_stenka) / 2 + 18.5   # 18.5-потому что по центру
         self.oboznachenie = 'КС2'
         #print(str(self.L), '=', str(float(self.os)), '-', str(float(self.R_kor)), '-', str(float(str(self.H_stenka))),
              # '/ 2 + 18.5')
@@ -2689,7 +2691,7 @@ class Detali:
                 nominalus = {3200: 1250, 4000: 1600, 5000: 1600, 6400: 1600}
                 nominal = nominalus[self.nominal]
 
-            if self.naimenovanie in ['Стенка', 'Стенка крашенная']:
+            if self.naimenovanie in ['Стенка крашенная']:
                 self.oboznachenie = str(self.oboznachenie) + '-01'
 
         elif re.findall(r'.', self.oboznachenie)[0] in ['Ш'] or self.oboznachenie in ['ТП']:
