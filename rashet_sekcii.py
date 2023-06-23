@@ -585,7 +585,7 @@ class calculation:
                 svar_det_one_floor[0][3][0] = 'k2f'
                 svar_det_one_floor[1][4][0] = 'k1f'
                 svar_det_one_floor[2][3][0] = 'cBf'
-                svar_det_one_floor[3][4][0] = 'cAf'
+                svar_det_one_floor[3][3][0] = 'cAf'
 
                 if len(svar_det_one_floor) == 5:    # для двухэтажек
 
