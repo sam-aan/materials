@@ -1,6 +1,5 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file 'di.ui'
 #
 # Created by: PyQt5 UI code generator 5.10.1
 #
@@ -131,7 +130,7 @@ class ExampleApp(QMainWindow):
 
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
-        MainWindow.setWindowTitle(_translate("MainWindow", "Solaris specification  V-230623-01"))
+        MainWindow.setWindowTitle(_translate("MainWindow", "Solaris specification  V-250723-01"))
         self.pushButton.setText(_translate("MainWindow", "Пуск"))
         self.pushButton2.setText(_translate("MainWindow", "Открыть файл"))
         self.pushButton3.setText(_translate("MainWindow", "Расчет материалов"))
@@ -438,6 +437,8 @@ class ExampleApp2(QtWidgets.QMainWindow):
 
         btn2 = self.pushButton2  # если кнопка нажата запускаем объединение файлов
         btn2.clicked.connect(self.slogenie)
+        self.NameDIr = 'D:/Загрузки'
+        self.fileName = ''
 
     def retranslateUi(self, Dialog):
         _translate = QtCore.QCoreApplication.translate
@@ -476,16 +477,19 @@ class ExampleApp2(QtWidgets.QMainWindow):
     def saveFileDialog(self):
         options = QFileDialog.Options()
         options = QFileDialog.DontUseNativeDialog
-        fileName = QFileDialog.getSaveFileName(self, "Сохранить как", "Материалы для заказа ", "Exel (*.xls)", )[0]
-        print(fileName)
-        thisFile = "example2.xls"
-        put = os.path.abspath(thisFile)
+        self.NameDIr = QFileDialog.getExistingDirectory(self, "Выбрать папку", self.NameDIr)
+        print(self.NameDIr)
+        put = os.path.abspath('example2.xls')
         print(put)
-        shutil.copyfile(put, fileName)
+        shutil.copyfile(put, self.NameDIr + '/' + str(self.fileName))
         os.remove('example2.xls')
 
     def zapusk(self):
         print('запускаем расчет материалов')
+        self.fileName = 'Материалы ' + str(self.seria.currentText()
+                                           + '-' + str(self.material.currentText())
+                                           + '-' + str(self.nominal.currentText())
+                                           + '-' + str(self.dlina_trassi.text()) + 'м.п.xls')
         rezult = materials_simple.vvod(self.seria.currentText(), self.material.currentText(),
                                        self.nominal.currentText(), self.dlina_trassi.text(),
                                        self.kol_stik.text(), self.kol_seks.text(), self.kol_zag.text(),
@@ -495,6 +499,7 @@ class ExampleApp2(QtWidgets.QMainWindow):
                                                 self.nominal.currentText(), self.dlina_trassi.text(),
                                                 self.kol_stik.text(), self.kol_seks.text(), self.kol_zag.text(),
                                                 self.kol_flanc.text(), self.dlina_svarka.text()])
+
 
         self.saveFileDialog()
 
