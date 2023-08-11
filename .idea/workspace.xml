@@ -4,65 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="89123829-8447-4316-aa24-a83a35692c1d" name="Changes" comment="V-230623-01 задача 20970">
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+    <list default="true" id="89123829-8447-4316-aa24-a83a35692c1d" name="Changes" comment="V-250723-01 Ш-СД22 и Ш-СД21 Зеркальные добавлены">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Module1.bas" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Nzakaza.ui" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/Solaris_vedomost.py" beforeDir="false" afterPath="$PROJECT_DIR$/Solaris_vedomost.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Windiw.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/box.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/Solaris_vedomost/Analysis-00.toc" beforeDir="false" afterPath="$PROJECT_DIR$/build/Solaris_vedomost/Analysis-00.toc" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/Solaris_vedomost/EXE-00.toc" beforeDir="false" afterPath="$PROJECT_DIR$/build/Solaris_vedomost/EXE-00.toc" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/Solaris_vedomost/PKG-00.pkg" beforeDir="false" afterPath="$PROJECT_DIR$/build/Solaris_vedomost/PKG-00.pkg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/Solaris_vedomost/PKG-00.toc" beforeDir="false" afterPath="$PROJECT_DIR$/build/Solaris_vedomost/PKG-00.toc" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/Solaris_vedomost/PYZ-00.pyz" beforeDir="false" afterPath="$PROJECT_DIR$/build/Solaris_vedomost/PYZ-00.pyz" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/Solaris_vedomost/PYZ-00.toc" beforeDir="false" afterPath="$PROJECT_DIR$/build/Solaris_vedomost/PYZ-00.toc" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/Solaris_vedomost/warn-Solaris_vedomost.txt" beforeDir="false" afterPath="$PROJECT_DIR$/build/Solaris_vedomost/warn-Solaris_vedomost.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/Solaris_vedomost/xref-Solaris_vedomost.html" beforeDir="false" afterPath="$PROJECT_DIR$/build/Solaris_vedomost/xref-Solaris_vedomost.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/calculation_of_sections.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/det.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/di.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/di.ui" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/di_1.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/Solaris_vedomost.exe" beforeDir="false" afterPath="$PROJECT_DIR$/dist/Solaris_vedomost.exe" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/file_open.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/hello.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/in_vedNachSmen_to_RabMest.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/komplekt.py" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/line_raskroi.py" beforeDir="false" afterPath="$PROJECT_DIR$/line_raskroi.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/logfilename.txt" beforeDir="false" afterPath="$PROJECT_DIR$/logfilename.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/main.spec" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/main_mat.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/main_mat.spec" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/material_calculation.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/materials_simple_kol.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/mysyte.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/okno.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/okno_vibora.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/one_floor.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/one_sekc.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/pereimenovanie_svar_det.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/schet.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/shini.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/shinoprovod_rashet_detali_1.1.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/shinoprovod_rashet_detali_1.2.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/solaris.spec" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/sort.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/sort.ui" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/specifikaciya.docx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/statr_okno.ui" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/straight.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/svar_det.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/table.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/techology.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/three_floor.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/to_exl_main_mat.py" beforeDir="false" afterPath="$PROJECT_DIR$/to_exl_main_mat.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/two_floor.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/welded_part.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/win_piton.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/комплектующие профиль.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/комплектующие.txt" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -443,7 +388,9 @@
       <workItem from="1689239776122" duration="610000" />
       <workItem from="1689270718979" duration="53000" />
       <workItem from="1689319703938" duration="11295000" />
-      <workItem from="1690188466191" duration="5300000" />
+      <workItem from="1690188466191" duration="6500000" />
+      <workItem from="1691039379898" duration="1077000" />
+      <workItem from="1691736209879" duration="958000" />
     </task>
     <task id="LOCAL-00001" summary="nakleika">
       <created>1643615263314</created>
@@ -718,7 +665,14 @@
       <option name="project" value="LOCAL" />
       <updated>1687506789508</updated>
     </task>
-    <option name="localTasksCounter" value="40" />
+    <task id="LOCAL-00040" summary="V-250723-01 Ш-СД22 и Ш-СД21 Зеркальные добавлены">
+      <created>1690297321434</created>
+      <option name="number" value="00040" />
+      <option name="presentableId" value="LOCAL-00040" />
+      <option name="project" value="LOCAL" />
+      <updated>1690297321434</updated>
+    </task>
+    <option name="localTasksCounter" value="41" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -748,7 +702,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="mnogo izm lkz CR1 s shinoi 160x6 dla 3200A" />
     <MESSAGE value="mnogo izm 2" />
     <MESSAGE value="sozdanie papok" />
     <MESSAGE value="atr in exlx" />
@@ -773,7 +726,8 @@
     <MESSAGE value="V-270423-01 по задачам 21700 21608" />
     <MESSAGE value="V-080623-01 фланцы не считало исправлено" />
     <MESSAGE value="V-230623-01 задача 20970" />
-    <option name="LAST_COMMIT_MESSAGE" value="V-230623-01 задача 20970" />
+    <MESSAGE value="V-250723-01 Ш-СД22 и Ш-СД21 Зеркальные добавлены" />
+    <option name="LAST_COMMIT_MESSAGE" value="V-250723-01 Ш-СД22 и Ш-СД21 Зеркальные добавлены" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
