@@ -4,18 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="89123829-8447-4316-aa24-a83a35692c1d" name="Changes" comment="V-110823-02 Ш-СД (Зеркальная)">
-      <change beforePath="$PROJECT_DIR$/build/Solaris_vedomost/Analysis-00.toc" beforeDir="false" afterPath="$PROJECT_DIR$/build/Solaris_vedomost/Analysis-00.toc" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/Solaris_vedomost/EXE-00.toc" beforeDir="false" afterPath="$PROJECT_DIR$/build/Solaris_vedomost/EXE-00.toc" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/Solaris_vedomost/PKG-00.pkg" beforeDir="false" afterPath="$PROJECT_DIR$/build/Solaris_vedomost/PKG-00.pkg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/Solaris_vedomost/PKG-00.toc" beforeDir="false" afterPath="$PROJECT_DIR$/build/Solaris_vedomost/PKG-00.toc" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/Solaris_vedomost/PYZ-00.pyz" beforeDir="false" afterPath="$PROJECT_DIR$/build/Solaris_vedomost/PYZ-00.pyz" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/Solaris_vedomost/PYZ-00.toc" beforeDir="false" afterPath="$PROJECT_DIR$/build/Solaris_vedomost/PYZ-00.toc" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/Solaris_vedomost/warn-Solaris_vedomost.txt" beforeDir="false" afterPath="$PROJECT_DIR$/build/Solaris_vedomost/warn-Solaris_vedomost.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/Solaris_vedomost/xref-Solaris_vedomost.html" beforeDir="false" afterPath="$PROJECT_DIR$/build/Solaris_vedomost/xref-Solaris_vedomost.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/Solaris_vedomost.exe" beforeDir="false" afterPath="$PROJECT_DIR$/dist/Solaris_vedomost.exe" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/line_raskroi.py" beforeDir="false" afterPath="$PROJECT_DIR$/line_raskroi.py" afterDir="false" />
-    </list>
+    <list default="true" id="89123829-8447-4316-aa24-a83a35692c1d" name="Changes" comment="V-110823-03 Ш-СД (Зеркальная)" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -398,7 +387,7 @@
       <workItem from="1690188466191" duration="6500000" />
       <workItem from="1691039379898" duration="1077000" />
       <workItem from="1691736209879" duration="1663000" />
-      <workItem from="1691742941566" duration="311000" />
+      <workItem from="1691742941566" duration="386000" />
     </task>
     <task id="LOCAL-00001" summary="nakleika">
       <created>1643615263314</created>
@@ -701,7 +690,14 @@
       <option name="project" value="LOCAL" />
       <updated>1691743139135</updated>
     </task>
-    <option name="localTasksCounter" value="44" />
+    <task id="LOCAL-00044" summary="V-110823-03 Ш-СД (Зеркальная)">
+      <created>1691743312221</created>
+      <option name="number" value="00044" />
+      <option name="presentableId" value="LOCAL-00044" />
+      <option name="project" value="LOCAL" />
+      <updated>1691743312237</updated>
+    </task>
+    <option name="localTasksCounter" value="45" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -731,7 +727,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="atr in exlx" />
     <MESSAGE value="ispravlenie oshibok" />
     <MESSAGE value="vkolontitul" />
     <MESSAGE value="sortirovka nestandarta" />
@@ -756,7 +751,8 @@
     <MESSAGE value="V-250723-01 Ш-СД22 и Ш-СД21 Зеркальные добавлены" />
     <MESSAGE value="V-110823-01 К-СД6 (Зеркальная)" />
     <MESSAGE value="V-110823-02 Ш-СД (Зеркальная)" />
-    <option name="LAST_COMMIT_MESSAGE" value="V-110823-02 Ш-СД (Зеркальная)" />
+    <MESSAGE value="V-110823-03 Ш-СД (Зеркальная)" />
+    <option name="LAST_COMMIT_MESSAGE" value="V-110823-03 Ш-СД (Зеркальная)" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
