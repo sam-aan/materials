@@ -7,7 +7,7 @@ class InOut:
 
     def __init__(self, fname, fdat):
         self.fname = fname  # имя файла который нужно открыть
-        self.fdat = fdat    # форма которую нужно выдать, для контольйно ведомости 'k', для нач.смен 'n'
+        self.fdat = fdat    # форма которую нужно выдать, для контрольной ведомости 'k', для нач.смен 'n'
 
 
     def zapusk(self):

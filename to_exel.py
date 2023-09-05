@@ -377,7 +377,9 @@ class writing_to_exl():
             spis_dla_vozvrata_2.append(value)      # для возвращяемого списка
 
             #   3 stolbec Серийный номер
-            if self.slovar[i]['Наименование'] in ['Крепежная скоба', 'Крышка стыка', 'Пружинный подвес', 'Концевая заглушка']:
+            print('ssss', self.slovar[i]['Наименование'])
+            if self.slovar[i]['Наименование'] in ['Крепежная скоба', 'Крышка стыка', 'Пружинный подвес',
+                                                  'Концевая заглушка']:
                 value = ''
             else:
                 value = str(re.findall(r'\d+', str(self.zakaz).lower())[0]) \

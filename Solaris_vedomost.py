@@ -5,7 +5,6 @@
 #
 # WARNING! All changes made in this file will be lost!
 
-import os
 import re
 from PyQt5.QtWidgets import (QMainWindow, QMessageBox, QFileDialog, QLineEdit, QRadioButton, QInputDialog)
 import rashet_sekcii
@@ -14,11 +13,16 @@ from PyQt5 import QtCore, QtWidgets
 import logg_solaris
 import sys  # sys нужен для передачи argv в QApplication
 import xlrd
-import shutil
 import materials_simple
 import tools
-
 # import logging
+import openpyxl
+from collections import defaultdict
+import sys
+import os
+import shutil
+from PyQt5.QtCore import QDateTime
+from PyQt5.QtWidgets import QApplication, QMainWindow, QPushButton, QFileDialog, QLabel, QVBoxLayout, QWidget, QMessageBox
 
 ORGANIZATION_NAME = 'PIK Solaris'
 ORGANIZATION_DOMAIN = 'www.piksolaris.ru'
@@ -77,6 +81,12 @@ class ExampleApp(QMainWindow):
         self.pushButton3.setObjectName("pushButton3")
         self.pushButton3.clicked.connect(self.handleButton)  # если кнопка нажата
 
+        # кнопка расчета материалов
+        self.pushButton4 = QtWidgets.QPushButton(self.centralwidget)
+        self.pushButton4.setGeometry(QtCore.QRect(220, 185, 170, 20))
+        self.pushButton4.setObjectName("pushButton4")
+        self.pushButton4.clicked.connect(self.handleButton2)  # если кнопка нажата
+
         self.label_zakaz = QtWidgets.QLabel(self.centralwidget)
         self.label_zakaz.setGeometry(QtCore.QRect(20, 20, 100, 10))
         self.label_zakaz.setObjectName("label")
@@ -123,17 +133,24 @@ class ExampleApp(QMainWindow):
 
         self.atribut = []  # Номер заказа, номер проекта
 
-    # Наименование проекта
+    # Расчет материалов
     def handleButton(self):
         next = ExampleApp2(self)
         next.show()
 
+    # Разница в спецификациях
+    def handleButton2(self):
+        next = ExcelProcessingApp(self)
+        next.show()
+
+
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
-        MainWindow.setWindowTitle(_translate("MainWindow", "Solaris specification  V-110823-03"))
+        MainWindow.setWindowTitle(_translate("MainWindow", "Solaris specification  V-180823-03"))
         self.pushButton.setText(_translate("MainWindow", "Пуск"))
         self.pushButton2.setText(_translate("MainWindow", "Открыть файл"))
         self.pushButton3.setText(_translate("MainWindow", "Расчет материалов"))
+        self.pushButton4.setText(_translate("MainWindow", "Разница в спецификациях"))
 
     def showDialog(self):
         self.fname = QFileDialog.getOpenFileName(self, 'Открыть файл', '', "Exel (*.xlsx)", )[0]
@@ -585,6 +602,301 @@ def sorting_det(array):
     # array2.sort(key=lambda i: (i[3]))
     return array2
 
+
+class ExcelProcessingApp(QMainWindow):
+    def __init__(self, parent=None):
+        # Это здесь нужно для доступа к переменным, методам
+        # и т.д. в файле design.py
+        super().__init__(parent)
+        self.initUI(self)  # Это нужно для инициализации нашего дизайна
+
+
+    def initUI(self, discrepancies):
+        discrepancies.setWindowTitle("Excel Processing App")
+        discrepancies.setGeometry(100, 100, 400, 200)
+        self.layout = QVBoxLayout()
+
+        self.btn_select_made = QPushButton("Изготовлено")
+        self.btn_select_made.clicked.connect(self.select_made_file)
+        self.layout.addWidget(self.btn_select_made)
+
+        self.made_file_label = QLabel("Выберите файл *xlsx")
+        self.layout.addWidget(self.made_file_label)
+
+        self.btn_select_to_make = QPushButton("Нужно изготовить")
+        self.btn_select_to_make.clicked.connect(self.select_to_make_file)
+        self.layout.addWidget(self.btn_select_to_make)
+
+        self.to_make_file_label = QLabel("Выберите файл *xlsx")
+        self.layout.addWidget(self.to_make_file_label)
+
+        self.btn_run_processing = QPushButton("Пуск")
+        self.btn_run_processing.clicked.connect(self.run_processing)
+        self.layout.addWidget(self.btn_run_processing)
+
+        self.central_widget = QWidget()
+        self.central_widget.setLayout(self.layout)
+        self.setCentralWidget(self.central_widget)
+
+        self.made_filename = ""
+        self.to_make_filename = ""
+
+    def select_made_file(self):
+        options = QFileDialog.Options()
+        options |= QFileDialog.ReadOnly
+        file_dialog = QFileDialog.getOpenFileName(self, "Выберите файл изготовленного", "", "Excel Files (*.xlsx)", options=options)
+        if file_dialog[0]:
+            self.made_filename = file_dialog[0]
+            self.made_file_label.setText(os.path.basename(self.made_filename))
+
+    def select_to_make_file(self):
+        options = QFileDialog.Options()
+        options |= QFileDialog.ReadOnly
+        file_dialog = QFileDialog.getOpenFileName(self, "Выберите файл для изготовления", "", "Excel Files (*.xlsx)", options=options)
+        if file_dialog[0]:
+            self.to_make_filename = file_dialog[0]
+            self.to_make_file_label.setText(os.path.basename(self.to_make_filename))
+
+    def run_processing(self):
+        if not self.made_filename or not self.to_make_filename:
+            QMessageBox.warning(self, "Ошибка", "Выберите оба файла")
+            return
+
+        self.process_file(self.made_filename, self.to_make_filename)
+
+    def process_file(self, filename1, filename2):
+        print(filename1, filename2)
+        sheet = "Спецификация"
+
+        setup(filename1, filename2, sheet)
+
+        # После завершения обработки, сохраняем файл в выбранную папку и удаляем исходный файл
+        output_folder = QFileDialog.getExistingDirectory(self, "Выберите папку для сохранения файла")
+        if output_folder:
+            today_date = QDateTime.currentDateTime().toString("ddMMyy")
+            new_filename = os.path.join(output_folder, f"{today_date}.xlsx")
+            shutil.move("result.xlsx", new_filename)
+            QMessageBox.information(self, "Успешно", "Файл успешно сохранен и исходный файл удален")
+
+def setup(file_path1, file_path2, sheet_name):
+    data1 = read(file_path1, sheet_name)
+    data2 = read(file_path2, sheet_name)
+    print('СПИСОК 1\n', data1)
+    print('СПИСОК 2\n', data2)
+    data1 = addition_of_repetitions(data1)
+    data2 = addition_of_repetitions(data2)
+    # result = compare_dicts_with_counts(data1, data2)
+    result1 = vendor_code(data1)
+    result2 = vendor_code(data2)
+    result = differences(result1, result2)
+    save_exel(result[0], result[1])
+
+def read(file_path, sheet_name):
+    print('ИЗ ЭКСЕЛЬ В СЛОВАРЬ')
+    # Открываем файл Excel
+    file_path = file_path  # Укажите путь к вашему файлу Excel
+    wb = openpyxl.load_workbook(file_path, data_only=True)  # Используем data_only=True
+    sheet = wb[sheet_name]  # Выбираем страницу "Спецификация"
+
+    # Инициализируем словарь для хранения данных
+    data_dict = defaultdict(list)
+
+    # Получаем имена столбцов (первая строка в файле Excel)
+    columns = [cell.value for cell in sheet[1]]
+
+    # Итерируемся по строкам, начиная со второй (первая строка уже использована для имен столбцов)
+    for row in sheet.iter_rows(min_row=2, values_only=True, max_col=14):  # Чтение только до 14 столбца включительно
+        # Пропускаем строки, где первая ячейка содержит значения "Итого", "итого", "Итого:", "итого:", "Итог", "итог", "Итог:", "итог:"
+        if row[0] in ["Итого", "итого", "Итого:", "итого:", "Итог", "итог", "Итог:", "итог:"]:
+            break
+
+        # Пропускаем строки, где первая ячейка пуста
+        if row[0] is None:
+            continue
+
+        # Создаем словарь данных для строки, используя имена столбцов
+        row_data = {columns[i]: row[i] for i in range(min(len(columns), len(row)))}
+
+        # Добавляем данные в словарь по соответствующим ключам
+        for key, value in row_data.items():
+            if key != '№ п/п':  # Пропускаем первый столбец
+                data_dict[key].append(value)
+
+    # Закрываем файл Excel
+    wb.close()
+
+    # Выводим полученный словарь
+    for key, values in data_dict.items():
+        print(key, values)
+
+    return data_dict
+
+def addition_of_repetitions(data_dict):
+    print('\nСЛОЖЕНИЕ ПОВТОРОВ')
+    # Создаем новый словарь для результата
+    result_dict = {
+        'Серия': [],
+        'IP': [],
+        'Мат. Пров.': [],
+        'Кол. Пров.': [],
+        'Ном. ток, А': [],
+        'Наименование': [],
+        'Обозначение': [],
+        'Тип': [],
+        'Размер, мм': [],
+        'Номер элемента': [],
+        'Кол, шт': [],
+        'Примечание': [],
+        'Этап': []
+    }
+
+    # Создаем словарь, который будет хранить сумму для каждой группы (группируем по ключам)
+    grouped_data = {}
+
+    # Проходимся по каждой строке в исходном словаре
+    for i in range(len(data_dict['Серия'])):
+        row_data = {k: data_dict[k][i] for k in data_dict}
+        key = tuple(row_data[k] for k in row_data if k != 'Кол, шт')  # Создаем ключ для группировки без 'Кол, шт'
+
+        # Если ключ уже есть в grouped_data, обновляем 'Кол, шт'
+        if key in grouped_data:
+            grouped_data[key]['Кол, шт'] += row_data['Кол, шт']
+        else:
+            grouped_data[key] = row_data
+
+    # Преобразуем grouped_data обратно в result_dict
+    for k, v in grouped_data.items():
+        for key in result_dict.keys():
+            result_dict[key].append(v.get(key, None))
+
+    # Выводим полученный словарь
+    print(result_dict)
+    return result_dict
+
+def compare_dicts_with_counts(dict1, dict2):
+    extra_dict = {}
+    missing_dict = {}
+
+    # Создаем множества из ключей для более быстрого поиска
+    keys1 = set(dict1.keys())
+    keys2 = set(dict2.keys())
+
+    # Находим лишние ключи в первом словаре
+    extra_keys = keys1 - keys2
+    for key in extra_keys:
+        extra_dict[key] = dict1[key]
+
+    # Находим ключи, которых не хватает в первом словаре
+    missing_keys = keys2 - keys1
+    for key in missing_keys:
+        missing_dict[key] = dict2[key]
+
+    # Находим различия в значениях одинаковых ключей
+    common_keys = keys1.intersection(keys2)
+    for key in common_keys:
+        values1 = dict1[key]
+        values2 = dict2[key]
+
+        # Если значения не совпадают, добавляем их в оба словаря
+        if values1 != values2:
+            extra_dict[key] = values1
+            missing_dict[key] = values2
+
+        # Проверяем количество элементов
+        if len(values1) != len(values2):
+            extra_dict[key + "_count"] = len(values1)
+            missing_dict[key + "_count"] = len(values2)
+
+    print("Лишнее:")
+    print(extra_dict)
+    print("\nНе хватает:")
+    print(missing_dict)
+    return extra_dict, missing_dict
+
+def vendor_code(data):
+    print('\nСоздаем список уникальных ключей на основе данных')
+    unique_keys = [
+        f'{data["Серия"][i]}-{data["IP"][i]}-{data["Мат. Пров."][i]}-{data["Кол. Пров."][i]}-{data["Ном. ток, А"][i]}-{data["Обозначение"][i]}-{data["Тип"][i]}-{data["Размер, мм"][i]}'
+        for i in range(len(data["Серия"]))]
+
+    # Создаем словарь для подсчета уникальных ключей
+    key_count = {}
+    for key in unique_keys:
+        if key in key_count:
+            key_count[key] += 1
+        else:
+            key_count[key] = 1
+
+    # Выводим результат
+    # for key, value in key_count.items():
+    #     print(f'{key}: {value}')
+    print(key_count)
+
+    return (key_count)
+
+def differences(dict1, dict2):
+    # Создаем словарь "лишнее"
+    extra_dict = {}
+    for key in dict1:
+        if key in dict2:
+            if dict1[key] > dict2[key]:
+                extra_dict[key] = dict1[key] - dict2[key]
+        else:
+            extra_dict[key] = dict1[key]
+
+    # Создаем словарь "не хватает"
+    missing_dict = {}
+    for key in dict2:
+        if key in dict1:
+            if dict2[key] > dict1[key]:
+                missing_dict[key] = dict2[key] - dict1[key]
+        else:
+            missing_dict[key] = dict2[key]
+
+    # Выводим результат
+    print("лишнее:")
+    print(extra_dict)
+
+    print("не хватает:")
+    print(missing_dict)
+
+    return (extra_dict, missing_dict)
+
+def save_exel(dict1, dict2):
+    print('\nСоздаем новую книгу Excel')
+    # Создаем новую книгу Excel
+    wb = openpyxl.Workbook()
+
+    # Создаем страницу "лишнее"
+    extra_sheet = wb.create_sheet(title="лишнее")
+
+    # Записываем заголовок для "лишнее"
+    extra_sheet.cell(row=1, column=1, value="Артикул")
+    extra_sheet.cell(row=1, column=2, value="Количество")
+
+    # Записываем данные из первого словаря на "лишнее"
+    row_num = 2
+    for key, value in dict1.items():
+        extra_sheet.cell(row=row_num, column=1, value=key)
+        extra_sheet.cell(row=row_num, column=2, value=value)
+        row_num += 1
+
+    # Создаем страницу "не хватает"
+    missing_sheet = wb.create_sheet(title="не хватает")
+
+    # Записываем заголовок для "не хватает"
+    missing_sheet.cell(row=1, column=1, value="Артикул")
+    missing_sheet.cell(row=1, column=2, value="Количество")
+
+    # Записываем данные из второго словаря на "не хватает"
+    row_num = 2
+    for key, value in dict2.items():
+        missing_sheet.cell(row=row_num, column=1, value=key)
+        missing_sheet.cell(row=row_num, column=2, value=value)
+        row_num += 1
+
+    # Сохраняем книгу в файл
+    wb.save("result.xlsx")
 
 def main():
     sys.stdout = logg_solaris.print_to_txt("logfilename.txt")
