@@ -146,7 +146,7 @@ class ExampleApp(QMainWindow):
 
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
-        MainWindow.setWindowTitle(_translate("MainWindow", "Solaris specification  V-180823-03"))
+        MainWindow.setWindowTitle(_translate("MainWindow", "Solaris specification  V-260923-01"))
         self.pushButton.setText(_translate("MainWindow", "Пуск"))
         self.pushButton2.setText(_translate("MainWindow", "Открыть файл"))
         self.pushButton3.setText(_translate("MainWindow", "Расчет материалов"))
@@ -492,8 +492,12 @@ class ExampleApp2(QtWidgets.QMainWindow):
         self.pushButton2.setText(_translate("Dialog", "Объеденить файлы"))
 
     def saveFileDialog(self):
+        if self.fileName == '':
+            self.fileName = 'Файл сложения'
+        else:
+            print('Итоговое имя файлу задано: ', self.fileName)
         options = QFileDialog.Options()
-        options = QFileDialog.DontUseNativeDialog
+        options |= QFileDialog.DontUseNativeDialog
         self.NameDIr = QFileDialog.getExistingDirectory(self, "Выбрать папку", self.NameDIr)
         print(self.NameDIr)
         put = os.path.abspath('example2.xls')
