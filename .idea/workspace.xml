@@ -4,16 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="89123829-8447-4316-aa24-a83a35692c1d" name="Changes" comment="V-050923-01 Добавил разницу в спецификации">
+    <list default="true" id="89123829-8447-4316-aa24-a83a35692c1d" name="Changes" comment="V-050923-01 Устранил ошибку с объединением файлов">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Solaris_vedomost.py" beforeDir="false" afterPath="$PROJECT_DIR$/Solaris_vedomost.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/Solaris_vedomost/Analysis-00.toc" beforeDir="false" afterPath="$PROJECT_DIR$/build/Solaris_vedomost/Analysis-00.toc" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/Solaris_vedomost/EXE-00.toc" beforeDir="false" afterPath="$PROJECT_DIR$/build/Solaris_vedomost/EXE-00.toc" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/Solaris_vedomost/PKG-00.pkg" beforeDir="false" afterPath="$PROJECT_DIR$/build/Solaris_vedomost/PKG-00.pkg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/Solaris_vedomost/PKG-00.toc" beforeDir="false" afterPath="$PROJECT_DIR$/build/Solaris_vedomost/PKG-00.toc" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/Solaris_vedomost/PYZ-00.pyz" beforeDir="false" afterPath="$PROJECT_DIR$/build/Solaris_vedomost/PYZ-00.pyz" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/Solaris_vedomost/PYZ-00.toc" beforeDir="false" afterPath="$PROJECT_DIR$/build/Solaris_vedomost/PYZ-00.toc" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/Solaris_vedomost.exe" beforeDir="false" afterPath="$PROJECT_DIR$/dist/Solaris_vedomost.exe" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/Solaris_vedomost/warn-Solaris_vedomost.txt" beforeDir="false" afterPath="$PROJECT_DIR$/build/Solaris_vedomost/warn-Solaris_vedomost.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/Solaris_vedomost/xref-Solaris_vedomost.html" beforeDir="false" afterPath="$PROJECT_DIR$/build/Solaris_vedomost/xref-Solaris_vedomost.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/logfilename.txt" beforeDir="false" afterPath="$PROJECT_DIR$/logfilename.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/nominal.py" beforeDir="false" afterPath="$PROJECT_DIR$/nominal.py" afterDir="false" />
     </list>
@@ -429,7 +423,11 @@
       <workItem from="1694673353982" duration="1992000" />
       <workItem from="1694968395466" duration="608000" />
       <workItem from="1695097861200" duration="1453000" />
-      <workItem from="1695660376456" duration="9879000" />
+      <workItem from="1695660376456" duration="11917000" />
+      <workItem from="1695808401055" duration="1366000" />
+      <workItem from="1695976418172" duration="685000" />
+      <workItem from="1695985782732" duration="44000" />
+      <workItem from="1696267463123" duration="1909000" />
     </task>
     <task id="LOCAL-00001" summary="nakleika">
       <created>1643615263314</created>
@@ -753,7 +751,14 @@
       <option name="project" value="LOCAL" />
       <updated>1693896103850</updated>
     </task>
-    <option name="localTasksCounter" value="47" />
+    <task id="LOCAL-00047" summary="V-050923-01 Устранил ошибку с объединением файлов">
+      <created>1695744399699</created>
+      <option name="number" value="00047" />
+      <option name="presentableId" value="LOCAL-00047" />
+      <option name="project" value="LOCAL" />
+      <updated>1695744399699</updated>
+    </task>
+    <option name="localTasksCounter" value="48" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -783,7 +788,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="sortirovka nestandarta" />
     <MESSAGE value="sortirovka nestandarta2" />
     <MESSAGE value="PR ispravleno" />
     <MESSAGE value="13.10.2022-01 error correction" />
@@ -808,7 +812,8 @@
     <MESSAGE value="V-110823-03 Ш-СД (Зеркальная)" />
     <MESSAGE value="V-180823-03 Ш-СД20-З (Зеркальная)" />
     <MESSAGE value="V-050923-01 Добавил разницу в спецификации" />
-    <option name="LAST_COMMIT_MESSAGE" value="V-050923-01 Добавил разницу в спецификации" />
+    <MESSAGE value="V-050923-01 Устранил ошибку с объединением файлов" />
+    <option name="LAST_COMMIT_MESSAGE" value="V-050923-01 Устранил ошибку с объединением файлов" />
   </component>
   <component name="XDebuggerManager">
     <watches-manager>
@@ -827,6 +832,6 @@
     <SUITE FILE_PATH="coverage/materials$line_raskroi.coverage" NAME="line_raskroi Coverage Results" MODIFIED="1652719704595" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/materials$linear_calculation.coverage" NAME="linear_calculation Coverage Results" MODIFIED="1682399212528" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/materials$__.coverage" NAME="Расчет  тепловыделения Coverage Results" MODIFIED="1665491603508" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
-    <SUITE FILE_PATH="coverage/materials$Solaris_vedomost.coverage" NAME="Solaris_vedomost Coverage Results" MODIFIED="1695117453490" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/materials$Solaris_vedomost.coverage" NAME="Solaris_vedomost Coverage Results" MODIFIED="1696309267995" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
   </component>
 </project>

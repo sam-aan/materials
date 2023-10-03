@@ -16,7 +16,7 @@ class calc():
                   'количество': int(input_data[9]),
                   'стандарт': 'стандарт'}
 
-    def isFloat(value):
+    def isFloat(self, value):
         """Проверяем, является ли значение числом"""
         try:
             float(value)
@@ -144,7 +144,7 @@ class calc():
                                "ксб": "Крышка стыка"
                                }
 
-        if self.isFloat(self.a['In']) == True:
+        if self.isFloat(self.a['In']):
             self.a['In'] = int(self.a['In'])
         else:
             self.a['In'] = 0
