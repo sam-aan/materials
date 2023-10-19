@@ -1,6 +1,7 @@
 # coding^utf8
 import copy
 import re
+
 from to_exel import writing_to_exl
 from сравнение import sorting
 from detali import Detali
@@ -18,7 +19,7 @@ class rashet:
         self.N_zak = atr[0]
         self.N_proj = atr[1]
         self.Name_proj = atr[2]
-        self.fname = fname
+        self.fname = fname      #Имя файла для расчета
         self.spisok_filov = []
         self.spis_kompl = {'profil': [], 'st_izd': []}
         self.spisok_dla_mater = {}  # словарь для расчета материалов

@@ -4,11 +4,13 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="89123829-8447-4316-aa24-a83a35692c1d" name="Changes" comment="V-031023-01 Устранил ошибку в nominal.py def isFloat(self, value):">
+    <list default="true" id="89123829-8447-4316-aa24-a83a35692c1d" name="Changes" comment="V-161023-01 Устранил ошибку Ш-СД34-01:">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/index.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Solaris_vedomost.py" beforeDir="false" afterPath="$PROJECT_DIR$/Solaris_vedomost.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/Solaris_vedomost/EXE-00.toc" beforeDir="false" afterPath="$PROJECT_DIR$/build/Solaris_vedomost/EXE-00.toc" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/logfilename.txt" beforeDir="false" afterPath="$PROJECT_DIR$/logfilename.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/пример.xlsx" beforeDir="false" afterPath="$PROJECT_DIR$/пример.xlsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/nominal.py" beforeDir="false" afterPath="$PROJECT_DIR$/nominal.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/rashet_sekcii.py" beforeDir="false" afterPath="$PROJECT_DIR$/rashet_sekcii.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -431,7 +433,11 @@
       <workItem from="1696267463123" duration="5931000" />
       <workItem from="1696698338888" duration="5791000" />
       <workItem from="1697347909776" duration="4042000" />
-      <workItem from="1697452495878" duration="96000" />
+      <workItem from="1697452495878" duration="398000" />
+      <workItem from="1697453795046" duration="2637000" />
+      <workItem from="1697520362910" duration="6007000" />
+      <workItem from="1697628643907" duration="362000" />
+      <workItem from="1697629031805" duration="3299000" />
     </task>
     <task id="LOCAL-00001" summary="nakleika">
       <created>1643615263314</created>
@@ -769,7 +775,14 @@
       <option name="project" value="LOCAL" />
       <updated>1696309895660</updated>
     </task>
-    <option name="localTasksCounter" value="49" />
+    <task id="LOCAL-00049" summary="V-161023-01 Устранил ошибку Ш-СД34-01:">
+      <created>1697452857396</created>
+      <option name="number" value="00049" />
+      <option name="presentableId" value="LOCAL-00049" />
+      <option name="project" value="LOCAL" />
+      <updated>1697452857396</updated>
+    </task>
+    <option name="localTasksCounter" value="50" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -799,7 +812,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="PR ispravleno" />
     <MESSAGE value="13.10.2022-01 error correction" />
     <MESSAGE value="13.10.2022-02 error correction" />
     <MESSAGE value="21.11.2022-01 error correction" />
@@ -824,7 +836,8 @@
     <MESSAGE value="V-050923-01 Добавил разницу в спецификации" />
     <MESSAGE value="V-050923-01 Устранил ошибку с объединением файлов" />
     <MESSAGE value="V-031023-01 Устранил ошибку в nominal.py def isFloat(self, value):" />
-    <option name="LAST_COMMIT_MESSAGE" value="V-031023-01 Устранил ошибку в nominal.py def isFloat(self, value):" />
+    <MESSAGE value="V-161023-01 Устранил ошибку Ш-СД34-01:" />
+    <option name="LAST_COMMIT_MESSAGE" value="V-161023-01 Устранил ошибку Ш-СД34-01:" />
   </component>
   <component name="XDebuggerManager">
     <watches-manager>
@@ -843,6 +856,6 @@
     <SUITE FILE_PATH="coverage/materials$line_raskroi.coverage" NAME="line_raskroi Coverage Results" MODIFIED="1652719704595" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/materials$linear_calculation.coverage" NAME="linear_calculation Coverage Results" MODIFIED="1682399212528" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/materials$__.coverage" NAME="Расчет  тепловыделения Coverage Results" MODIFIED="1665491603508" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
-    <SUITE FILE_PATH="coverage/materials$Solaris_vedomost.coverage" NAME="Solaris_vedomost Coverage Results" MODIFIED="1696874710107" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/materials$Solaris_vedomost.coverage" NAME="Solaris_vedomost Coverage Results" MODIFIED="1697716056225" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
   </component>
 </project>
