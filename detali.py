@@ -704,8 +704,8 @@ class Detali:
         self.L1 = '224.2'
         self.oboznachenie = '000 108'
         self.naimenovanie = 'Шина компенсации'
-        self.A = '30'
-        self.B = '30'  #
+        self.A = '-'
+        self.B = '-'  #
         self.C = '-'  #
         self.print_rezult()
         return self.a
@@ -721,6 +721,8 @@ class Detali:
             self.L = float(self.os) - float(self.R_kor) - 4
         elif self.name in ['тс', 'tsv']:
             self.L = float(self.os[0]) - float(self.R_kor)
+        elif self.name in ['sk']:
+            self.L = 428.5
         else:
             self.L = float(self.os) - float(self.R_kor) * 2
 
@@ -997,7 +999,6 @@ class Detali:
 
     # крышка с отверситем для втычной розетки для типов 3 и 4
     def k18_01(self):
-        self.C = '-'
         self.L = float(self.os) - float(self.R_kor) * 2
         self.A = str(float(self.A) - float(self.R_kor))
         self.naimenovanie = 'Крышка крашенная'
@@ -1008,7 +1009,6 @@ class Detali:
 
     # крышка с отверситем для втычной розетки для типов 5 и 6
     def k18_02(self):
-        self.C = '-'
         self.L = float(self.os) - float(self.R_kor) * 2
         self.A = str(float(self.A) - float(self.R_kor))
         self.naimenovanie = 'Крышка крашенная'
@@ -1107,7 +1107,6 @@ class Detali:
 
     # крышка с выступом с отверситем для втычной розетки для типов 3 и 4
     def kv18_01(self):
-        self.C = '-'
         self.L = float(self.os) - float(self.R_kor) * 2
         self.A = str(float(self.A) - float(self.R_kor))
         self.naimenovanie = 'Крышка с выступом крашенная'
@@ -1118,7 +1117,6 @@ class Detali:
 
     # крышка с выступом с отверситем для втычной розетки для типов 5 и 6
     def kv18_02(self):
-        self.C = '-'
         self.L = float(self.os) - float(self.R_kor) * 2
         self.A = str(float(self.A) - float(self.R_kor))
         self.naimenovanie = 'Крышка с выступом крашенная'
@@ -1185,12 +1183,14 @@ class Detali:
         self.C = '-'
         if self.name in ['пф', 'pf', 'pfk']:
             self.L = float(self.os) - float(self.R_kor) - 4
-        elif self.name in ['п', 'тг', 'ом', 'pt', 'tg']:
+        elif self.name in ['п', 'тг', 'ом', 'pt', 'tg', 'pr']:
             self.L = float(self.os) - float(self.R_kor) * 2 - 1
         elif self.name in ['уг', 'угф', 'ug', 'ugf']:
             self.L = float(self.os) - float(self.R_kor) + float(self.H_paketa) / 2
         elif self.name in ['тс', 'tsv']:
             self.L = float(self.os[0]) - float(self.R_kor)
+        elif self.name in ['sk']:
+            self.L = 428.5
         else:
             self.L = 'неизветсно'
         if self.coating == 's':
