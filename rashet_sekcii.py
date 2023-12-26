@@ -157,7 +157,7 @@ class calculation:
             print('ЗАВЕРШЕНИЕ РАСЧЕТА СЕКЦИИ')
             return [True, self.index, self.itog, self.komplekt, self.spisok_dla_mater]
         else:
-            print('Чтото пошло не так')
+            print('Чтото пошло не так rashet_sekcii 160')
             return [False, self.index, self.dat, self.komplekt, self.spisok_dla_mater]
 
     def welded_part(self, svar_det):
@@ -283,7 +283,7 @@ class calculation:
             coating это атрибут покрытия (окрашенно "s", или не окрашено)."""
         print('РАСЧЕТ ДЕТАЛИ', '| Обознач:', str(detal[0]))
 
-        if detal[0] in ['n', 'fl', 'zts', 'sux', 'mfazcentr', 'torcentr']:
+        if detal[0] in ['n', 'fl_100', 'fl_130', 'zts', 'sux', 'mfazcentr', 'torcentr']:
             self.komplekt.append([self.dat['Кол. пров.'], self.dat['Материал'], self.dat['In'],
                                   detal[0], detal[1] * int(self.dat['количество'])])
             return 0
@@ -376,6 +376,8 @@ class calculation:
         elif int(self.L) > 2500 and int(self.L) < 3000:
             self.dat['тип'] = 2.9
 
+        self.B = int(self.dat['межфазное расстояние фланца'])
+
         itog = [[self.index, self.dat['Серия'], self.dat['ip'], self.dat['Материал'], self.dat['In'],
                  self.dat['Кол. пров.'], self.dat['Наименование'], 'pt',
                  self.L, self.L1, self.A, self.B, self.C,
@@ -393,7 +395,10 @@ class calculation:
                     detali[2][0] = 's17'
                     detali[3][0] = 's18'
                     detali[4][1] = 2
-                    detali.append(['fl', 2])
+                    if self.dat['межфазное расстояние фланца'] in [100, '100']:
+                        detali.append(['fl_100', 2])
+                    else:
+                        detali.append(['fl_130', 2])
 
                 if self.dat['In'] in [2500]:
                     detali.pop(0)
@@ -420,7 +425,10 @@ class calculation:
                     itog[0][7] = 'pf'
                     detali[2][0] = 's17'
                     detali[4][1] = 2
-                    detali.append(['fl', 2])
+                    if self.dat['межфазное расстояние фланца'] in [100, '100']:
+                        detali.append(['fl_100', 2])
+                    else:
+                        detali.append(['fl_130', 2])
 #CR
         elif self.dat['Серия'] in ['CR1', 'CR2']:
 
@@ -433,7 +441,10 @@ class calculation:
                     detali[0][0] = 's36'
                     detali[0][1] = 2
                     detali.append(['s37', 2, self.os[0]])
-                    detali.append(['fl', 2])
+                    if self.dat['межфазное расстояние фланца'] in [100, '100']:
+                        detali.append(['fl_100', 2])
+                    else:
+                        detali.append(['fl_130', 2])
 
                 if self.dat['In'] in [3200, 4000, 5000]:
                     detali.insert(0, ['s_01', 8, self.os[0]])
@@ -450,7 +461,10 @@ class calculation:
                     itog[0][7] = 'pf'
                     detali[2][0] = 's17'
                     detali[4][1] = 2
-                    detali.append(['fl', 2])
+                    if self.dat['межфазное расстояние фланца'] in [100, '100']:
+                        detali.append(['fl_100', 2])
+                    else:
+                        detali.append(['fl_130', 2])
 
         for i in detali:
             itog_det = self.detail(i, 's_01')
@@ -1159,7 +1173,11 @@ class calculation:
 
             if self.dat['Обозначение'] in ['kpfuv']:
                 itog[0][7] = 'kpfuv'
-                detali = [['n', 2], ['sux', 4], ['fl', 2]]
+                detali = [['n', 2], ['sux', 4]]
+                if self.dat['межфазное расстояние фланца'] in [100, '100']:
+                    detali.append(['fl_100', 2])
+                else:
+                    detali.append(['fl_130', 2])
                 svar_det_one_floor = [['К-СД9', 'Крышка СБ', 1, ['k3f', 1, x], ['k13', 1, y], ['k2', 1, z]],
                                       ['К-СД10', 'Крышка СБ', 1, ['k4f', 1, x], ['k16', 1, y], ['k1', 1, z]],
                                       ['С-СД9', 'Стенка СБ', 1, ['c2f', 1, x], ['c1a', 1, y], ['u', 1, 0], ['cB', 1, z]],

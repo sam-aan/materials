@@ -6,23 +6,21 @@
 # WARNING! All changes made in this file will be lost!
 
 import re
-from PyQt5.QtWidgets import (QMainWindow, QMessageBox, QFileDialog, QLineEdit, QRadioButton, QInputDialog)
+from PyQt5.QtWidgets import (QLineEdit, QRadioButton, QInputDialog)
 import rashet_sekcii
 import to_exl_main_mat
 from PyQt5 import QtCore, QtWidgets
 import logg_solaris
-import sys  # sys нужен для передачи argv в QApplication
 import xlrd
 import materials_simple
 import tools
-# import logging
 import openpyxl
 from collections import defaultdict
 import sys
 import os
 import shutil
 from PyQt5.QtCore import QDateTime
-from PyQt5.QtWidgets import QApplication, QMainWindow, QPushButton, QFileDialog, QLabel, QVBoxLayout, QWidget, QMessageBox
+from PyQt5.QtWidgets import QMainWindow, QPushButton, QFileDialog, QLabel, QVBoxLayout, QWidget, QMessageBox
 
 ORGANIZATION_NAME = 'PIK Solaris'
 ORGANIZATION_DOMAIN = 'www.piksolaris.ru'
@@ -146,7 +144,7 @@ class ExampleApp(QMainWindow):
 
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
-        MainWindow.setWindowTitle(_translate("MainWindow", "Solaris specification  V-231023-01"))
+        MainWindow.setWindowTitle(_translate("MainWindow", "Solaris specification  V-261223-01"))
         self.pushButton.setText(_translate("MainWindow", "Пуск"))
         self.pushButton2.setText(_translate("MainWindow", "Открыть файл"))
         self.pushButton3.setText(_translate("MainWindow", "Расчет материалов"))
